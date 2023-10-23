@@ -8,6 +8,7 @@ export const Layout = styled.div`
   background-color: antiquewhite;
 `;
 export const AppWrapper = styled.div`
+  position: relative;
   width: 100%;
   max-width: 600px;
   background-color: white;
