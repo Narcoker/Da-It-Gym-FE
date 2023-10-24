@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -7,6 +7,7 @@ import ExercisePartLabel from "../../components/ExercisePartLabel/ExercisePartLa
 import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccordion";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
 import ExerciseCalendar from "../../components/ExerciseCalendar/ExerciseCalendar";
+import Toggle from "../../components/Toggle/Toggle";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ export default function UISample() {
     console.log(inputRef.current?.value);
   };
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const [isCheck, setCheck] = useState(false);
   return (
     <>
       <Button onClick={handler} display="block" type="border" size="medium">
@@ -91,6 +92,9 @@ export default function UISample() {
       <CalendarWrapper>
         <ExerciseCalendar />
       </CalendarWrapper>
+      <Wrapper>
+        <Toggle isCheck={isCheck} setCheck={setCheck} />
+      </Wrapper>
     </>
   );
 }
