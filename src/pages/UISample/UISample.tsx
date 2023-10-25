@@ -87,7 +87,12 @@ export default function UISample() {
         /> */}
       </Wrapper>
       <Wrapper>
-        <RoutineAccordion routineName="Day 1" />
+        <RoutineAccordion
+          routineName="Day 1"
+          exerciseName="벤프"
+          exercisePart="chest"
+          type="record"
+        />
       </Wrapper>
       <CalendarWrapper>
         <ExerciseCalendar />

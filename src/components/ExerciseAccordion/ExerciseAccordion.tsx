@@ -3,23 +3,13 @@ import * as S from "./ExerciseAccordion.style";
 import Button from "../Button/Button";
 import ExerciseSet from "../ExerciseSet/ExerciseSet";
 import * as Icon from "../Icon";
+import RestTimerSettingModal from "./RestTimerSettingModal";
+import { ExerciseTypes } from "../ExerciseCard/ExerciseCard";
 
-interface Props {
+export interface Props {
   exerciseName: string;
   exercisePart: string;
   type: "record" | "recorded";
-}
-
-interface ExerciseTypes {
-  chest: string;
-  back: string;
-  shoulders: string;
-  legs: string;
-  biceps: string;
-  triceps: string;
-  abs: string;
-  cardio: string;
-  [key: string]: string;
 }
 
 export interface ExerciseSetType {
@@ -46,6 +36,7 @@ export default function ExerciseAccordion({ exerciseName, exercisePart, type }: 
   };
 
   const [isSpread, setSpread] = useState(false);
+  const [restTimerModal, setRestTimerModal] = useState("");
   const [exerciseSetList, setExerciseSetList] = useState<ExerciseSetType[]>([
     {
       setNum: 1,
@@ -54,6 +45,10 @@ export default function ExerciseAccordion({ exerciseName, exercisePart, type }: 
       completed: true,
     },
   ]);
+
+  const restTimeChangeHandler = () => {
+    setRestTimerModal(exerciseName);
+  };
 
   const spreadHandler = () => {
     setSpread((prev) => !prev);
@@ -86,49 +81,61 @@ export default function ExerciseAccordion({ exerciseName, exercisePart, type }: 
   };
 
   return (
-    <S.Accordion>
-      <S.AccordionHeader>
-        <S.LeftHeader>
-          <S.Icon onClick={spreadHandler} isSpread={isSpread}>
-            <Icon.DownArrow size="24" />
-          </S.Icon>
-          {exerciseName}
-          <S.Part>{partName[exercisePart]}</S.Part>
-        </S.LeftHeader>
-        <S.RightHeader>휴식시간 변경</S.RightHeader>
-      </S.AccordionHeader>
-      <S.ExerciseSet isSpread={isSpread}>
-        {isSpread && (
-          <>
-            <ExerciseSet type="title" />
-            {exerciseSetList.map((exerciseSet, idx) => (
-              <ExerciseSet
-                type="record"
-                key={idx}
-                idx={idx}
-                exerciseSet={exerciseSet}
-                exerciseSetList={exerciseSetList}
-                setExerciseSetList={setExerciseSetList}
-              />
-            ))}
-          </>
+    <>
+      <S.Accordion>
+        <S.AccordionHeader>
+          <S.LeftHeader>
+            <S.Icon onClick={spreadHandler} isSpread={isSpread}>
+              <Icon.DownArrow size="24" />
+            </S.Icon>
+            {exerciseName}
+            <S.Part>{partName[exercisePart]}</S.Part>
+          </S.LeftHeader>
+          {type === "record" && (
+            <S.RightHeader onClick={restTimeChangeHandler}>휴식시간 변경</S.RightHeader>
+          )}
+        </S.AccordionHeader>
+        <S.ExerciseSet isSpread={isSpread}>
+          {isSpread && (
+            <>
+              <ExerciseSet type="title" />
+              {exerciseSetList.map((exerciseSet, idx) => (
+                <ExerciseSet
+                  type={type}
+                  key={idx}
+                  idx={idx}
+                  exerciseSet={exerciseSet}
+                  exerciseSetList={exerciseSetList}
+                  setExerciseSetList={setExerciseSetList}
+                />
+              ))}
+            </>
+          )}
+        </S.ExerciseSet>
+        {isSpread && type === "record" && (
+          <S.AccordionFooter>
+            <Button
+              display="flex"
+              type="border"
+              size="large"
+              onClick={exerciseSetRemoveHandler}
+            >
+              세트 삭제
+            </Button>
+            <Button
+              display="flex"
+              type="fill"
+              size="large"
+              onClick={exerciseSetAddHandler}
+            >
+              세트 추가
+            </Button>
+          </S.AccordionFooter>
         )}
-      </S.ExerciseSet>
-      {isSpread && type === "record" && (
-        <S.AccordionFooter>
-          <Button
-            display="flex"
-            type="border"
-            size="large"
-            onClick={exerciseSetRemoveHandler}
-          >
-            세트 삭제
-          </Button>
-          <Button display="flex" type="fill" size="large" onClick={exerciseSetAddHandler}>
-            세트 추가
-          </Button>
-        </S.AccordionFooter>
+      </S.Accordion>
+      {restTimerModal === exerciseName && (
+        <RestTimerSettingModal setRestTimerModal={setRestTimerModal} />
       )}
-    </S.Accordion>
+    </>
   );
 }

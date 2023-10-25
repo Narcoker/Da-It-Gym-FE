@@ -35,3 +35,8 @@ export const Icon = styled.span<StyleProps>`
   transition: 0.3s;
   transform: ${({ isSpread }) => (isSpread ? "rotate(180deg)" : "rotate(0deg)")};
 `;
+
+export const Exercises = styled.div`
+  width: 100%;
+  padding: 0 20px;
+`;

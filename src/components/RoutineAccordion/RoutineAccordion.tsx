@@ -2,11 +2,20 @@ import { useState } from "react";
 import ExerciseAccordion from "../ExerciseAccordion/ExerciseAccordion";
 import * as S from "./RoutineAccordion.style";
 import * as Icon from "../Icon";
-interface Props {
+
+export interface Props {
   routineName: string;
+  exerciseName: string;
+  exercisePart: string;
+  type: "record" | "recorded";
 }
 
-export default function RoutineAccordion({ routineName }: Props) {
+export default function RoutineAccordion({
+  routineName,
+  exerciseName,
+  exercisePart,
+  type,
+}: Props) {
   const [isSpread, setIsSpread] = useState(false);
 
   const spreadHandler = () => {
@@ -21,9 +30,15 @@ export default function RoutineAccordion({ routineName }: Props) {
         </S.Icon>
         {routineName}
       </S.RoutineHeader>
-      {isSpread && (
-        <ExerciseAccordion exerciseName="벤치프레스" exercisePart="chest" type="record" />
-      )}
+      <S.Exercises>
+        {isSpread && (
+          <ExerciseAccordion
+            exerciseName={exerciseName}
+            exercisePart={exercisePart}
+            type={type}
+          />
+        )}
+      </S.Exercises>
     </S.RoutineWrapper>
   );
 }

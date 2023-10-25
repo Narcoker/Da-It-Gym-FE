@@ -7,7 +7,7 @@ interface StyleProps {
 }
 
 export const Accordion = styled.div`
-  width: 90%;
+  width: 100%;
   background-color: white;
   padding: 16px 20px;
   border-radius: 10px;
@@ -70,5 +70,5 @@ export const ExerciseSet = styled.div<StyleProps>`
 export const AccordionFooter = styled.div`
   display: flex;
   margin-top: 30px;
-  gap: 5px;
+  gap: 15px;
 `;
