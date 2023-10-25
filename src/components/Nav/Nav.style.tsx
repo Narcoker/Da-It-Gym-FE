@@ -2,7 +2,7 @@ import styled from "styled-components";
 import * as COLOR from "../../constants/color";
 
 export const NavTopWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   border-top: 1px soild ${COLOR.Gray1};
@@ -14,7 +14,7 @@ export const NavTopWrapper = styled.div`
 `;
 
 export const NavBottomWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-around;
   border-top: 1px soild ${COLOR.Gray1};

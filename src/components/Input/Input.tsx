@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import * as S from "./Input.style";
 
 interface Props {
-  placeholder: string;
+  placeholder?: string;
   inputTitle?: string;
   defaultValue?: string;
   required?: boolean;

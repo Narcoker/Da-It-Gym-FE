@@ -8,6 +8,7 @@ import FeedDiary from "./pages/FeedDiary/FeedDiary";
 import FeedRoutine from "./pages/FeedRoutine/FeedRoutine";
 import FeedDiaryDetail from "./pages/FeedDiaryDetail/FeedDiaryDetail";
 import FeedRoutineDetail from "./pages/FeedRoutineDetail/FeedRoutineDetail";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/feed/routine" element={<FeedRoutine />} />
           <Route path="/feed/diary/:id" element={<FeedDiaryDetail />} />
           <Route path="/feed/routine/:id" element={<FeedRoutineDetail />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
         </Routes>
       </S.AppWrapper>
     </S.Layout>
