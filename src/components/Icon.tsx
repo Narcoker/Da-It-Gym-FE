@@ -167,6 +167,14 @@ export const LeftArrow = ({ size, color }: Props) => (
   />
 );
 
+// 동그라미 플러스
+export const PlusCircle = ({ size, color }: Props) => (
+  <Ai.AiOutlinePlusCircle
+    size={size ? size : F_DEFAULT}
+    color={color ? color : C_DEFAULT}
+  />
+);
+
 //업다운 화살표
 export const UpArrow = ({ size, color }: Props) => (
   <Go.GoChevronUp size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
