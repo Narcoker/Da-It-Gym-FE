@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import * as COLOR from "../../constants/color";
 
 interface ButtonProps {
@@ -7,27 +7,24 @@ interface ButtonProps {
   type: "division" | "body";
 }
 
-const getColor = (props: ButtonProps) => {
+const getBackgroundColor = (props: ButtonProps) => {
   const { isActive, type } = props;
   switch (type) {
     case "division":
-      return css`
-        background-color: ${isActive ? COLOR.Purple2 : COLOR.Purple1};
-        color: ${isActive ? "#ffffff" : "#000000"};
-      `;
+      return isActive ? COLOR.Purple2 : COLOR.Purple1;
     case "body":
-      return css`
-        background-color: ${isActive ? COLOR.Green2 : COLOR.Green1};
-        color: ${isActive ? "#ffffff" : "#000000"};
-      `;
+      return isActive ? COLOR.Primary : COLOR.Sub1;
   }
 };
-
+const getTextColor = (props: ButtonProps) => {
+  return props.isActive ? `${COLOR.White}` : `${COLOR.Black}`;
+};
 export const StyledButton = styled.button<ButtonProps>`
   width: ${({ labelWidth }) => labelWidth + 30}px;
   height: 24px;
   border-radius: 10px;
-  ${getColor}
+  background-color: ${getBackgroundColor};
+  color: ${getTextColor};
   outline: none;
   border: none;
   cursor: pointer;

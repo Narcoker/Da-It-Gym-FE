@@ -8,6 +8,7 @@ import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccord
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
 import ExerciseCalendar from "../../components/ExerciseCalendar/ExerciseCalendar";
 import Toggle from "../../components/Toggle/Toggle";
+import RoutineUser from "../../components/RoutineUser/RoutineUser";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -99,6 +100,17 @@ export default function UISample() {
       </CalendarWrapper>
       <Wrapper>
         <Toggle isCheck={isCheck} setCheck={setCheck} />
+      </Wrapper>
+      <Wrapper>
+        <RoutineUser
+          src="https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg"
+          userName="jamesjoe"
+          info="안녕하세요 "
+          likeCount="12.3K "
+          shareCount="12.3K"
+          timeAgo="5시간 전"
+          label="3분할"
+        />
       </Wrapper>
     </>
   );

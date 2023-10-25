@@ -1,7 +1,9 @@
 import * as S from "./RoutineUser.style";
 import * as Icon from "../Icon";
 import * as COLOR from "../../constants/color";
-interface Props {
+import HashTagButton from "../HashtagButton/HashtagButton";
+import { HashTagButtonProps } from "../HashtagButton/HashtagButton";
+interface Props extends HashTagButtonProps {
   src: string;
   userName: string;
   info: string;
@@ -10,8 +12,16 @@ interface Props {
   timeAgo: string;
 }
 
-function RoutineUser({ src, userName, info, likeCount, shareCount, timeAgo }: Props) {
-  const infomation = info.slice(0, Math.min(30, info.length));
+function RoutineUser({
+  src,
+  userName,
+  info,
+  likeCount,
+  shareCount,
+  timeAgo,
+  label,
+}: Props) {
+  const infomation = info.slice(0, Math.min(10000, info.length));
   return (
     <S.RoutineUserWrapper>
       <S.RoutineTop>
@@ -39,7 +49,9 @@ function RoutineUser({ src, userName, info, likeCount, shareCount, timeAgo }: Pr
       </S.RoutineTop>
       <S.RoutineBottom>
         <S.BottomBox>
-          <S.RoutineDivide>3분할</S.RoutineDivide>
+          <S.RoutineDivide>
+            <HashTagButton label={label} type="division" />
+          </S.RoutineDivide>
           <S.RoutineTime>{timeAgo}</S.RoutineTime>
         </S.BottomBox>
       </S.RoutineBottom>
@@ -52,11 +64,12 @@ export default RoutineUser;
 //✨ 사용법
 {
   /* <RoutineUser
-  src="https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg"
-  userName="조재균"
-  info="안녕하세요"
-  likeCount="1.2K"
-  shareCount="2M"
-  timeAgo="5시간 전"
-/> */
+      src="https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg"
+      userName="jamesjoe"
+      info="안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안dsdsdsdsdsdsdsds녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심dsdsdsds히늘도 저는 열심히안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안dsdsdsdsdsdsdsds녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심히안녕하세요 오늘도 저는 열심dsdsdsds히"
+      likeCount="12.3K "
+      shareCount="12.3K"
+      timeAgo="5시간 전"
+      label="3분할"
+  /> */
 }

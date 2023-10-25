@@ -11,9 +11,15 @@ interface DotProps {
 export const CarouselWrapper = styled.div`
   position: relative;
   overflow: hidden;
-  width: 600px;
+
+  width: 100%;
+  /* 미디어 쿼리 썼을때 height를 100vw하면 되지 않을까 */
   height: 600px;
   margin: 0 auto;
+  @media (max-width: 600px) {
+    width: 100vw;
+    height: 100vw;
+  }
 `;
 
 export const CarouselListBox = styled.div<Props>`

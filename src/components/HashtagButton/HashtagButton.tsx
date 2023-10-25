@@ -1,28 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./HashtagButton.style";
 
-interface HashTagButtonProps {
+export interface HashTagButtonProps {
+  id?: string;
   label: string;
-  type: "division" | "body";
+  isActive?: boolean;
+  // setIsActive: React.Dispatch<React.SetStateAction<number>>;
+  type?: "division" | "body";
+  onClick?: () => void;
 }
 
-const HashTagButton: React.FC<HashTagButtonProps> = ({ label, type }) => {
-  const [isActive, setIsActive] = useState(false);
+const HashTagButton: React.FC<HashTagButtonProps> = ({
+  id,
+  label,
+  type,
+  isActive = false,
+  onClick,
+}) => {
   const labelWidth = label.length * 10;
 
-  const handleClick = () => {
-    setIsActive(!isActive);
-  };
-
   return (
-    <S.StyledButton
-      labelWidth={labelWidth}
-      isActive={isActive}
-      type={type}
-      onClick={handleClick}
-    >
-      {label}
-    </S.StyledButton>
+    <>
+      {type === "division" && (
+        <S.StyledButton
+          labelWidth={labelWidth}
+          isActive={isActive}
+          id={id}
+          type={type}
+          onClick={onClick}
+        >
+          {label}
+        </S.StyledButton>
+      )}
+      {type === "body" && (
+        <S.StyledButton
+          labelWidth={labelWidth}
+          isActive={isActive}
+          id={id}
+          type={type}
+          onClick={onClick}
+        >
+          {label}
+        </S.StyledButton>
+      )}
+    </>
   );
 };
 

@@ -26,22 +26,29 @@ export const UserBox = styled.div`
   display: flex;
   justify-content: space-between;
   flex: 1;
-  margin: 12px 0px 4px 10px;
+  margin: 3px 0px 4px 10px;
   vertical-align: top;
 `;
 
 export const UserInfoBox = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
 `;
 export const RoutineUserName = styled.div`
-  font-size: ${FONT.L};
+  font-size: ${FONT.M};
   color: ${COLOR.Black};
 `;
 export const RoutineInfo = styled.div`
-  margin: 20px 0px;
-  font-size: ${FONT.S};
-  color: ${COLOR.Gray4};
+  margin-top: 3px;
+  width: 90%;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  font-size: ${FONT.XS};
+  color: ${COLOR.Gray3};
+  overflow: hidden;
 `;
 
 export const LikeShareBox = styled.div`
@@ -54,12 +61,12 @@ export const LikeBox = styled.div`
   margin-right: 5px;
 `;
 export const LikeIcon = styled.div`
-  font-size: ${FONT.S};
+  font-size: ${FONT.XS};
   font-weight: ${FONT.Bold};
   color: ${COLOR.Red};
 `;
 export const LikeCount = styled.div`
-  font-size: ${FONT.S};
+  font-size: ${FONT.XS};
   color: ${COLOR.Gray2};
 `;
 export const ShareBox = styled(LikeBox)`
@@ -81,12 +88,13 @@ export const BottomBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: calc(100% - 74px);
+  height: fit-content;
 `;
 export const RoutineDivide = styled.div`
   font-size: ${FONT.S};
-  color: ${COLOR.Gray4};
+  color: ${COLOR.Gray3};
 `;
 export const RoutineTime = styled.div`
   font-size: ${FONT.S};
-  color: ${COLOR.Gray4};
+  color: ${COLOR.Gray2};
 `;
