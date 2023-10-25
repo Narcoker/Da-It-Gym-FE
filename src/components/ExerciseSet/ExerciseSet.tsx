@@ -1,6 +1,9 @@
 import { ChangeEvent } from "react";
 import { ExerciseSetType } from "../ExerciseAccordion/ExerciseAccordion";
 import * as S from "./ExerciseSet.style";
+import * as Icon from "../Icon";
+import * as COLOR from "../../constants/color";
+
 interface Props {
   type: "title" | "record" | "recorded";
   exerciseSet?: ExerciseSetType;
@@ -19,7 +22,7 @@ export default function ExerciseSet({
   //중량이 변하면 list의 값을 업데이트하고 앞에 0이 연속적으로 등장하거나 숫자외의 값이 나오면 입력받지 않는 함
   const weightsCheckHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;
-    console.log(newValue);
+    // console.log(newValue);
     if (newValue && idx && setExerciseSetList) {
       const newSet: ExerciseSetType = {
         setNum: exerciseSetList!.slice(idx, idx + 1)[0].setNum,
@@ -83,7 +86,6 @@ export default function ExerciseSet({
         ...exerciseSetList!.slice(idx! + 1),
       ]);
     }
-
     // console.log(exerciseSetList);
   };
 
@@ -122,7 +124,9 @@ export default function ExerciseSet({
           </S.ExerciseLeft>
           <S.ExerciseRight onClick={completeHandler}>
             <S.CheckboxHide type="checkbox" defaultChecked={exerciseSet?.completed} />
-            <S.Checkbox />
+            <S.Checkbox>
+              <Icon.Check color={COLOR.White} />
+            </S.Checkbox>
           </S.ExerciseRight>
         </S.ExerciseWrapper>
       )}
@@ -135,7 +139,9 @@ export default function ExerciseSet({
           </S.ExerciseLeft>
           <S.ExerciseRight>
             <S.CheckboxHide type="checkbox" checked={exerciseSet?.completed} />
-            <S.Checkbox />
+            <S.Checkbox>
+              <Icon.Check color={COLOR.White} />
+            </S.Checkbox>
           </S.ExerciseRight>
         </S.ExerciseWrapper>
       )}

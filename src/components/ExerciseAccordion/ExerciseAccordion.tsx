@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as S from "./ExerciseAccordion.style";
 import Button from "../Button/Button";
 import ExerciseSet from "../ExerciseSet/ExerciseSet";
+import * as Icon from "../Icon";
 
 interface Props {
   exerciseName: string;
@@ -88,7 +89,9 @@ export default function ExerciseAccordion({ exerciseName, exercisePart, type }: 
     <S.Accordion>
       <S.AccordionHeader>
         <S.LeftHeader>
-          <S.Icon onClick={spreadHandler}></S.Icon>
+          <S.Icon onClick={spreadHandler} isSpread={isSpread}>
+            <Icon.DownArrow size="24" />
+          </S.Icon>
           {exerciseName}
           <S.Part>{partName[exercisePart]}</S.Part>
         </S.LeftHeader>

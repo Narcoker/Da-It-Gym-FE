@@ -23,13 +23,16 @@ export const Part = styled.span`
   color: ${COLOR.Gray3};
 `;
 
-export const Icon = styled.span`
+export const Icon = styled.span<StyleProps>`
   display: flex;
-  width: 16px;
-  height: 16px;
-  background-color: ${COLOR.Brown1};
+  width: 24px;
+  height: 24px;
   margin-right: 10px;
   border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  transform: ${({ isSpread }) => (isSpread ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 export const AccordionHeader = styled.div`

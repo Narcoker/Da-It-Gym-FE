@@ -9,6 +9,7 @@ export const ExerciseWrapper = styled.div`
   padding-left: 25px;
   font-weight: ${FONT.Regular};
   font-size: ${FONT.S};
+  align-items: center;
 `;
 
 export const ExerciseHeaderWrapper = styled(ExerciseWrapper)`
@@ -69,6 +70,9 @@ export const Checkbox = styled.div`
   border-radius: 5px;
   background-color: ${COLOR.Gray2};
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const CheckboxHide = styled.input`

@@ -1,7 +1,6 @@
 import New from "./pages/New/New";
 import { Route, Routes } from "react-router";
 import UISample from "./pages/UISample/UISample";
-import IconTest from "./pages/IconTest/IconTest";
 import * as S from "./App.style";
 import MyPage from "./pages/MyPage/MyPage";
 import ExerciseDiary from "./pages/ExerciseDiary/ExerciseDiary";
@@ -17,7 +16,6 @@ function App() {
         <Routes>
           <Route path="/" element={<New />} />
           <Route path="/ui-sample" element={<UISample />} />
-          <Route path="/icon-test" element={<IconTest />} />
           <Route path="/my" element={<MyPage />} />
           <Route path="/diary" element={<ExerciseDiary />} />
           <Route path="/feed/diary" element={<FeedDiary />} />

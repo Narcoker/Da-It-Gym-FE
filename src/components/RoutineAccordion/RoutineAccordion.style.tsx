@@ -2,6 +2,10 @@ import styled from "styled-components";
 import * as FONT from "../../constants/font";
 import * as COLOR from "../../constants/color";
 
+interface StyleProps {
+  isSpread: boolean;
+}
+
 export const RoutineWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -21,10 +25,13 @@ export const RoutineHeader = styled.div`
   cursor: pointer;
 `;
 
-export const Icon = styled.span`
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-color: black;
+export const Icon = styled.span<StyleProps>`
+  display: flex;
+  width: 24px;
+  height: 24px;
   margin-right: 10px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  transform: ${({ isSpread }) => (isSpread ? "rotate(180deg)" : "rotate(0deg)")};
 `;

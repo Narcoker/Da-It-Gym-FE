@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ExerciseAccordion from "../ExerciseAccordion/ExerciseAccordion";
 import * as S from "./RoutineAccordion.style";
-
+import * as Icon from "../Icon";
 interface Props {
   routineName: string;
 }
@@ -16,7 +16,9 @@ export default function RoutineAccordion({ routineName }: Props) {
   return (
     <S.RoutineWrapper>
       <S.RoutineHeader onClick={spreadHandler}>
-        <S.Icon />
+        <S.Icon isSpread={isSpread}>
+          <Icon.DownArrow size="24" />
+        </S.Icon>
         {routineName}
       </S.RoutineHeader>
       {isSpread && (
