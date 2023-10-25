@@ -3,12 +3,11 @@ import * as COLOR from "../../constants/color";
 import * as FONT from "../../constants/font";
 export const FollowUserWrapper = styled.div`
   display: flex;
-  width: 400px;
+  width: 100%;
   height: 75px;
   background-color: ${COLOR.White};
   box-shadow: 0px 4px 4px ${COLOR.Shadow};
   border-radius: 10px;
-  margin: 40px;
   padding: 6px 0px 6px 16px;
 `;
 
@@ -21,7 +20,7 @@ export const FollowUserImg = styled.img`
 export const UserBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  flex: 1;
   margin: 12px 10px;
 `;
 

@@ -10,6 +10,7 @@ import * as Md from "react-icons/md";
 import * as Bs from "react-icons/bs";
 import * as Lu from "react-icons/lu";
 import * as Io5 from "react-icons/io5";
+import * as Io from "react-icons/io";
 import * as COLOR from "../constants/color";
 const F_DEFAULT = "16";
 const C_DEFAULT = `${COLOR.Primary}`;
@@ -143,6 +144,15 @@ export const CheckCircleFill = ({ size, color }: Props) => (
     color={color ? color : C_DEFAULT}
   />
 );
+
+// 추가 동그라미
+export const AddCircle = ({ size, color }: Props) => (
+  <Io.IoIosAddCircleOutline
+    size={size ? size : F_DEFAULT}
+    color={color ? color : C_DEFAULT}
+  />
+);
+
 // 좌우 동그라미 화살표
 export const RightArrow = ({ size, color }: Props) => (
   <Ai.AiOutlineRightCircle

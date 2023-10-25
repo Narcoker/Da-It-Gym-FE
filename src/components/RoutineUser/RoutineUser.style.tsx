@@ -4,12 +4,11 @@ import * as FONT from "../../constants/font";
 export const RoutineUserWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 100%;
   height: 120px;
   background-color: ${COLOR.White};
   box-shadow: 0px 4px 4px ${COLOR.Shadow};
   border-radius: 10px;
-  margin: 40px;
   padding: 6px 16px 6px 16px;
 `;
 export const RoutineTop = styled.div`
@@ -26,7 +25,7 @@ export const RoutineUserImg = styled.img`
 export const UserBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  flex: 1;
   margin: 12px 0px 4px 10px;
   vertical-align: top;
 `;
@@ -81,7 +80,7 @@ export const RoutineBottom = styled.div`
 export const BottomBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 290px;
+  width: calc(100% - 74px);
 `;
 export const RoutineDivide = styled.div`
   font-size: ${FONT.S};

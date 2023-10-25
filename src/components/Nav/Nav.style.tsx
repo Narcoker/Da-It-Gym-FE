@@ -5,22 +5,26 @@ export const NavTopWrapper = styled.div`
   position: fixed;
   display: flex;
   justify-content: space-between;
-  border-top: 1px soild ${COLOR.Gray1};
+  background-color: ${COLOR.White};
   width: 100%;
+  max-width: 600px;
   height: 60px;
   top: 0;
-
   padding: 0px 40px;
+  z-index: 99;
 `;
 
 export const NavBottomWrapper = styled.div`
   position: fixed;
   display: flex;
   justify-content: space-around;
-  border-top: 1px soild ${COLOR.Gray1};
+  background-color: ${COLOR.White};
+  border-top: 1px solid ${COLOR.Gray1};
   width: 100%;
+  max-width: 600px;
   height: 60px;
   bottom: 0;
+  z-index: 99;
 `;
 export const AllNoteBox = styled.div`
   display: flex;
