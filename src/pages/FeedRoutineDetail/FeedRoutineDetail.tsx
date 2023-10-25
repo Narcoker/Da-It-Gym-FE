@@ -3,17 +3,230 @@ import * as S from "./FeedRoutineDetail.styled";
 import * as Icon from "../../components/Icon";
 import * as COLOR from "../../constants/color";
 import * as FONT from "../../constants/font";
+import { useEffect, useState } from "react";
+import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
+import { Routine, useRoutine } from "../../hooks/useRoutine";
+import FeedInteractionInfo from "../../components/FeedInteractionInfo/FeedInteractionInfo";
 
 export default function FeedRoutineDetail() {
+  const tmpWriter = "가슴왕 재규니";
+
   const tmpDescription = `
-  description
-  ㄴ
-  ㄴ
-  ㄴ
-  ㄴ
-  ㄴ
-  ㄴ
+  벤치프레스만 오지게 해버리다가
+  가슴이 터져버렸다.
   `;
+
+  const tmpTitle = "벤치프레스를 조지다.";
+  const tmpRoutine: Routine = {
+    id: 1,
+    days: [
+      {
+        id: 11,
+        dayNum: 1,
+        isSpread: false,
+        exercises: [
+          {
+            id: 111,
+            exerciseNum: 0,
+            name: "인클라인 벤치 프레스",
+            part: "가슴",
+            restTime: {
+              miniutes: 1,
+              seconds: 0,
+            },
+            isSpread: false,
+            exerciseSets: [
+              {
+                id: 1111,
+                setNum: 1,
+                weights: 30,
+                counts: 12,
+                completed: false,
+              },
+              {
+                id: 1112,
+                setNum: 2,
+                weights: 20,
+                counts: 12,
+                completed: false,
+              },
+              {
+                id: 1113,
+                setNum: 3,
+                weights: 10,
+                counts: 12,
+                completed: false,
+              },
+            ],
+          },
+          {
+            id: 113,
+            exerciseNum: 1,
+            name: "벤치 프레스",
+            part: "가슴",
+            restTime: {
+              miniutes: 1,
+              seconds: 0,
+            },
+            isSpread: false,
+            exerciseSets: [
+              {
+                id: 1131,
+                setNum: 1,
+                weights: 30,
+                counts: 10,
+                completed: false,
+              },
+              {
+                id: 1132,
+                setNum: 2,
+                weights: 20,
+                counts: 10,
+                completed: false,
+              },
+              {
+                id: 1133,
+                setNum: 3,
+                weights: 10,
+                counts: 10,
+                completed: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 14,
+        dayNum: 2,
+        isSpread: false,
+        exercises: [
+          {
+            id: 141,
+            exerciseNum: 0,
+            name: "사이드 레터럴 레이즈",
+            part: "어깨",
+            restTime: {
+              miniutes: 1,
+              seconds: 0,
+            },
+            isSpread: false,
+            exerciseSets: [
+              {
+                id: 1411,
+                setNum: 1,
+                weights: 10,
+                counts: 20,
+                completed: false,
+              },
+              {
+                id: 1412,
+                setNum: 2,
+                weights: 10,
+                counts: 20,
+                completed: false,
+              },
+              {
+                id: 1413,
+                setNum: 3,
+                weights: 10,
+                counts: 20,
+                completed: false,
+              },
+              {
+                id: 1414,
+                setNum: 4,
+                weights: 10,
+                counts: 20,
+                completed: false,
+              },
+            ],
+          },
+          {
+            id: 15,
+            exerciseNum: 1,
+            name: "프론트 레이즈",
+            part: "어깨",
+            restTime: {
+              miniutes: 1,
+              seconds: 0,
+            },
+            isSpread: false,
+            exerciseSets: [
+              {
+                id: 151,
+                setNum: 1,
+                weights: 20,
+                counts: 20,
+                completed: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 16,
+        dayNum: 3,
+        isSpread: false,
+        exercises: [
+          {
+            id: 161,
+            exerciseNum: 0,
+            name: "러닝",
+            part: "유산소",
+            restTime: {
+              miniutes: 1,
+              seconds: 0,
+            },
+            isSpread: false,
+            exerciseSets: [
+              {
+                id: 1611,
+                setNum: 1,
+                weights: 10,
+                counts: 1,
+                completed: false,
+              },
+            ],
+          },
+          {
+            id: 17,
+            exerciseNum: 1,
+            name: "덤벨 오버헤드 익스텐션",
+            part: "삼두",
+            restTime: {
+              miniutes: 1,
+              seconds: 0,
+            },
+            isSpread: false,
+            exerciseSets: [
+              {
+                id: 171,
+                setNum: 1,
+                weights: 10,
+                counts: 15,
+                completed: false,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  const [writer, setWriter] = useState("작성자");
+  const [title, setTitle] = useState("제목");
+  const [discription, setDiscription] = useState("게시글을 불러오는 중 입니다...");
+  const [routine, dispatch] = useRoutine();
+
+  const handleUpdateRoutine = (newRoutine: Routine): void => {
+    dispatch({ type: "UPDATE_ROUTINE", newRoutine });
+  };
+
+  useEffect(() => {
+    setWriter(tmpWriter);
+    setTitle(tmpTitle);
+    setDiscription(tmpDescription);
+    handleUpdateRoutine(tmpRoutine);
+  }, []);
 
   return (
     <>
@@ -24,7 +237,7 @@ export default function FeedRoutineDetail() {
             <S.WriterProfileImgWrapper>
               <S.WriterProfileImg src="" alt="img" />
             </S.WriterProfileImgWrapper>
-            <S.BoardTitle>nickname</S.BoardTitle>
+            <S.BoardTitle>{writer}</S.BoardTitle>
           </S.WriterInfoWrapper>
 
           <S.FunctionsWrapper>
@@ -42,40 +255,45 @@ export default function FeedRoutineDetail() {
         </S.BoardHeader>
 
         <S.BoardTitleWrapper>
-          <S.BoardTitle>Title</S.BoardTitle>
+          <S.BoardTitle>{title}</S.BoardTitle>
           <S.BoardWritedTime>5천 시간 전</S.BoardWritedTime>
         </S.BoardTitleWrapper>
 
         <S.BoardDescriptionWrapper>
-          {tmpDescription.split("\n").map((line) => (
+          {discription.split("\n").map((line) => (
             <S.Description>{line}</S.Description>
           ))}
         </S.BoardDescriptionWrapper>
 
         <S.BoardFooter>
-          <S.UserInterectionWrapper>
-            <Icon.Heart size={FONT.M} color={COLOR.Gray2} />
-            <S.BoardLikesCount>1.2K</S.BoardLikesCount>
-
-            <Icon.Share size={FONT.M} color={COLOR.Gray2} />
-            <S.BoardScrapsCount>2M</S.BoardScrapsCount>
-          </S.UserInterectionWrapper>
+          <S.LikeShareWrapper>
+            <FeedInteractionInfo LikeCnt="100" ShareCnt="100" />
+          </S.LikeShareWrapper>
 
           <S.UserInterectionWrapper>
-            <Icon.PlusCircle size={FONT.M} color={COLOR.Gray2} />
+            <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
             <S.UseFunctionText>내 루틴으로 작성하기</S.UseFunctionText>
           </S.UserInterectionWrapper>
         </S.BoardFooter>
 
         <S.BoardFooter>
           <S.UserInterectionWrapperRight>
-            <Icon.PlusCircle size={FONT.M} color={COLOR.Gray2} />
+            <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
             <S.UseFunctionText>모든 루틴을 일지에 추가하기</S.UseFunctionText>
           </S.UserInterectionWrapperRight>
         </S.BoardFooter>
       </S.BoardContainer>
-      
-      <S.RoutineContainer>루틴 프레임 워크</S.RoutineContainer>
+
+      <S.RoutineContainer>
+        <RoutineAccordion
+          routine={routine}
+          dispatch={dispatch}
+          mulitple={true}
+          type="recorded"
+        />
+      </S.RoutineContainer>
+
+      <Nav type="home" />
     </>
   );
 }

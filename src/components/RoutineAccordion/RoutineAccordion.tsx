@@ -24,7 +24,7 @@ export default function RoutineAccordion({
   const handleSpread = (dayIndex: number) => {
     dispatch({ type: "UPDATE_EXERCISES_IS_SPREAD", dayIndex });
   };
-
+  
   const handleCreateDay = () => {
     (dispatch as React.Dispatch<RoutineAction>)({ type: "CREATE_DAY" });
   };

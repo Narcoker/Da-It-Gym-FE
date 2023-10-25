@@ -10,6 +10,7 @@ export interface Routine {
 }
 
 export type Action =
+  | { type: "UPDATE_ROUTINE"; newRoutine: Routine }
   | { type: "CREATE_DAY" }
   | { type: "DELETE_DAY" }
   | {
@@ -66,6 +67,10 @@ export function routineReducer(routine: Routine, action: Action) {
   const newRoutine: Routine = JSON.parse(JSON.stringify(routine));
 
   switch (action.type) {
+    case "UPDATE_ROUTINE": {
+      return action.newRoutine;
+    }
+
     case "CREATE_DAY": {
       const newDay = { ...initDay };
       newDay.dayNum = newRoutine.days.length + 1;

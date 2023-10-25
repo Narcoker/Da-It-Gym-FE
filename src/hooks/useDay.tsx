@@ -4,7 +4,7 @@ import { initExerciseSet } from "./useExerciseSet";
 import { ExerciseName, ExercisePart } from "../constants/excercise";
 
 export interface Day {
-  id: string | null;
+  id: number | null;
   dayNum: number;
   isSpread: boolean;
   exercises: Exercise[];

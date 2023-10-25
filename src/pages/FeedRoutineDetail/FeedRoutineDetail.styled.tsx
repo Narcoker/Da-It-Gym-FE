@@ -9,7 +9,6 @@ export const BoardContainer = styled.div`
 
 export const BoardHeader = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   align-items: center;
   justify-content: space-between;
   padding: 20px 0;
@@ -40,7 +39,6 @@ export const FunctionIconWrapper = styled.div``;
 export const BoardTitleWrapper = styled.div`
   display: flex;
   gap: 45px;
-  border: 1px solid red;
   padding: 10px 0;
 `;
 
@@ -68,11 +66,15 @@ export const BoardFooter = styled.div`
   justify-content: space-between;
 `;
 
+export const LikeShareWrapper = styled.div`
+  margin: -10px -15px;
+`;
+
 export const UserInterectionWrapper = styled.div`
   display: inline-flex;
   align-items: flex-end;
-  padding: 3px 0;
   gap: 5px;
+  border: 1px soild red;
 `;
 
 export const UserInterectionWrapperRight = styled(UserInterectionWrapper)`
@@ -95,4 +97,15 @@ export const UseFunctionText = styled.span`
   color: ${COLOR.Gray2};
 `;
 
-export const RoutineContainer = styled.div``;
+export const RoutineContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 70px;
+`;
+
+export const RoutineFunctionsContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+`;
