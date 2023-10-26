@@ -1,5 +1,5 @@
 import * as S from "./ExercisePartLabel.style";
-interface Props {
+export interface Props {
   name: string;
   exercisePart: string;
   type: "part" | "exercise";

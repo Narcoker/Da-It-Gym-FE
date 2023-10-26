@@ -14,7 +14,8 @@ export const Purple1 = "#F7EDFF";
 export const Purple2 = "#8035DF";
 
 export const Green1 = "#EDFFD0";
-export const Green2 = "#3F9222";
+export const Green2 = "#05C12E";
+export const Green3 = "#3F9222";
 
 export const Brown1 = "#FBE4D4";
 export const Brown2 = "#A44425";
@@ -22,3 +23,5 @@ export const Brown2 = "#A44425";
 export const Red = "#FF4444";
 
 export const Shadow = "rgba(0, 0, 0, 0.25)";
+
+export const Yellow = "#FFCB13";

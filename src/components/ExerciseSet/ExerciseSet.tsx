@@ -4,7 +4,7 @@ import * as S from "./ExerciseSet.style";
 import * as Icon from "../Icon";
 import * as COLOR from "../../constants/color";
 
-interface Props {
+export interface Props {
   type: "title" | "record" | "recorded";
   exerciseSet?: ExerciseSetType;
   idx?: number;

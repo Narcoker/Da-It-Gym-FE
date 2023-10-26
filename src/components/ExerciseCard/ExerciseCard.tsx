@@ -1,11 +1,11 @@
 import * as S from "./ExerciseCard.style";
 
-interface Props {
+export interface Props {
   exerciseName: string;
   exercisePart: string;
 }
 
-interface ExerciseTypes {
+export interface ExerciseTypes {
   chest: string;
   back: string;
   shoulders: string;

@@ -1,6 +1,6 @@
 import * as S from "./Button.style";
 
-interface Props {
+export interface Props {
   children: React.ReactNode;
   display: "flex" | "block";
   type: "border" | "fill" | "deactivated";
