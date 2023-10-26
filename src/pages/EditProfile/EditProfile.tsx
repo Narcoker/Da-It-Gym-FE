@@ -1,5 +1,15 @@
-import React from "react";
+import Nav from "../../components/Nav/Nav";
+
+import TrainerEdit from "./components/TrainerEdit/TrainerEdit";
+import UserEdit from "./components/UserEdit/UserEdit";
 
 export default function EditProfile() {
-  return <div>EditProfile</div>;
+  return (
+    <>
+      <Nav type="top" />
+      <UserEdit />
+      <TrainerEdit />
+      <Nav type="home" />
+    </>
+  );
 }

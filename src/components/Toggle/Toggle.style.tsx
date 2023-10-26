@@ -12,6 +12,7 @@ export const ToggleLabel = styled.label<StyleProps>`
   background-color: ${({ isCheck }) => (isCheck ? `${COLOR.Sub1}` : `${COLOR.Gray2}`)};
   border-radius: 50px;
   position: relative;
+  cursor: pointer;
 `;
 
 export const ToggleDot = styled.div<StyleProps>`
