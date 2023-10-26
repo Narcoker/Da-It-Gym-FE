@@ -4,12 +4,11 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import ExerciseCard from "../../components/ExerciseCard/ExerciseCard";
 import ExercisePartLabel from "../../components/ExercisePartLabel/ExercisePartLabel";
+import Toggle from "../../components/Toggle/Toggle";
+import { useRoutine } from "../../hooks/useRoutine";
+import { useDay } from "../../hooks/useDay";
 import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccordion";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
-import ExerciseCalendar from "../../components/ExerciseCalendar/ExerciseCalendar";
-import Toggle from "../../components/Toggle/Toggle";
-import RoutineUser from "../../components/RoutineUser/RoutineUser";
-
 const ButtonWrapper = styled.div`
   display: flex;
   gap: 5px;
@@ -35,6 +34,9 @@ export default function UISample() {
   };
   const inputRef = useRef<HTMLInputElement>(null);
   const [isCheck, setCheck] = useState(false);
+
+  const [routine, routineDispatch] = useRoutine();
+  const [day, dayDispatch] = useDay();
   return (
     <>
       <Button onClick={handler} display="block" type="border" size="medium">
@@ -79,37 +81,37 @@ export default function UISample() {
         <ExerciseCard exerciseName="풀업" exercisePart="back" />
         <ExerciseCard exerciseName="벤치프레스" exercisePart="chest" />
       </ExerciseCardWrapper>
-      <Wrapper>
-        <ExerciseAccordion exerciseName="벤치프레스" exercisePart="chest" type="record" />
-        {/* <ExerciseAccordion
-          exerciseName="벤치프레스"
-          exercisePart="chest"
-          type="recorded"
-        /> */}
-      </Wrapper>
-      <Wrapper>
-        <RoutineAccordion
-          routineName="Day 1"
-          exerciseName="벤프"
-          exercisePart="chest"
-          type="record"
-        />
-      </Wrapper>
-      <CalendarWrapper>
-        <ExerciseCalendar />
-      </CalendarWrapper>
+      <CalendarWrapper>{/* <ExerciseCalendar /> */}</CalendarWrapper>
       <Wrapper>
         <Toggle isCheck={isCheck} setCheck={setCheck} />
       </Wrapper>
       <Wrapper>
-        <RoutineUser
-          src="https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg"
-          userName="jamesjoe"
-          info="안녕하세요 "
-          likeCount="12.3K "
-          shareCount="12.3K"
-          timeAgo="5시간 전"
-          label="3분할"
+        {/* 
+            useDay 선언 필요 
+            exercises={day.exercises} 로 사용하시면 됩니다.
+            dayIndex는 반드시 0 으로 지정!!
+            
+
+            const [day, dayDispatch] = useDay();
+            dayDispatch({
+              type: "", // "" 내부에서 자동 완성 단축키 누르면 사용가능한 타입이 나옵니다. 
+              // 이 행에서 자동 완성 단축키 누르면 필요한 속성들이 나옵니다. 
+            })
+         */}
+        <ExerciseAccordion
+          exercises={day.exercises}
+          dayIndex={0}
+          dispatch={dayDispatch}
+          type="record"
+        />
+      </Wrapper>
+      <Wrapper>
+        {/* useRoutine 선언 필요 */}
+        <RoutineAccordion
+          routine={routine}
+          dispatch={routineDispatch}
+          mulitple={true}
+          type="record"
         />
       </Wrapper>
     </>

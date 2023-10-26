@@ -25,7 +25,7 @@ export const RoutineHeader = styled.div`
   cursor: pointer;
 `;
 
-export const Icon = styled.span<StyleProps>`
+export const IconWrapper = styled.span<StyleProps>`
   display: flex;
   width: 24px;
   height: 24px;
@@ -39,4 +39,24 @@ export const Icon = styled.span<StyleProps>`
 export const Exercises = styled.div`
   width: 100%;
   padding: 0 20px;
+`;
+
+export const FunctionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 150px;
+  margin-top: 30px;
+`;
+
+export const FunctionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const FunctionText = styled.span`
+  padding-left: 5px;
+  color: ${COLOR.Primary};
+  transform: translateY(1px);
 `;

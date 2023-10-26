@@ -11,6 +11,7 @@ import FeedRoutineDetail from "./pages/FeedRoutineDetail/FeedRoutineDetail";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import SearchUser from "./pages/SearchUesr/SearchUser";
 import FeedImport from "./pages/FeedImport/FeedImport";
+import FeedNewRoutine from "./pages/FeedNewRoutine/FeedNewRoutine";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Route path="/diary" element={<ExerciseDiary />} />
           <Route path="/feed/diary" element={<FeedDiary />} />
           <Route path="/feed/routine" element={<FeedRoutine />} />
+          <Route path="/feed/routine/new" element={<FeedNewRoutine />} />
+          <Route path="/feed/routine/new" element={<FeedNewRoutine />} />
           <Route path="/feed/diary/:id" element={<FeedDiaryDetail />} />
           <Route path="/feed/routine/:id" element={<FeedRoutineDetail />} />
           <Route path="/profile/edit" element={<EditProfile />} />

@@ -7,7 +7,7 @@ interface StyleProps {
 }
 
 export const Accordion = styled.div`
-  width: 100%;
+  width: 100%; // 승재님 요청, 원래 90% 이었음
   background-color: white;
   padding: 16px 20px;
   border-radius: 10px;
@@ -15,6 +15,7 @@ export const Accordion = styled.div`
   box-shadow: 0 4px 4px ${COLOR.Shadow};
   cursor: pointer;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const Part = styled.span`
@@ -71,4 +72,25 @@ export const AccordionFooter = styled.div`
   display: flex;
   margin-top: 30px;
   gap: 15px;
+`;
+
+export const FunctionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px 30px;
+  margin-top: 30px;
+`;
+
+export const FunctionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const FunctionText = styled.span`
+  padding-left: 5px;
+  color: ${COLOR.Primary};
+  transform: translateY(1px);
 `;
