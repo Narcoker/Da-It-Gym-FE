@@ -6,6 +6,7 @@ export const NavTopWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${COLOR.White};
+  border-bottom: 1px solid ${COLOR.Gray1};
   width: 100%;
   max-width: 600px;
   height: 60px;
