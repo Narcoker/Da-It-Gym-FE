@@ -7,7 +7,6 @@ import Nav from "../../components/Nav/Nav";
 export default function ExerciseDiary() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("type");
-  console.log(query);
   return (
     <>
       {query === "success" ? (

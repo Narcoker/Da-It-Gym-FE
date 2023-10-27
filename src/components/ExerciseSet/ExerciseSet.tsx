@@ -3,6 +3,8 @@ import { ExerciseSetType } from "../ExerciseAccordion/ExerciseAccordion";
 import * as S from "./ExerciseSet.style";
 import * as Icon from "../Icon";
 import * as COLOR from "../../constants/color";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { countDownState, restStartState } from "../../recoil/timerState";
 
 export interface Props {
   type: "title" | "record" | "recorded";
@@ -20,6 +22,10 @@ export default function ExerciseSet({
   setExerciseSetList,
 }: Props) {
   //중량이 변하면 list의 값을 업데이트하고 앞에 0이 연속적으로 등장하거나 숫자외의 값이 나오면 입력받지 않는 함
+
+  const setCountDown = useSetRecoilState(countDownState);
+  const [restStart, setRestStart] = useRecoilState(restStartState);
+
   const weightsCheckHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;
     // console.log(newValue);
@@ -70,8 +76,17 @@ export default function ExerciseSet({
     }
   };
 
+  // 타이머 관련 함수
+  const startTimer = () => {
+    setCountDown(Date.now());
+    if (!restStart) {
+      // console.log("restStart");
+      setRestStart(true);
+    }
+  };
+
   const completeHandler = () => {
-    console.log(exerciseSetList);
+    startTimer();
     if (setExerciseSetList) {
       const newSet: ExerciseSetType = {
         setNum: exerciseSetList!.slice(idx, idx! + 1)[0].setNum,
