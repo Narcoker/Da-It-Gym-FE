@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import * as COLOR from "../../../../constants/color";
+import * as FONT from "../../../../constants/font";
 
 export const Overlay = styled.div`
   position: absolute;
@@ -24,6 +25,7 @@ export const Wrapper = styled.div`
   top: 20%;
   min-width: 280px;
   padding: 20px;
+  padding-top: 50px;
 `;
 
 export const ButtonBox = styled.div`
@@ -38,4 +40,26 @@ export const Inputs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+export const CalendarLabel = styled.label`
+  width: 100%;
+`;
+
+export const Calendartitle = styled.div`
+  font-weight: ${FONT.Bold};
+  padding-left: 8px;
+  margin-bottom: 12px;
+`;
+
+export const DateInput = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  outline: none;
+  border: 1px solid ${COLOR.Gray1};
+  border-radius: 5px;
+
+  &:focus {
+    border: 1px solid ${COLOR.Primary};
+  }
 `;

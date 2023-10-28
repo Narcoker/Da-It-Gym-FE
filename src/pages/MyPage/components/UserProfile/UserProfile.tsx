@@ -2,6 +2,7 @@ import { useState } from "react";
 import FollowModal from "../FollowModal/FollowModal";
 import * as S from "./UserProfile.style";
 import InbodyModal from "../InbodyModal/InbodyModal";
+import { useNavigate } from "react-router";
 
 interface Props {
   nickname: string;
@@ -11,6 +12,7 @@ interface Props {
 export type FollowType = "" | "follow" | "follower";
 
 export default function UserProfile({ nickname, place }: Props) {
+  const navigate = useNavigate();
   const [followType, setFollowType] = useState<FollowType>("");
   const [isInbodyClick, setIsInbodyClick] = useState(false);
   const followHandler = () => {
@@ -25,6 +27,10 @@ export default function UserProfile({ nickname, place }: Props) {
     setIsInbodyClick(true);
   };
 
+  const profileHandler = () => {
+    navigate("/profile/edit");
+  };
+
   return (
     <>
       <S.ProfileWrapper>
@@ -35,7 +41,7 @@ export default function UserProfile({ nickname, place }: Props) {
             <S.Place>{`${place}에서 운동 중`}</S.Place>
           </S.ProfileContent>
           <S.ButtonBox>
-            <S.ProfileButton>프로필 편집</S.ProfileButton>
+            <S.ProfileButton onClick={profileHandler}>프로필 편집</S.ProfileButton>
             <S.ProfileButton onClick={inbodyHandler}>인바디</S.ProfileButton>
             <S.ProfileButton>대표루틴 설정</S.ProfileButton>
           </S.ButtonBox>

@@ -39,6 +39,7 @@ export const ButtonBox = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 `;
 
 export const ProfileButton = styled.button`
@@ -47,12 +48,12 @@ export const ProfileButton = styled.button`
   border-radius: 50px;
   font-weight: ${FONT.Bold};
   background-color: ${COLOR.Sub1};
-  white-space: nowrap;
   cursor: pointer;
 `;
 
 export const CounterBox = styled(ButtonBox)`
   gap: 20px;
+  flex-wrap: nowrap;
 `;
 
 export const CounterButton = styled(ProfileButton)`

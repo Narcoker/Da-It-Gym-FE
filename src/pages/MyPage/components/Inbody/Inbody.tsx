@@ -7,6 +7,21 @@ interface Props {
 }
 
 export default function Inbody({ score }: Props) {
+  // const data = [120, 150, 67, 18, 32];
+  const normData = [
+    90,
+    Math.floor((1500 / 1700) * 100),
+    67,
+    Math.floor((1 - 24 / 50) * 100),
+    Math.floor((32 / 50) * 100),
+  ];
+  const avgNormData = [
+    80,
+    Math.floor((1100 / 1700) * 100),
+    67,
+    Math.floor((1 - 15 / 50) * 100),
+    Math.floor((30 / 50) * 100),
+  ];
   return (
     <S.Wrapper>
       <S.ScoreCard>
@@ -20,8 +35,9 @@ export default function Inbody({ score }: Props) {
         <ApexChart
           type="radar"
           series={[
-            { name: "현재", data: [120, 150, 67, 18, 32] },
-            { name: "평균", data: [100, 140, 60, 20, 30] },
+            //인바디 점수, 기초대사량, 체중, 체지방률, 골격근량
+            { name: "현재", data: normData },
+            { name: "평균", data: avgNormData },
           ]}
           options={{
             chart: {
@@ -32,7 +48,6 @@ export default function Inbody({ score }: Props) {
             },
             fill: {
               opacity: 0.2,
-              // colors: [`${COLOR.Primary}`, `${COLOR.Purple2}`],
             },
             tooltip: {
               y: { formatter: (value) => `${value}` },
@@ -40,7 +55,6 @@ export default function Inbody({ score }: Props) {
             stroke: {
               show: true,
               width: 2,
-              // colors: [`${COLOR.Primary}`, `${COLOR.Purple2}`],
               dashArray: 0,
             },
             markers: {
@@ -48,7 +62,6 @@ export default function Inbody({ score }: Props) {
               hover: {
                 size: 10,
               },
-              // colors: [`${COLOR.Primary}`, `${COLOR.Purple2}`],
             },
             xaxis: {
               categories: ["인바디 점수", "기초대사량", "체중", "체지방률", "골격근량"],

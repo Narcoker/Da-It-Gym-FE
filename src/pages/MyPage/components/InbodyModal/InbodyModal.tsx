@@ -18,6 +18,10 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
     <S.Overlay>
       <S.Wrapper>
         <S.Inputs>
+          <S.CalendarLabel>
+            <S.Calendartitle>측정일</S.Calendartitle>
+            <S.DateInput type="date" />
+          </S.CalendarLabel>
           <Input inputTitle="인바디 점수" />
           <Input inputTitle="골격근량" />
           <Input inputTitle="체지방률(%)" />

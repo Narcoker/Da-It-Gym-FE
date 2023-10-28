@@ -175,3 +175,7 @@ export const UpArrow = ({ size, color }: Props) => (
 export const DownArrow = ({ size, color }: Props) => (
   <Go.GoChevronDown size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
 );
+
+export const Location = ({ size, color }: Props) => (
+  <Md.MdLocationPin size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
+);

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const Section = styled.section`
-  margin-top: 60px;
+export const RoutineUsers = styled.div`
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  gap: 10px;
 `;
