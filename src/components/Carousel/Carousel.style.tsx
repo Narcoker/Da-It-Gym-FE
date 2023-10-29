@@ -11,7 +11,6 @@ interface DotProps {
 export const CarouselWrapper = styled.div`
   position: relative;
   overflow: hidden;
-
   width: 100%;
   /* 미디어 쿼리 썼을때 height를 100vw하면 되지 않을까 */
   height: 600px;
