@@ -20,6 +20,7 @@ export interface Day {
 }
 
 export type Action =
+  | { type: "CREATE_DAY"; newDay: Day }
   | { type: "CREATE_EXERCISE"; exerciseName: ExerciseName; exercisePart: ExercisePart }
   | { type: "DELETE_EXERCISE" }
   | { type: "UPDATE_EXERCISES_IS_SPREAD" }
@@ -51,6 +52,11 @@ export function dayRecucer(day: Day, action: Action) {
   const newDay: Day = JSON.parse(JSON.stringify(day));
 
   switch (action.type) {
+    case "CREATE_DAY": {
+      const { newDay } = action;
+      return newDay;
+    }
+
     case "CREATE_EXERCISE": {
       const { exerciseName, exercisePart } = action;
       const newExercise = getNewExercise(

@@ -54,7 +54,7 @@ function Carousel({ list }: Props) {
           </S.IconBox>
         )}
         <S.DotBox>
-          {list.map((data, index) => {
+          {list.map((_, index) => {
             return (
               <S.Dot key={index} index={index} currentIndex={currentIndex}>
                 ●

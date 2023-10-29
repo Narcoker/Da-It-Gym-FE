@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HashTagButton from "../../../components/HashtagButton/HashtagButton";
 import * as S from "./FDSTag.style";
 const division = [
@@ -27,14 +27,17 @@ function FDSTag() {
     setActiveButtonId(id);
   };
 
-  const handleBodyIsActive = (label: string) => {
-    if (ActiveBody.includes(label)) {
-      setActiveBody(ActiveBody.filter((ele) => ele !== label));
-    } else {
-      setActiveBody([...ActiveBody, label]);
-    }
-    console.log(ActiveBody);
-  };
+  // const handleBodyIsActive = (label: string) => {
+  //   if (ActiveBody.includes(label)) {
+  //     setActiveBody(ActiveBody.filter((ele) => ele !== label));
+  //   } else {
+  //     setActiveBody([...ActiveBody, label]);
+  //   }
+  //   console.log(ActiveBody);
+  // };
+  useEffect(() => {
+    setActiveBody(["가슴", "등", "어깨"]);
+  }, []);
   return (
     <S.TagWrapper>
       <S.TagTitle>태그를 추가해주세요</S.TagTitle>
@@ -58,9 +61,6 @@ function FDSTag() {
               id={data.id}
               label={data.label}
               type="body"
-              onClick={() => {
-                handleBodyIsActive(data.label);
-              }}
               isActive={ActiveBody.includes(data.label)}
               //ActiveBody 배열에 label있으면 isActive값 true 로 전달
             />

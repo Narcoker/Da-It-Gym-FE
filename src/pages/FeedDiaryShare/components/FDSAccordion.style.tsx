@@ -34,4 +34,5 @@ export const ExerciseAcc = styled.div`
   justify-content: center;
   margin: 10px 0px;
   display: flex;
+  flex-direction: column;
 `;

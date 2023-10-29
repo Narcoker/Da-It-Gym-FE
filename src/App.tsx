@@ -23,6 +23,7 @@ import { useEffect } from "react";
 import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import FeedDiaryShare from "./pages/FeedDiaryShare/FeedDiaryShare";
 import Admin from "./pages/Admin/Admin";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     { path: "/profile/:nickname", element: <Profile /> },
     { path: "/diary", element: <ExerciseDiary /> },
     { path: "/feed/diary", element: <FeedDiary /> },
+    { path: "/feed/diary/share", element: <FeedDiaryShare /> },
     { path: "/feed/routine", element: <FeedRoutine /> },
     { path: "/feed/routine/new", element: <FeedNewRoutine /> },
     { path: "/feed/diary/:id", element: <FeedDiaryDetail /> },
