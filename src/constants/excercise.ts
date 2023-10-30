@@ -117,11 +117,11 @@ export const exercises = {
       exercisePart: "back",
     },
     {
-      exerciseName: "렛 풀 다운",
+      exerciseName: "랫 풀 다운",
       exercisePart: "back",
     },
     {
-      exerciseName: "덤펠 로우",
+      exerciseName: "덤벨 로우",
       exercisePart: "back",
     },
     {
@@ -164,10 +164,6 @@ export const exercises = {
       exerciseName: "데드리프트",
       exercisePart: "legs",
     },
-    {
-      exerciseName: "해밍컬",
-      exercisePart: "legs",
-    },
   ],
   biceps: [
     {
@@ -179,7 +175,7 @@ export const exercises = {
       exercisePart: "biceps",
     },
     {
-      exerciseName: "헤머 컬",
+      exerciseName: "해머 컬",
       exercisePart: "biceps",
     },
     {

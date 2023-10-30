@@ -25,7 +25,6 @@ function App() {
           <Route path="/feed/diary" element={<FeedDiary />} />
           <Route path="/feed/routine" element={<FeedRoutine />} />
           <Route path="/feed/routine/new" element={<FeedNewRoutine />} />
-          <Route path="/feed/routine/new" element={<FeedNewRoutine />} />
           <Route path="/feed/diary/:id" element={<FeedDiaryDetail />} />
           <Route path="/feed/routine/:id" element={<FeedRoutineDetail />} />
           <Route path="/profile/edit" element={<EditProfile />} />
