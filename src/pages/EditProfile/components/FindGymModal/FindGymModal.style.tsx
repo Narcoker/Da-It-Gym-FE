@@ -13,14 +13,13 @@ export const Overlay = styled.div`
 `;
 
 export const Wrapper = styled.section`
-  width: 400px;
+  width: 100%;
+  height: calc(100vh - 120px);
   background-color: ${COLOR.White};
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 10px;
   overflow: hidden;
+  position: absolute;
+  top: 60px;
 `;
 
 export const Header = styled.header`

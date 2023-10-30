@@ -1,9 +1,14 @@
+import { useSearchParams } from "react-router-dom";
 import Nav from "../../components/Nav/Nav";
 import TrainerEdit from "./components/TrainerEdit/TrainerEdit";
 import UserEdit from "./components/UserEdit/UserEdit";
 import * as S from "./EditProfile.style";
+import FindGymModal from "./components/FindGymModal/FindGymModal";
 
 export default function EditProfile() {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("section");
+
   const logoutHandler = () => {
     console.log("로그아웃 요청");
   };
@@ -14,8 +19,16 @@ export default function EditProfile() {
   return (
     <>
       <Nav type="top" />
-      <UserEdit />
-      <TrainerEdit />
+      <>
+        {query === "gym" ? (
+          <FindGymModal />
+        ) : (
+          <>
+            <UserEdit />
+            <TrainerEdit />
+          </>
+        )}
+      </>
       <S.Footer>
         <S.Button onClick={logoutHandler}>로그아웃</S.Button>
         <S.Span>|</S.Span>

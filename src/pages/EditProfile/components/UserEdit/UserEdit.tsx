@@ -5,7 +5,6 @@ import * as Icon from "../../../../components/Icon";
 import Input from "../../../../components/Input/Input";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router";
-import FindGymModal from "../FindGymModal/FindGymModal";
 
 interface Preview {
   url: string;
@@ -15,7 +14,6 @@ interface Preview {
 export default function UserEdit() {
   const navigate = useNavigate();
   const [preview, setPreview] = useState<Preview | null>(null);
-  const [gymFindModal, setGymFindModal] = useState(false);
   const previewHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -24,7 +22,8 @@ export default function UserEdit() {
   };
 
   const placeHandler = () => {
-    setGymFindModal(true);
+    // setGymFindModal(true);
+    navigate("/profile/edit?section=gym");
   };
 
   const cancelHandler = () => {
@@ -74,7 +73,6 @@ export default function UserEdit() {
           </Button>
         </S.ButtonBox>
       </S.Wrapper>
-      {gymFindModal && <FindGymModal setGymFindModal={setGymFindModal} />}
     </>
   );
 }
