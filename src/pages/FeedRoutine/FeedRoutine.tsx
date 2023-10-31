@@ -3,9 +3,31 @@ import HashTagButton from "../../components/HashtagButton/HashtagButton";
 import Nav from "../../components/Nav/Nav";
 import RoutineUser from "../../components/RoutineUser/RoutineUser";
 import * as S from "./FeedRoutine.style";
+import useCounts from "../../hooks/useCounts";
 
 const tempData = [
   {
+    id: "1",
+    userImg:
+      "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
+    userName: "가슴왕 재규니",
+    info: "안녕하세요 가슴을 조지는 루틴입니다. ",
+    likeCount: 999999,
+    shareCount: 999999999,
+    createdAt: new Date(),
+  },
+  {
+    id: "2",
+    userImg:
+      "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
+    userName: "가슴왕 재규니",
+    info: "안녕하세요 가슴을 조지는 루틴입니다. ",
+    likeCount: 999,
+    shareCount: 0,
+    createdAt: new Date(),
+  },
+  {
+    id: "2",
     userImg:
       "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
     userName: "가슴왕 재규니",
@@ -15,38 +37,22 @@ const tempData = [
     createdAt: new Date(),
   },
   {
+    id: "3",
     userImg:
       "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
     userName: "가슴왕 재규니",
     info: "안녕하세요 가슴을 조지는 루틴입니다. ",
-    likeCount: 1000,
-    shareCount: 100000,
+    likeCount: 1_000,
+    shareCount: 100_000,
     createdAt: new Date(),
   },
   {
-    userImg:
-      "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
-    userName: "가슴왕 재규니",
-    info: "안녕하세요 가슴을 조지는 루틴입니다. ",
-    likeCount: 1000,
-    shareCount: 100000,
-    createdAt: new Date(),
-  },
-  {
-    userImg:
-      "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
-    userName: "가슴왕 재규니",
-    info: "안녕하세요 가슴을 조지는 루틴입니다. ",
-    likeCount: 1000,
-    shareCount: 100000,
-    createdAt: new Date(),
-  },
-  {
+    id: "4",
     userImg:
       "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
     userName: "가슴왕 재규니",
     info: "안녕하세요. 오늘도 역시 가슴을 조지는 루틴입니다.abcdefghi",
-    likeCount: 1000,
+    likeCount: 999_999,
     shareCount: 100000,
     createdAt: new Date(),
   },
@@ -60,6 +66,8 @@ export default function FeedRoutine() {
   const handleSelectedTab = (tab: SelectedTab) => {
     setSelectedTab(tab);
   };
+
+  const reduceCount = useCounts();
 
   return (
     <>
@@ -106,12 +114,13 @@ export default function FeedRoutine() {
       <S.Routines>
         {tempData.map((routine) => (
           <RoutineUser
+            key={routine.id}
             src={routine.userImg}
             userName={routine.userName}
             info={routine.info}
-            likeCount={routine.likeCount.toString()}
-            shareCount={routine.shareCount.toString()}
-            timeAgo={routine.createdAt.toDateString()}
+            likeCount={reduceCount(routine.likeCount)}
+            shareCount={reduceCount(routine.shareCount)}
+            timeAgo={routine.createdAt.toLocaleString()}
           />
         ))}
       </S.Routines>
