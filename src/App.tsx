@@ -15,6 +15,9 @@ import FeedNewRoutine from "./pages/FeedNewRoutine/FeedNewRoutine";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Nav from "./components/Nav/Nav";
+import Chat from "./pages/Chat/Chat";
+import ChatSearchUser from "./pages/ChatSearchUser/ChatSearchUser";
+import ChatRooms from "./pages/ChatRooms/ChatRooms";
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/feed/search-user" element={<SearchUser />} />
           <Route path="/feed/import/:id" element={<FeedImport />} />
+          <Route path="/chat/:chatId" element={<Chat />} />
+          <Route path="/chat/search/user" element={<ChatSearchUser />} />
+          <Route path="/chat/rooms" element={<ChatRooms />} />
         </Routes>
         <ToastContainer
           position="top-right"

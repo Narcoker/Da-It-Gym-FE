@@ -31,7 +31,7 @@ export default function Nav({ type }: Props) {
             </S.NavIcon>
             {sideMenu && <SideMenu sideMenu={sideMenu} />}
           </S.MenuBox>
-          <S.MessengerBox onClick={() => handleNav("/")}>
+          <S.MessengerBox onClick={() => handleNav("/chat/rooms")}>
             <S.NavIcon>
               <Icon.Messenger />
             </S.NavIcon>
@@ -74,11 +74,11 @@ export default function Nav({ type }: Props) {
       )}
       {type === "chat" && (
         <S.NavBottomWrapper>
-          <S.FollowListBox onClick={() => handleNav("/")}>
+          <S.FollowListBox onClick={() => handleNav("/chat/search/user")}>
             <S.NavIcon>
-              <Icon.Follow />
+              <Icon.Search />
             </S.NavIcon>
-            <S.NavMenuTitle>팔로우</S.NavMenuTitle>
+            <S.NavMenuTitle>유저 검색</S.NavMenuTitle>
           </S.FollowListBox>
           <S.MypageBox onClick={() => handleNav("/")}>
             <S.NavIcon>
@@ -86,7 +86,7 @@ export default function Nav({ type }: Props) {
             </S.NavIcon>
             <S.NavMenuTitle>마이</S.NavMenuTitle>
           </S.MypageBox>
-          <S.ChatRoomBox onClick={() => handleNav("/")}>
+          <S.ChatRoomBox onClick={() => handleNav("/chat/rooms")}>
             <S.NavIcon>
               <Icon.ChatRoom />
             </S.NavIcon>

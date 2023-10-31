@@ -1,7 +1,7 @@
-import * as S from "../SearchUesr/SearchUser.style";
 import Nav from "../../components/Nav/Nav";
 import * as Icon from "../../components/Icon";
 import * as COLOR from "../../constants/color";
+import * as S from "./ChatSearchUser.style";
 import FollowUser from "../../components/FollowUser/FollowUser";
 import { useEffect, useState } from "react";
 
@@ -70,7 +70,7 @@ const tempUsers = [
   },
 ];
 
-function SearchUser() {
+function ChatSearchUser() {
   const [users, setUsers] = useState<Users[]>([]);
   useEffect(() => {
     setUsers(tempUsers);
@@ -80,6 +80,7 @@ function SearchUser() {
     <>
       <Nav type="top" />
       <S.Container>
+        <S.Title>유저 검색</S.Title>
         <S.SearchContainer>
           <S.SearchInput
             type="text"
@@ -105,9 +106,9 @@ function SearchUser() {
         </S.UsersContainer>
       </S.Container>
 
-      <Nav type="home" />
+      <Nav type="chat" />
     </>
   );
 }
 
-export default SearchUser;
+export default ChatSearchUser;
