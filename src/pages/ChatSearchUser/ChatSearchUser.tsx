@@ -5,7 +5,7 @@ import * as S from "./ChatSearchUser.style";
 import FollowUser from "../../components/FollowUser/FollowUser";
 import { useEffect, useState } from "react";
 
-interface Users {
+interface User {
   userImg: string;
   userName: string;
   info: string;
@@ -71,7 +71,7 @@ const tempUsers = [
 ];
 
 function ChatSearchUser() {
-  const [users, setUsers] = useState<Users[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   useEffect(() => {
     setUsers(tempUsers);
   }, []);
