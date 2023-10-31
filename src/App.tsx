@@ -12,6 +12,8 @@ import EditProfile from "./pages/EditProfile/EditProfile";
 import SearchUser from "./pages/SearchUesr/SearchUser";
 import FeedImport from "./pages/FeedImport/FeedImport";
 import FeedNewRoutine from "./pages/FeedNewRoutine/FeedNewRoutine";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -31,6 +33,18 @@ function App() {
           <Route path="/feed/search-user" element={<SearchUser />} />
           <Route path="/feed/import/:id" element={<FeedImport />} />
         </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </S.AppWrapper>
     </S.Layout>
   );

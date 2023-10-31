@@ -6,6 +6,7 @@ import Input from "../../../../components/Input/Input";
 import { ChangeEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import FindGymModal from "../FindGymModal/FindGymModal";
+import { toast } from "react-toastify";
 
 interface Preview {
   url: string;
@@ -42,6 +43,7 @@ export default function UserEdit() {
     const nickname = nicknameRef.current!.value;
     const desc = descRef.current!.value;
 
+    toast.error("빈 칸을 입력해 주세요");
     console.log(split, nickname, desc);
   };
   return (
