@@ -5,14 +5,24 @@ import * as FONT from "../../constants/font";
 export const FeedPreviewWrapper = styled.div`
   position: relative;
   display: flex;
-  width: 140px;
-  height: 140px;
+  width: 100%;
+  height: 100%;
   background-color: ${COLOR.White};
 `;
 
 export const PreviewImg = styled.img`
   width: 100%;
   object-fit: cover;
+`;
+
+export const ImgOverlay = styled.div`
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: 2;
+  display: flex;
+  position: absolute;
+  background-color: ${COLOR.Gray4};
 `;
 
 export const CountWrapper = styled.div`
@@ -29,6 +39,8 @@ export const CountBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 5px;
+  z-index: 3;
 `;
 
 export const CountIcon = styled.span`

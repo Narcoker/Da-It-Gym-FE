@@ -1,22 +1,25 @@
 import * as S from "../FeedPreview/FeedPreview.style";
+import * as Icon from "../../components/Icon";
+import * as COLOR from "../../constants/color";
 
 interface Props {
   src: string;
-  likeCount: number;
-  shareCount: number;
+  likeCount: string;
+  shareCount: string;
 }
 
 function FeedPreview({ src, likeCount, shareCount }: Props) {
   return (
     <S.FeedPreviewWrapper>
       <S.PreviewImg src={src} alt={src} />
+      <S.ImgOverlay />
       <S.CountWrapper>
         <S.CountBox>
-          <S.CountIcon>&#x2661;</S.CountIcon>
+          <Icon.HeartFill size="18" color={COLOR.Red} />
           <S.CountNumber>{likeCount}</S.CountNumber>
         </S.CountBox>
         <S.CountBox>
-          <S.CountIcon>&#x1f4e5;</S.CountIcon>
+          <Icon.Share size="18" color={COLOR.White} />
           <S.CountNumber>{shareCount}</S.CountNumber>
         </S.CountBox>
       </S.CountWrapper>
