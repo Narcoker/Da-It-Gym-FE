@@ -57,14 +57,14 @@ export const Square = styled.div`
 `;
 
 export const GymLists = styled.div`
-  height: calc(100vh - 590px);
+  height: 300px;
   background-color: ${COLOR.White};
   overflow-y: scroll;
   padding: 20px;
 `;
 
 export const NoList = styled.div`
-  height: calc(100vh - 590px);
+  height: 300px;
   background-color: ${COLOR.White};
   padding: 20px;
   font-size: ${FONT.L};

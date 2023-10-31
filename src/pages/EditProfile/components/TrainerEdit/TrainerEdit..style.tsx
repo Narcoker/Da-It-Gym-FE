@@ -77,3 +77,42 @@ export const Icon = styled.div`
   right: 10px;
   cursor: pointer;
 `;
+
+export const ContentList = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+export const Content = styled.span`
+  flex: 1;
+  font-size: ${FONT.S};
+  font-weight: ${FONT.Bold};
+  text-align: center;
+  padding: 5px;
+`;
+
+export const TrainerInput = styled.input`
+  flex: 1;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid ${COLOR.Gray2};
+  &:focus {
+    border: 1px solid ${COLOR.Primary};
+  }
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+`;
+
+export const CertButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  gap: 10px;
+`;
+
+export const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;

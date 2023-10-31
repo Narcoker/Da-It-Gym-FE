@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Toggle from "../../../../components/Toggle/Toggle";
 import * as Icon from "../../../../components/Icon";
-import Select, { MultiValue } from "react-select";
 import * as COLOR from "../../../../constants/color";
 import * as S from "./TrainerEdit..style";
 import Button from "../../../../components/Button/Button";
 import { useNavigate } from "react-router";
 
-interface Option {
-  value: string;
-  label: string;
-}
-
 interface Image {
   url: string;
   file: File;
+}
+
+interface Award {
+  awardName: string;
+  awardDate: string;
+  awardOrg: string;
+}
+
+interface Cerificate {
+  certificateName: string;
+  certificateDate: string;
 }
 
 export default function TrainerEdit() {
@@ -22,19 +27,27 @@ export default function TrainerEdit() {
   const [isCheck, setCheck] = useState(false);
   const [certificateImages, setCertificateImages] = useState<Image[]>([]);
   const [awardImages, setAwardImages] = useState<Image[]>([]);
-  const options = [
-    { value: "1", label: "자격증1" },
-    { value: "2", label: "자격증2" },
-    { value: "3", label: "자격증3" },
+  const awardRef = useRef<HTMLInputElement>(null);
+  const awardDateRef = useRef<HTMLInputElement>(null);
+  const awardOrg = useRef<HTMLInputElement>(null);
+  const certRef = useRef<HTMLSelectElement>(null);
+  const certDateRef = useRef<HTMLInputElement>(null);
+  const [awards, setAwards] = useState<Award[]>([]);
+  const certificateOptions = [
+    "생활스포츠 지도사 2급",
+    "생활스포츠 지도사 1급",
+    "건강운동관리사",
+    "NSCA-CPT,",
+    "NSCA-CSCC",
+    "NASM-CPT",
+    "NASM-CES",
+    "NASM-PES",
+    "FISAF",
+    "KACEP",
+    "KATA",
   ];
 
-  const options2 = [
-    { value: "1", label: "수상경력1" },
-    { value: "2", label: "수상경력2" },
-    { value: "3", label: "수상경력3" },
-  ];
-  const [certificates, setCertificates] = useState<MultiValue<Option>>([]);
-  const [awards, setAwards] = useState<MultiValue<Option>>([]);
+  const [certificates, setCertificates] = useState<Cerificate[]>([]);
 
   const previewHandler = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
     if (!e.target.files) return;
@@ -82,6 +95,39 @@ export default function TrainerEdit() {
   const submitHandler = () => {
     console.log("변경하기 제출");
   };
+
+  const awardAddHandler = () => {
+    const award: Award = {
+      awardName: awardRef.current!.value,
+      awardDate: awardDateRef.current!.value,
+      awardOrg: awardOrg.current!.value,
+    };
+    setAwards((prev) => [...prev, award]);
+
+    awardRef.current!.value = "";
+    awardDateRef.current!.value = "";
+    awardOrg.current!.value = "";
+    awardRef.current!.focus();
+  };
+
+  const awardRemoveHandler = () => {
+    setAwards((prev) => [...prev.slice(0, -1)]);
+  };
+
+  const certAddHandler = () => {
+    const cert: Cerificate = {
+      certificateName: certRef.current!.value,
+      certificateDate: certDateRef.current!.value,
+    };
+
+    setCertificates((prev) => [...prev, cert]);
+    certDateRef.current!.value = "";
+  };
+
+  const certRemoveHandler = () => {
+    setCertificates((prev) => [...prev.slice(0, -1)]);
+  };
+
   return (
     <>
       <S.TrainerProfile>
@@ -92,13 +138,39 @@ export default function TrainerEdit() {
         <S.TrainerWrapper>
           <S.TrainerInputBox>
             <S.ContentTitle>자격증을 선택해 주세요</S.ContentTitle>
-            <Select
-              defaultValue={certificates}
-              onChange={setCertificates}
-              options={options}
-              isMulti
-              placeholder="자격증을 선택해 주세요"
-            />
+            <S.ContentList>
+              <S.Content>자격증</S.Content>
+              <S.Content>취득 날짜</S.Content>
+            </S.ContentList>
+            <S.ContentList>
+              <S.TrainerInput placeholder="예-2023 피지크 1등" as="select" ref={certRef}>
+                {certificateOptions.map((certificateOption) => (
+                  <option value={certificateOption}>{certificateOption}</option>
+                ))}
+              </S.TrainerInput>
+              <S.TrainerInput type="date" ref={certDateRef} />
+            </S.ContentList>
+            <S.Contents>
+              {certificates.map((certificate) => (
+                <S.ContentList>
+                  <S.Content>{certificate.certificateName}</S.Content>
+                  <S.Content>{certificate.certificateDate}</S.Content>
+                </S.ContentList>
+              ))}
+            </S.Contents>
+            <S.CertButtonBox>
+              <Button
+                display="block"
+                size="medium"
+                type="border"
+                onClick={certRemoveHandler}
+              >
+                제거
+              </Button>
+              <Button display="block" size="medium" type="fill" onClick={certAddHandler}>
+                추가
+              </Button>
+            </S.CertButtonBox>
           </S.TrainerInputBox>
           <S.TrainerInputBox>
             <S.ContentTitle>자격증 사진을 올려주세요</S.ContentTitle>
@@ -129,13 +201,38 @@ export default function TrainerEdit() {
           </S.TrainerInputBox>
           <S.TrainerInputBox>
             <S.ContentTitle>수상경력을 선택해 주세요</S.ContentTitle>
-            <Select
-              defaultValue={awards}
-              onChange={setAwards}
-              options={options2}
-              isMulti
-              placeholder="수상경력을 선택해 주세요"
-            />
+            <S.ContentList>
+              <S.Content>수상 명</S.Content>
+              <S.Content>수상 날짜</S.Content>
+              <S.Content>주최기관</S.Content>
+            </S.ContentList>
+            <S.ContentList>
+              <S.TrainerInput placeholder="예-2023 피지크 1등" ref={awardRef} />
+              <S.TrainerInput type="date" ref={awardDateRef} />
+              <S.TrainerInput ref={awardOrg} />
+            </S.ContentList>
+            <S.Contents>
+              {awards.map((award) => (
+                <S.ContentList>
+                  <S.Content>{award.awardName}</S.Content>
+                  <S.Content>{award.awardDate}</S.Content>
+                  <S.Content>{award.awardOrg}</S.Content>
+                </S.ContentList>
+              ))}
+            </S.Contents>
+            <S.CertButtonBox>
+              <Button
+                display="block"
+                size="medium"
+                type="border"
+                onClick={awardRemoveHandler}
+              >
+                제거
+              </Button>
+              <Button display="block" size="medium" type="fill" onClick={awardAddHandler}>
+                추가
+              </Button>
+            </S.CertButtonBox>
           </S.TrainerInputBox>
           <S.TrainerInputBox>
             <S.ContentTitle>수상 사진을 올려주세요</S.ContentTitle>

@@ -10,16 +10,17 @@ export const Overlay = styled.div`
   top: 0;
   background-color: ${COLOR.Shadow};
   z-index: 101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Wrapper = styled.section`
-  width: 100%;
-  height: calc(100vh - 120px);
+  width: 350px;
+  height: 800px;
   background-color: ${COLOR.White};
   border-radius: 10px;
   overflow: hidden;
-  position: absolute;
-  top: 60px;
 `;
 
 export const Header = styled.header`

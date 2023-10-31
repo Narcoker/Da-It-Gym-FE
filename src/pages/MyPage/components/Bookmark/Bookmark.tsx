@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import * as S from "./Bookmark.style";
 import Routines from "../Routines/Routines";
+import Diaries from "../Diaries/Diaries";
 
 export default function Bookmark() {
   const [searchParams] = useSearchParams();
@@ -27,7 +28,7 @@ export default function Bookmark() {
           <Routines />
         </S.RoutineWrapper>
       )}
-      {feed === "diary" && <>diary</>}
+      {feed === "diary" && <Diaries />}
     </>
   );
 }

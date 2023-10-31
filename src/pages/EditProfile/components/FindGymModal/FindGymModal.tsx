@@ -1,25 +1,24 @@
-import { useState } from "react";
 import * as S from "./FindGymModal.style";
 import GymMap from "../GymMap/GymMap";
 import Button from "../../../../components/Button/Button";
 
-// interface Props {
-//   setGymFindModal: React.Dispatch<React.SetStateAction<boolean>>;
-// }
+interface Props {
+  setGymFind: React.Dispatch<React.SetStateAction<boolean>>;
+  setGymName: React.Dispatch<React.SetStateAction<string>>;
+  gymFind: boolean;
+}
 
-export default function FindGymModal() {
-  const [gym, setGym] = useState("");
-
+export default function FindGymModal({ setGymFind, setGymName, gymFind }: Props) {
   const gymNameChangeHandler = () => {
-    console.log("헬스장 이름 변경");
-    // setGymFindModal(false);
+    console.log(gymFind);
+    setGymFind((prev) => !prev);
   };
   return (
-    <S.Wrapper>
-      {/* <S.Header>헬스장 찾기</S.Header> */}
-      <GymMap setGym={setGym} />
-      <S.ButtonBox>
-        {gym ? (
+    <S.Overlay>
+      <S.Wrapper>
+        <S.Header>헬스장 찾기</S.Header>
+        <GymMap setGym={setGymName} />
+        <S.ButtonBox>
           <Button
             display="block"
             type="fill"
@@ -28,12 +27,8 @@ export default function FindGymModal() {
           >
             확인
           </Button>
-        ) : (
-          <Button display="block" type="deactivated" size="medium" onClick={() => {}}>
-            확인
-          </Button>
-        )}
-      </S.ButtonBox>
-    </S.Wrapper>
+        </S.ButtonBox>
+      </S.Wrapper>
+    </S.Overlay>
   );
 }

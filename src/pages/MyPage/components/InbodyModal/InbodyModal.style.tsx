@@ -22,10 +22,10 @@ export const Wrapper = styled.div`
   align-items: center;
   border-radius: 10px;
   position: absolute;
-  top: 20%;
   min-width: 280px;
   padding: 20px;
   padding-top: 50px;
+  padding-bottom: 50px;
 `;
 
 export const ButtonBox = styled.div`
@@ -46,10 +46,13 @@ export const CalendarLabel = styled.label`
   width: 100%;
 `;
 
-export const Calendartitle = styled.div`
+export const Calendartitle = styled.span`
+  display: flex;
   font-weight: ${FONT.Bold};
   padding-left: 8px;
   margin-bottom: 12px;
+  position: relative;
+  width: fit-content;
 `;
 
 export const DateInput = styled.input`
@@ -62,4 +65,12 @@ export const DateInput = styled.input`
   &:focus {
     border: 1px solid ${COLOR.Primary};
   }
+`;
+
+export const Required = styled.span`
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  font-weight: ${FONT.Bold};
+  color: ${COLOR.Red};
 `;

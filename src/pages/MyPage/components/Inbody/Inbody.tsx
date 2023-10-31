@@ -8,20 +8,56 @@ interface Props {
 
 export default function Inbody({ score }: Props) {
   // const data = [120, 150, 67, 18, 32];
+  const inbodyData = {
+    avg: [80, 1100, 67, 24, 32],
+    records: [
+      {
+        testDate: "2023-10-20",
+        inbodyScore: 77,
+        muscle: 29.9,
+        fatPercent: 21.4,
+        weight: 67.3,
+        basalMetabolicRate: 1573,
+      },
+      {
+        testDate: "2023-11-20",
+        inbodyScore: 80,
+        muscle: 30.2,
+        fatPercent: 18.4,
+        weight: 67.3,
+        basalMetabolicRate: 1602,
+      },
+      {
+        testDate: "2023-12-20",
+        inbodyScore: 90,
+        muscle: 30.5,
+        fatPercent: 15.4,
+        weight: 64.3,
+        basalMetabolicRate: 1610,
+      },
+    ],
+  };
+  const len = inbodyData.records.length;
   const normData = [
-    90,
-    Math.floor((1500 / 1700) * 100),
-    67,
-    Math.floor((1 - 24 / 50) * 100),
-    Math.floor((32 / 50) * 100),
+    inbodyData.records[len - 1].inbodyScore,
+    Math.floor((inbodyData.records[len - 1].basalMetabolicRate / 1700) * 100),
+    inbodyData.records[len - 1].weight,
+    Math.floor((1 - inbodyData.records[len - 1].fatPercent / 50) * 100),
+    Math.floor((inbodyData.records[len - 1].muscle / 50) * 100),
   ];
+
   const avgNormData = [
-    80,
-    Math.floor((1100 / 1700) * 100),
-    67,
-    Math.floor((1 - 15 / 50) * 100),
-    Math.floor((30 / 50) * 100),
+    inbodyData.avg[0],
+    Math.floor((inbodyData.avg[1] / 1700) * 100),
+    inbodyData.avg[2],
+    Math.floor((1 - inbodyData.avg[3] / 50) * 100),
+    Math.floor((inbodyData.avg[4] / 50) * 100),
   ];
+
+  const muscles = inbodyData.records.map((record) => record.muscle);
+  const fats = inbodyData.records.map((record) => record.fatPercent);
+  const weights = inbodyData.records.map((record) => record.weight);
+  const dates = inbodyData.records.map((record) => record.testDate);
   return (
     <S.Wrapper>
       <S.ScoreCard>
@@ -83,7 +119,7 @@ export default function Inbody({ score }: Props) {
       <S.LineChart>
         <ApexChart
           type="line"
-          series={[{ name: "현재", data: [29.3, 30, 31] }]}
+          series={[{ name: "골격근량", data: muscles }]}
           options={{
             chart: {
               height: 350,
@@ -112,7 +148,7 @@ export default function Inbody({ score }: Props) {
               },
             },
             xaxis: {
-              categories: ["23.09", "23.10", "23.11"],
+              categories: dates,
             },
             markers: {
               size: 5,
@@ -126,7 +162,7 @@ export default function Inbody({ score }: Props) {
       <S.LineChart>
         <ApexChart
           type="line"
-          series={[{ name: "체지방량", data: [20, 18, 17], color: `${COLOR.Red}` }]}
+          series={[{ name: "체지방량", data: fats, color: `${COLOR.Red}` }]}
           options={{
             chart: {
               height: 350,
@@ -155,7 +191,7 @@ export default function Inbody({ score }: Props) {
               },
             },
             xaxis: {
-              categories: ["23.09", "23.10", "23.11"],
+              categories: dates,
             },
             markers: {
               size: 5,
@@ -170,7 +206,7 @@ export default function Inbody({ score }: Props) {
       <S.LineChart>
         <ApexChart
           type="line"
-          series={[{ name: "몸무게", data: [67, 67.5, 67.4], color: `${COLOR.Purple2}` }]}
+          series={[{ name: "몸무게", data: weights, color: `${COLOR.Purple2}` }]}
           options={{
             chart: {
               height: 350,
@@ -199,7 +235,7 @@ export default function Inbody({ score }: Props) {
               },
             },
             xaxis: {
-              categories: ["23.09", "23.10", "23.11"],
+              categories: dates,
             },
             markers: {
               size: 5,

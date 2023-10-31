@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import Routines from "../Routines/Routines";
 import Inbody from "../Inbody/Inbody";
 import Bookmark from "../Bookmark/Bookmark";
-import Diary from "../Diary/Diary";
+import Diaries from "../Diaries/Diaries";
 
 export default function UserContent() {
   const [searchParams] = useSearchParams();
@@ -61,7 +61,7 @@ export default function UserContent() {
       </S.ContentMenuHeader>
       <S.Contents>
         {query === "routines" && <Routines />}
-        {query === "diary" && <Diary />}
+        {query === "diary" && <Diaries />}
         {query === "bookmark" && <Bookmark />}
         {query === "inbody" && <Inbody score={120} />}
       </S.Contents>
