@@ -43,7 +43,6 @@ export default function UserProfile({ nickname, place }: Props) {
           <S.ButtonBox>
             <S.ProfileButton onClick={profileHandler}>프로필 편집</S.ProfileButton>
             <S.ProfileButton onClick={inbodyHandler}>인바디</S.ProfileButton>
-            <S.ProfileButton>대표루틴 설정</S.ProfileButton>
           </S.ButtonBox>
           <S.CounterBox>
             <S.CounterButton>{`일지수 ${24}`}</S.CounterButton>

@@ -11,6 +11,7 @@ export default function Routines() {
         likeCount="20"
         shareCount="20"
         timeAgo="4시간 전"
+        label="3분할"
       />
       <RoutineUser
         src=""
@@ -19,6 +20,7 @@ export default function Routines() {
         likeCount="20"
         shareCount="20"
         timeAgo="4시간 전"
+        label="3분할"
       />
     </S.RoutineUsers>
   );

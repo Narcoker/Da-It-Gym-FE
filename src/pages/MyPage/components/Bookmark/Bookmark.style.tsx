@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import * as COLOR from "../../../../constants/color";
 import * as FONT from "../../../../constants/font";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   height: 300px;
@@ -9,7 +10,7 @@ export const Wrapper = styled.div`
   padding: 0 10px;
 `;
 
-export const BookmarkWrapper = styled.div`
+export const BookmarkWrapper = styled(Link)`
   flex: 1;
   position: relative;
   cursor: pointer;
@@ -35,4 +36,8 @@ export const BookmarkTitle = styled.span`
   left: 10px;
   font-weight: ${FONT.Bold};
   font-size: ${FONT.S};
+`;
+
+export const RoutineWrapper = styled.div`
+  width: 100%;
 `;

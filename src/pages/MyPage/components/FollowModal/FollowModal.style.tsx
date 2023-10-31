@@ -24,6 +24,7 @@ export const Wrapper = styled.div`
   position: absolute;
   top: 20%;
   height: 500px;
+  width: 300px;
 `;
 
 export const Header = styled.div`
@@ -45,4 +46,9 @@ export const Icon = styled.div`
 
 export const Users = styled.div`
   overflow-y: scroll;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;

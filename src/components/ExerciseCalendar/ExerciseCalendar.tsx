@@ -1,12 +1,15 @@
-import { useState } from "react";
 import * as S from "./ExerciseCalendar.style";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+export type ValuePiece = Date | null;
+export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function ExerciseCalendar() {
-  const [value, onChange] = useState<Value>(new Date());
+interface Props {
+  value: Value;
+  onChange: React.Dispatch<React.SetStateAction<Value>>;
+}
+
+export default function ExerciseCalendar({ value, onChange }: Props) {
   // const day = moment(value).format("YYYY-MM-DD");
   const currDate = new Date();
   const currDateTime = moment(currDate).format("MM-DD");

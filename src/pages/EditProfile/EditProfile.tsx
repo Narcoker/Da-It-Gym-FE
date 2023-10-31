@@ -8,7 +8,6 @@ import FindGymModal from "./components/FindGymModal/FindGymModal";
 export default function EditProfile() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("section");
-
   const logoutHandler = () => {
     console.log("로그아웃 요청");
   };

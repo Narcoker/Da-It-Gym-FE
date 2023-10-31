@@ -53,6 +53,18 @@ export default function FollowModal({ type, setFollowType }: Props) {
             info="description...."
             inbodyScore={120}
           />
+          <FollowUser
+            src=""
+            userName="user-nick"
+            info="description...."
+            inbodyScore={120}
+          />
+          <FollowUser
+            src=""
+            userName="user-nick"
+            info="description...."
+            inbodyScore={120}
+          />
         </S.Users>
       </S.Wrapper>
     </S.Overlay>
