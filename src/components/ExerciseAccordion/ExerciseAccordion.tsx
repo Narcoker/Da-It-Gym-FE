@@ -119,6 +119,7 @@ export default function ExerciseAccordion({
             <RestTimerSettingModal
               dayIndex={dayIndex}
               exerciseIndex={exerciseIndex}
+              restTime={exercise.restTime}
               dispatch={dispatch}
               setIsOpenedRestTimerModal={setIsOpenedRestTimerModal}
             />

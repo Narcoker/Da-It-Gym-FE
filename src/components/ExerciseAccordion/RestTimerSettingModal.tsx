@@ -8,6 +8,7 @@ import { RestTime } from "../../hooks/useExercise";
 interface Props {
   dayIndex: number;
   exerciseIndex: number;
+  restTime: RestTime;
   dispatch: React.Dispatch<RoutineAction> | React.Dispatch<DayAction>;
   setIsOpenedRestTimerModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -15,6 +16,7 @@ interface Props {
 export default function RestTimerSettingModal({
   dayIndex,
   exerciseIndex,
+  restTime,
   dispatch,
   setIsOpenedRestTimerModal,
 }: Props) {
@@ -27,7 +29,8 @@ export default function RestTimerSettingModal({
 
   const handleUpdateRestTime = (dayIndex: number, exerciseIndex: number) => {
     const newRestTime: RestTime = {
-      miniutes: parseInt(minutesRef.current?.value as string),
+      hours: 0,
+      minutes: parseInt(minutesRef.current?.value as string),
       seconds: parseInt(seconedsRef.current?.value as string),
     };
     dispatch({ type: "UPDATE_EXERCISE_REST_TIME", dayIndex, exerciseIndex, newRestTime });
@@ -48,7 +51,7 @@ export default function RestTimerSettingModal({
             type="number"
             max={5}
             onBlur={handleInputText}
-            defaultValue="1"
+            defaultValue={restTime.minutes}
             ref={minutesRef}
           />
           분
@@ -56,7 +59,7 @@ export default function RestTimerSettingModal({
             type="number"
             max={59}
             onBlur={handleInputText}
-            defaultValue="0"
+            defaultValue={restTime.seconds}
             ref={seconedsRef}
           />
           초
