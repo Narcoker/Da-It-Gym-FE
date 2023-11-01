@@ -73,7 +73,7 @@ export function routineReducer(routine: Routine, action: Action) {
 
     case "CREATE_DAY": {
       const newDay = { ...initDay };
-      newDay.dayNum = newRoutine.days.length + 1;
+      newDay.order = newRoutine.days.length + 1;
       newRoutine.days.push(newDay);
       return newRoutine;
     }
@@ -102,7 +102,7 @@ export function routineReducer(routine: Routine, action: Action) {
 
     case "UPDATE_EXERCISES_IS_SPREAD": {
       const { dayIndex } = action;
-      newRoutine.days[dayIndex].isSpread = !newRoutine.days[dayIndex].isSpread;
+      newRoutine.days[dayIndex].spread = !newRoutine.days[dayIndex].spread;
       return newRoutine;
     }
 
@@ -127,7 +127,7 @@ export function routineReducer(routine: Routine, action: Action) {
     case "CREATE_EXERSISE_SET": {
       const { dayIndex, exerciseIndex } = action;
       const newExerciseSet = { ...initExerciseSet };
-      newExerciseSet.setNum =
+      newExerciseSet.order =
         newRoutine.days[dayIndex].exercises[exerciseIndex].exerciseSets.length + 1;
       newRoutine.days[dayIndex].exercises[exerciseIndex].exerciseSets.push(
         newExerciseSet,
@@ -143,8 +143,8 @@ export function routineReducer(routine: Routine, action: Action) {
 
     case "UPDATE_EXERCISES_SETS_IS_SPREAD": {
       const { dayIndex, exerciseIndex } = action;
-      newRoutine.days[dayIndex].exercises[exerciseIndex].isSpread =
-        !newRoutine.days[dayIndex].exercises[exerciseIndex].isSpread;
+      newRoutine.days[dayIndex].exercises[exerciseIndex].spread =
+        !newRoutine.days[dayIndex].exercises[exerciseIndex].spread;
       return newRoutine;
     }
 

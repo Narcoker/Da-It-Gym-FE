@@ -3,7 +3,7 @@ import * as FONT from "../../constants/font";
 import * as COLOR from "../../constants/color";
 
 interface StyleProps {
-  isSpread: boolean;
+  spread: boolean;
 }
 
 export const Accordion = styled.div`
@@ -33,7 +33,7 @@ export const Icon = styled.span<StyleProps>`
   justify-content: center;
   align-items: center;
   transition: 0.3s;
-  transform: ${({ isSpread }) => (isSpread ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ spread }) => (spread ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 export const AccordionHeader = styled.div`
@@ -59,8 +59,8 @@ export const ExerciseSet = styled.div<StyleProps>`
   height: 0;
   transition: 0.3s;
 
-  ${({ isSpread }) =>
-    isSpread &&
+  ${({ spread }) =>
+    spread &&
     css`
       visibility: visible;
       opacity: 1;

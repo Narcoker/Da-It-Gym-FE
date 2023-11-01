@@ -2,7 +2,7 @@ import { useReducer } from "react";
 
 export interface ExerciseSet {
   id: number | null;
-  setNum: number;
+  order: number;
   weights: number;
   counts: number;
   completed: boolean;
@@ -37,7 +37,7 @@ function exerciseSetReducer(exerciseSet: ExerciseSet, action: Action) {
 
 export const initExerciseSet: ExerciseSet = {
   id: null,
-  setNum: 1,
+  order: 1,
   weights: 10,
   counts: 1,
   completed: false,

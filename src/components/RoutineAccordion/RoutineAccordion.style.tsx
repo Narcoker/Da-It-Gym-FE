@@ -3,7 +3,7 @@ import * as FONT from "../../constants/font";
 import * as COLOR from "../../constants/color";
 
 interface StyleProps {
-  isSpread: boolean;
+  spread: boolean;
 }
 
 export const RoutineWrapper = styled.div`
@@ -33,7 +33,7 @@ export const IconWrapper = styled.span<StyleProps>`
   justify-content: center;
   align-items: center;
   transition: 0.3s;
-  transform: ${({ isSpread }) => (isSpread ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ spread }) => (spread ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 export const Exercises = styled.div`

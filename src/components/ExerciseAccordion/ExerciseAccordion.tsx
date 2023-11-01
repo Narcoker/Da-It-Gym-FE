@@ -63,7 +63,7 @@ export default function ExerciseAccordion({
             <S.LeftHeader>
               <S.Icon
                 onClick={() => handleSpread(dayIndex, exerciseIndex)}
-                isSpread={exercise.isSpread}
+                spread={exercise.spread}
               >
                 <Icon.DownArrow size="24" />
               </S.Icon>
@@ -76,8 +76,8 @@ export default function ExerciseAccordion({
               </S.RightHeader>
             )}
           </S.AccordionHeader>
-          <S.ExerciseSet isSpread={exercise.isSpread}>
-            {exercise.isSpread && (
+          <S.ExerciseSet spread={exercise.spread}>
+            {exercise.spread && (
               <>
                 <ExerciseSet type="title" />
                 {exercise.exerciseSets.map((exerciseSet, index) => (
@@ -94,7 +94,7 @@ export default function ExerciseAccordion({
               </>
             )}
           </S.ExerciseSet>
-          {exercise.isSpread && type === "record" && (
+          {exercise.spread && type === "record" && (
             <S.AccordionFooter>
               <Button
                 display="flex"

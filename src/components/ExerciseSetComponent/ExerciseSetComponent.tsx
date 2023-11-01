@@ -96,7 +96,7 @@ export default function ExerciseSetComponent({
                 console.log(exerciseSetIndex);
               }}
             >
-              {exerciseSet!.setNum}
+              {exerciseSet!.order}
             </S.Record>
             <S.Record>
               <S.NumberInput

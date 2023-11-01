@@ -24,7 +24,7 @@ export default function RoutineAccordion({
   const handleSpread = (dayIndex: number) => {
     dispatch({ type: "UPDATE_EXERCISES_IS_SPREAD", dayIndex });
   };
-  
+
   const handleCreateDay = () => {
     (dispatch as React.Dispatch<RoutineAction>)({ type: "CREATE_DAY" });
   };
@@ -39,13 +39,13 @@ export default function RoutineAccordion({
         routine.days.map((day: Day, index) => (
           <S.RoutineWrapper key={`day ${index + 1}`}>
             <S.RoutineHeader onClick={() => handleSpread(index)}>
-              <S.IconWrapper isSpread={day.isSpread}>
+              <S.IconWrapper spread={day.spread}>
                 <Icon.DownArrow size="24" />
               </S.IconWrapper>
-              {`Day ${day.dayNum}`}
+              {`Day ${day.order}`}
             </S.RoutineHeader>
             <S.Exercises>
-              {day.isSpread && (
+              {day.spread && (
                 <ExerciseAccordion
                   exercises={day.exercises}
                   dayIndex={index}
@@ -60,13 +60,13 @@ export default function RoutineAccordion({
       {!mulitple && (
         <S.RoutineWrapper>
           <S.RoutineHeader onClick={() => handleSpread(0)}>
-            <S.IconWrapper isSpread={routine.days[0].isSpread}>
+            <S.IconWrapper spread={routine.days[0].spread}>
               <Icon.DownArrow size="24" />
             </S.IconWrapper>
             {title}
           </S.RoutineHeader>
           <S.Exercises>
-            {routine.days[0].isSpread && (
+            {routine.days[0].spread && (
               <ExerciseAccordion
                 exercises={routine.days[0].exercises}
                 dayIndex={0}

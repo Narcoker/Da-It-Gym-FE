@@ -3,10 +3,19 @@ import { Exercise, RestTime, getNewExercise } from "./useExercise";
 import { initExerciseSet } from "./useExerciseSet";
 import { ExerciseName, ExercisePart } from "../constants/excercise";
 
+export interface ExerciseTime {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 export interface Day {
   id: number | null;
-  dayNum: number;
-  isSpread: boolean;
+  order: number;
+  dayDate: Date | null;
+  exerciseTime: ExerciseTime;
+  completed: boolean;
+  spread: boolean;
   exercises: Exercise[];
 }
 
@@ -59,7 +68,7 @@ export function dayRecucer(day: Day, action: Action) {
     }
 
     case "UPDATE_EXERCISES_IS_SPREAD": {
-      return { ...newDay, isSpread: !newDay.isSpread };
+      return { ...newDay, spread: !newDay.spread };
     }
 
     case "UPDATE_EXERCISE_NAME": {
@@ -83,7 +92,7 @@ export function dayRecucer(day: Day, action: Action) {
     case "CREATE_EXERSISE_SET": {
       const { exerciseIndex } = action;
       const newExersizeSet = { ...initExerciseSet };
-      newExersizeSet.setNum = newDay.exercises[exerciseIndex].exerciseSets.length + 1;
+      newExersizeSet.order = newDay.exercises[exerciseIndex].exerciseSets.length + 1;
       newDay.exercises[exerciseIndex].exerciseSets.push(newExersizeSet);
       return newDay;
     }
@@ -96,8 +105,7 @@ export function dayRecucer(day: Day, action: Action) {
 
     case "UPDATE_EXERCISES_SETS_IS_SPREAD": {
       const { exerciseIndex } = action;
-      newDay.exercises[exerciseIndex].isSpread =
-        !newDay.exercises[exerciseIndex].isSpread;
+      newDay.exercises[exerciseIndex].spread = !newDay.exercises[exerciseIndex].spread;
       return newDay;
     }
 
@@ -127,8 +135,15 @@ export function dayRecucer(day: Day, action: Action) {
 
 export const initDay: Day = {
   id: null,
-  dayNum: 1,
-  isSpread: false,
+  order: 1,
+  dayDate: null,
+  exerciseTime: {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  },
+  completed: false,
+  spread: false,
   exercises: [],
 };
 

@@ -4,16 +4,17 @@ import { ExerciseName, ExercisePart, getExcercisePartName } from "../constants/e
 
 export interface Exercise {
   id: number | null;
-  exerciseNum: number;
+  order: number;
   name: string;
   part: string;
   restTime: RestTime;
-  isSpread: boolean;
+  spread: boolean;
   exerciseSets: ExerciseSet[];
 }
 
 export interface RestTime {
-  miniutes: number;
+  hours: number;
+  minutes: number;
   seconds: number;
 }
 
@@ -48,7 +49,7 @@ function exerciseReducer(exercise: Exercise, action: Action) {
     }
 
     case "UPDATE_IS_SPREAD_SETS": {
-      return { ...newExercise, isSpread: !newExercise.isSpread };
+      return { ...newExercise, spread: !newExercise.spread };
     }
 
     case "CREATE_EXERCISE_SET": {
@@ -80,13 +81,13 @@ function exerciseReducer(exercise: Exercise, action: Action) {
 }
 
 export const getNewExercise = (
-  exerciseNum: number,
+  order: number,
   exerciseName: ExerciseName,
   exercisePart: ExercisePart,
 ): Exercise => {
   return {
     ...initExercise,
-    exerciseNum: exerciseNum,
+    order: order,
     name: exerciseName,
     part: getExcercisePartName(exercisePart),
   };
@@ -94,11 +95,11 @@ export const getNewExercise = (
 
 export const initExercise: Exercise = {
   id: null,
-  exerciseNum: 1,
+  order: 1,
   name: "",
   part: "",
-  restTime: { miniutes: 1, seconds: 0 },
-  isSpread: false,
+  restTime: { hours: 0, minutes: 1, seconds: 0 },
+  spread: false,
   exerciseSets: [initExerciseSet],
 };
 
