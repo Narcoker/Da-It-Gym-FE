@@ -9,8 +9,6 @@ import { useRoutine } from "../../hooks/useRoutine";
 import { useDay } from "../../hooks/useDay";
 import ExerciseAccordion from "../../components/ExerciseAccordion/ExerciseAccordion";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
-import ExerciseCalendar from "../../components/ExerciseCalendar/ExerciseCalendar";
-import Toggle from "../../components/Toggle/Toggle";
 import RoutineUser from "../../components/RoutineUser/RoutineUser";
 
 const ButtonWrapper = styled.div`

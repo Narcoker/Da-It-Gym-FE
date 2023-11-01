@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as COLOR from "../../constants/color";
 import * as FONT from "../../constants/font";
-export const FollowUserWrapper = styled.div`
+export const ChatRoomWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 75px;
@@ -11,7 +11,7 @@ export const FollowUserWrapper = styled.div`
   padding: 6px 0px 6px 16px;
 `;
 
-export const FollowUserImg = styled.img`
+export const UserImg = styled.img`
   width: 64px;
   height: 64px;
   border-radius: 10px;
@@ -31,7 +31,7 @@ export const UserInfoBox = styled.div`
   align-items: center;
   gap: 10px;
 `;
-export const FollowUserName = styled.div`
+export const UserName = styled.div`
   font-size: ${FONT.M};
   color: ${COLOR.Black};
 `;

@@ -4,6 +4,7 @@ import * as COLOR from "../../constants/color";
 import * as Icon from "../../components/Icon";
 import { useEffect, useState } from "react";
 import ChatRoom from "./ChatRoom";
+import { useNavigate } from "react-router";
 
 export interface Room {
   roomId: number;
@@ -22,35 +23,35 @@ const tempRooms: Room[] = [
     createdAt: new Date(),
   },
   {
-    roomId: 1,
+    roomId: 2,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
     createdAt: new Date(),
   },
   {
-    roomId: 1,
+    roomId: 3,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
     createdAt: new Date(),
   },
   {
-    roomId: 1,
+    roomId: 4,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
     createdAt: new Date(),
   },
   {
-    roomId: 1,
+    roomId: 5,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
     createdAt: new Date(),
   },
   {
-    roomId: 1,
+    roomId: 6,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
@@ -58,14 +59,14 @@ const tempRooms: Room[] = [
   },
 
   {
-    roomId: 1,
+    roomId: 7,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
     createdAt: new Date(),
   },
   {
-    roomId: 1,
+    roomId: 8,
     userImg: "",
     userName: "짱군이",
     resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
@@ -75,9 +76,16 @@ const tempRooms: Room[] = [
 
 function ChatRooms() {
   const [rooms, setRooms] = useState<Room[]>([]);
+  const navigate = useNavigate();
+
+  const handleRedirectChatRoom = (roomId: number): void => {
+    navigate(`/chat/${roomId}`);
+  };
+
   useEffect(() => {
     setRooms(tempRooms);
   }, []);
+
   return (
     <>
       <Nav type="top" />
@@ -96,7 +104,12 @@ function ChatRooms() {
 
         <S.UsersContainer>
           {rooms.map(({ roomId, userImg, userName, resentMessage, createdAt }) => (
-            <S.Users key={roomId}>
+            <S.Users
+              key={roomId}
+              onClick={() => {
+                handleRedirectChatRoom(roomId);
+              }}
+            >
               <ChatRoom
                 userImg={userImg}
                 userName={userName}
