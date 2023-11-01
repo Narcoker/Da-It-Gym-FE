@@ -18,7 +18,7 @@ export const PreviewImg = styled.img`
 export const ImgOverlay = styled.div`
   width: 100%;
   height: 100%;
-  opacity: 0.1;
+  opacity: 0.3;
   z-index: 2;
   display: flex;
   position: absolute;
@@ -51,4 +51,5 @@ export const CountIcon = styled.span`
 export const CountNumber = styled.span`
   margin-top: 3px;
   margin-left: 3px;
+  font-size: ${FONT.XS};
 `;
