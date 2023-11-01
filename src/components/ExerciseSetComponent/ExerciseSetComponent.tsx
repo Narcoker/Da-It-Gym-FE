@@ -5,6 +5,7 @@ import { ExerciseSet } from "../../hooks/useExerciseSet";
 import { Action as RoutineAction } from "../../hooks/useRoutine";
 import { Action as DayAction } from "../../hooks/useDay";
 import { ChangeEvent } from "react";
+import useRestTimer from "../../hooks/useRestTimer";
 
 interface Props {
   type: "title" | "record" | "recorded";
@@ -23,6 +24,8 @@ export default function ExerciseSetComponent({
   exerciseSet,
   exerciseSetIndex,
 }: Props) {
+  const { startTimer } = useRestTimer();
+
   const weightsCheckHandler = (
     e: ChangeEvent<HTMLInputElement>,
     dayIndex: number,
@@ -68,6 +71,7 @@ export default function ExerciseSetComponent({
     exerciseIndex: number,
     exerciseSetIndex: number,
   ) => {
+    startTimer();
     dispatch!({
       type: "UPDATE_EXERSISE_SET_COMPLETED",
       dayIndex,

@@ -14,6 +14,7 @@ import {
   timerState,
 } from "../../../../recoil/timerState";
 import { setInterval, clearInterval } from "worker-timers";
+import { useSearchParams } from "react-router-dom";
 
 export default function ExerciseNav() {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ export default function ExerciseNav() {
   const timerId = useRef(0);
   const [play, setPlay] = useRecoilState(playState);
   const [startTime, setStartTime] = useRecoilState(startTimeState);
+  const [searchParams] = useSearchParams();
+  const date = searchParams.get("date");
 
   const startTimer = () => {
     // 시작시간이 없는 경우 -> play
@@ -83,8 +86,18 @@ export default function ExerciseNav() {
   };
 
   const checkHandler = () => {
-    navigate("/diary?type=success");
+    navigate(`/diary?type=success&date=${date}`);
+    // 운동시간 초기화
+    setStartTime(0);
+    setTimer({ hour: 0, min: 0, sec: 0 });
+    setPauseTime({ start: 0, end: 0, restTime: 0 });
+    if (play === "play") {
+      clearInterval(timerId.current);
+    }
+    setPlay("stop");
+    // setPlay("pause");
   };
+
   return (
     <S.FooterNav>
       <CountDown />
