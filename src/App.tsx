@@ -14,11 +14,14 @@ import FeedImport from "./pages/FeedImport/FeedImport";
 import FeedNewRoutine from "./pages/FeedNewRoutine/FeedNewRoutine";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Nav from "./components/Nav/Nav";
 
 function App() {
   return (
     <S.Layout>
       <S.AppWrapper>
+        <Nav type="top" />
+        <Nav type="home" />
         <Routes>
           <Route path="/" element={<New />} />
           <Route path="/ui-sample" element={<UISample />} />

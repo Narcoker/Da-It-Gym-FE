@@ -23,7 +23,6 @@ export const TextareaStyle = styled.textarea<TextareaStyleProps>`
 export const Label = styled.label`
   display: block;
   width: 100%;
-  margin-top: 10px;
 `;
 
 export const TitleWrapper = styled.span`

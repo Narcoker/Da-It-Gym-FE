@@ -16,6 +16,7 @@ export default function Nav({ type }: Props) {
   const navigate = useNavigate();
   const handleNav = (destination: string) => {
     navigate(destination);
+    setSideMenu(false);
   };
   const handleSideMenu = () => {
     setSideMenu((prev) => !prev);
@@ -39,31 +40,31 @@ export default function Nav({ type }: Props) {
       )}
       {type === "home" && (
         <S.NavBottomWrapper>
-          <S.AllNoteBox onClick={() => handleNav("/")}>
+          <S.AllNoteBox onClick={() => handleNav("/feed/diary")}>
             <S.NavIcon>
               <Icon.ExerciseLogs />
             </S.NavIcon>
             <S.NavMenuTitle>운동일지</S.NavMenuTitle>
           </S.AllNoteBox>
-          <S.AllRoutineBox onClick={() => handleNav("/")}>
+          <S.AllRoutineBox onClick={() => handleNav("/feed/routine")}>
             <S.NavIcon>
               <Icon.Routines />
             </S.NavIcon>
             <S.NavMenuTitle>루틴</S.NavMenuTitle>
           </S.AllRoutineBox>
-          <S.MypageBox onClick={() => handleNav("/")}>
+          <S.MypageBox onClick={() => handleNav("/my")}>
             <S.NavIcon>
               <Icon.My />
             </S.NavIcon>
             <S.NavMenuTitle>마이</S.NavMenuTitle>
           </S.MypageBox>
-          <S.MyRoutineBox onClick={() => handleNav("/")}>
+          <S.MyRoutineBox onClick={() => handleNav("/feed/routine/new")}>
             <S.NavIcon>
               <Icon.MyRoutine />
             </S.NavIcon>
             <S.NavMenuTitle>루틴 작성</S.NavMenuTitle>
           </S.MyRoutineBox>
-          <S.MyRoutineBox onClick={() => handleNav("/")}>
+          <S.MyRoutineBox onClick={() => handleNav("/diary")}>
             <S.NavIcon>
               <Icon.MyExerciseLog />
             </S.NavIcon>

@@ -17,7 +17,6 @@ export const InputStyle = styled.input`
 export const Label = styled.label`
   display: block;
   width: 100%;
-  margin-top: 10px;
 `;
 
 export const TitleWrapper = styled.span`

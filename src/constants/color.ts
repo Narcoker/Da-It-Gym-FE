@@ -4,6 +4,7 @@ export const Sub2 = "#8CACFF";
 export const Sub3 = "#2452CA";
 
 export const White = "#FFFFFF";
+export const Gray0 = "#F4F4F4";
 export const Gray1 = "#D9D9D9";
 export const Gray2 = "#A0A0A0";
 export const Gray3 = "#676767";
