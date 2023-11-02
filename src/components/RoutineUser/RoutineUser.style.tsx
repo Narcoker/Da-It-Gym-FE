@@ -40,15 +40,11 @@ export const RoutineUserName = styled.div`
   color: ${COLOR.Black};
 `;
 export const RoutineInfo = styled.div`
-  margin-top: 3px;
+  padding-top: 3px;
   width: 90%;
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+
   font-size: ${FONT.XS};
   color: ${COLOR.Gray3};
-  overflow: hidden;
 `;
 
 export const LikeShareBox = styled.div`
@@ -80,8 +76,7 @@ export const ShareCount = styled(LikeCount)``;
 export const RoutineBottom = styled.div`
   display: flex;
   width: 100%;
-  height: 20px;
-  justify-content: space-between;
+  align-items: center;
   justify-content: right;
 `;
 export const BottomBox = styled.div`
@@ -89,6 +84,7 @@ export const BottomBox = styled.div`
   justify-content: space-between;
   width: calc(100% - 74px);
   height: fit-content;
+  align-items: center;
 `;
 export const RoutineDivide = styled.div`
   font-size: ${FONT.S};

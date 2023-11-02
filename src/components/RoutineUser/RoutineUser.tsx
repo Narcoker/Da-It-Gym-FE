@@ -21,7 +21,7 @@ function RoutineUser({
   timeAgo,
   label,
 }: Props) {
-  const infomation = info.slice(0, Math.min(10000, info.length));
+  const infomation = info.slice(0, Math.min(130, info.length)).concat("...");
   return (
     <S.RoutineUserWrapper>
       <S.RoutineTop>
