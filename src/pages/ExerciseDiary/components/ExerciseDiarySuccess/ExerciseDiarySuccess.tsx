@@ -8,7 +8,7 @@ import * as COLOR from "../../../../constants/color";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import { useEffect, useState } from "react";
 import { useDay } from "../../../../hooks/useDay";
-import useExerciseDiary from "../../../../api/useExerciseDiary";
+import useExerciseDiary from "../../../../api/useExerciseDiaryAPI";
 import moment from "moment";
 
 export default function ExerciseDiarySuccess() {

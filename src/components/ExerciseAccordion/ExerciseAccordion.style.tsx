@@ -72,6 +72,7 @@ export const AccordionFooter = styled.div`
   display: flex;
   margin-top: 30px;
   gap: 15px;
+  padding: 0 30px;
 `;
 
 export const FunctionsContainer = styled.div`

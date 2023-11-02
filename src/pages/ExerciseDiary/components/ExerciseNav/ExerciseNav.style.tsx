@@ -6,10 +6,11 @@ export const FooterNav = styled.nav`
   position: fixed;
   width: 100%;
   max-width: 600px;
-  height: 64px;
+  height: 60px;
   background-color: ${COLOR.Primary};
   bottom: 0;
   display: flex;
+  z-index: 100;
 `;
 
 export const RestTime = styled.div`

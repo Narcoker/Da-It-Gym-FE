@@ -99,7 +99,7 @@ export default function ExerciseAccordion({
               <Button
                 display="flex"
                 type="border"
-                size="large"
+                size="medium"
                 onClick={() => handleDeleteExersizeSet(dayIndex, exerciseIndex)}
               >
                 세트 삭제
@@ -107,7 +107,7 @@ export default function ExerciseAccordion({
               <Button
                 display="flex"
                 type="fill"
-                size="large"
+                size="medium"
                 onClick={() => handleCreateExersizeSet(dayIndex, exerciseIndex)}
               >
                 세트 추가

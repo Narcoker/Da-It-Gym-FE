@@ -1,6 +1,9 @@
 import * as S from "./ExerciseCalendar.style";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import useExerciseDiary from "../../api/useExerciseDiaryAPI";
+import { useNavigate } from "react-router";
 export type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
@@ -9,16 +12,46 @@ interface Props {
   onChange: React.Dispatch<React.SetStateAction<Value>>;
 }
 
+export interface Journals {
+  journalId: number;
+  journalDate: string;
+}
+
 export default function ExerciseCalendar({ value, onChange }: Props) {
   // const day = moment(value).format("YYYY-MM-DD");
   const currDate = new Date();
   const currDateTime = moment(currDate).format("MM-DD");
-
-  const mark = ["2023-10-03", "2023-10-10", "2023-10-13", "2023-10-22"];
+  const { requestJournals } = useExerciseDiary();
+  const navigate = useNavigate();
+  const [journals, setJournals] = useState<Journals[]>([
+    {
+      journalId: 1,
+      journalDate: "2023-10-03",
+    },
+    {
+      journalId: 2,
+      journalDate: "2023-10-10",
+    },
+    {
+      journalId: 3,
+      journalDate: "2023-10-13",
+    },
+  ]);
+  const mark = journals.map((journal) => journal.journalDate);
 
   const dayHandler = (value: Value) => {
-    console.log(`${moment(value as Date).format("YYYY-MM-DD")}로 요청보냄`);
+    const date = moment(value as Date).format("YYYY-MM-DD");
+    console.log(date);
+    if (mark.includes(date)) {
+      navigate(`/diary?type=success&date=${date}`);
+    } else {
+      navigate(`/diary?date=${date}`);
+    }
   };
+
+  useEffect(() => {
+    requestJournals(setJournals);
+  }, []);
 
   return (
     <S.StyleCalendar

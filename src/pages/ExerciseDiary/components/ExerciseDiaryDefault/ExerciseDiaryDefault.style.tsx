@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
+  margin-top: 60px;
 `;
 
 export const CalendarAccordion = styled.div`

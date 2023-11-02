@@ -5,7 +5,7 @@ import * as COLOR from "../../../../constants/color";
 export const Wrapper = styled.div`
   flex: 1;
   margin: 30px;
-  margin-top: 70px;
+  margin-top: 130px;
   box-shadow: 0 4px 4px ${COLOR.Shadow};
   border-radius: 10px;
   padding: 30px 20px;
