@@ -36,7 +36,9 @@ export const FunctionsWrapper = styled.div`
 
 export const FunctionIconWrapper = styled.div``;
 
-export const BoardTitleWrapper = styled.div``;
+export const BoardTitleWrapper = styled.div`
+  margin-bottom: 10px;
+`;
 
 export const BoardTitle = styled.span`
   font-size: ${FONT.M};
