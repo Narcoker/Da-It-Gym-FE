@@ -50,7 +50,7 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>운동일지</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
-      <S.SideMenuBox onClick={() => handleNav("/my")}>
+      <S.SideMenuBox onClick={() => handleNav("/profile/닉네임?section=routines")}>
         <S.SearchIcon>
           <Icon.My />
         </S.SearchIcon>

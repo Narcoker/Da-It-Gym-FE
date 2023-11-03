@@ -52,7 +52,7 @@ export default function Nav({ type }: Props) {
             </S.NavIcon>
             <S.NavMenuTitle>루틴</S.NavMenuTitle>
           </S.AllRoutineBox>
-          <S.MypageBox onClick={() => handleNav("/my")}>
+          <S.MypageBox onClick={() => handleNav("/profile/닉네임?section=routines")}>
             <S.NavIcon>
               <Icon.My />
             </S.NavIcon>

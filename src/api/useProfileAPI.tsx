@@ -25,7 +25,7 @@ interface InbodyPayload {
   basalMetabolicRate: number;
 }
 
-export default function useMyAPI() {
+export default function useProfileAPI() {
   const API_URL = import.meta.env.API_URL;
 
   // 프로필 편집

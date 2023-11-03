@@ -2,7 +2,7 @@ import New from "./pages/New/New";
 import { Route, Routes } from "react-router";
 import UISample from "./pages/UISample/UISample";
 import * as S from "./App.style";
-import MyPage from "./pages/MyPage/MyPage";
+import Profile from "./pages/Profile/Profile";
 import ExerciseDiary from "./pages/ExerciseDiary/ExerciseDiary";
 import FeedDiary from "./pages/FeedDiary/FeedDiary";
 import FeedRoutine from "./pages/FeedRoutine/FeedRoutine";
@@ -32,7 +32,7 @@ function App() {
           <Route path="/ui-sample" element={<UISample />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/my" element={<MyPage />} />
+          <Route path="/profile/:nickname" element={<Profile />} />
           <Route path="/diary" element={<ExerciseDiary />} />
           <Route path="/feed/diary" element={<FeedDiary />} />
           <Route path="/feed/routine" element={<FeedRoutine />} />

@@ -3,7 +3,7 @@ import * as FONT from "../../../../constants/font";
 import * as COLOR from "../../../../constants/color";
 
 export const Overlay = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

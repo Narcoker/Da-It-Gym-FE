@@ -1,9 +1,9 @@
 import Nav from "../../components/Nav/Nav";
-import * as S from "./MyPage.style";
+import * as S from "./Profile.style";
 import UserContent from "./components/UserContent/UserContent";
 import UserProfile from "./components/UserProfile/UserProfile";
 
-export default function MyPage() {
+export default function Profile() {
   return (
     <>
       <Nav type="top" />
