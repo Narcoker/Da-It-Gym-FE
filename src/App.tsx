@@ -18,6 +18,8 @@ import Nav from "./components/Nav/Nav";
 import Chat from "./pages/Chat/Chat";
 import ChatSearchUser from "./pages/ChatSearchUser/ChatSearchUser";
 import ChatRooms from "./pages/ChatRooms/ChatRooms";
+import Signup from "./pages/Signup/Signup";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Routes>
           <Route path="/" element={<New />} />
           <Route path="/ui-sample" element={<UISample />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/my" element={<MyPage />} />
           <Route path="/diary" element={<ExerciseDiary />} />
           <Route path="/feed/diary" element={<FeedDiary />} />

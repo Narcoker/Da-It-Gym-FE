@@ -6,6 +6,8 @@ interface Props {
   inputTitle?: string;
   defaultValue?: string;
   required?: boolean;
+  maxLength?: number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // placeholder - Input의 placeholder를 지정할 수 있습니다
@@ -14,7 +16,7 @@ interface Props {
 // required - Input 항목이 필수 항목일 경우 사용합니다. inputTitle 옆에 붉은 * 가 표시됩니다.
 // ref - ref 를 이용해 부모 컴포넌트에서 Input의 value를 사용할 수 있습니다.
 const Input = forwardRef(function Input(
-  { placeholder, inputTitle, defaultValue, required = false }: Props,
+  { placeholder, inputTitle, defaultValue, required = false, maxLength, onChange }: Props,
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {
   return (
@@ -26,7 +28,13 @@ const Input = forwardRef(function Input(
         </S.TitleWrapper>
       )}
 
-      <S.InputStyle placeholder={placeholder} defaultValue={defaultValue} ref={ref} />
+      <S.InputStyle
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        ref={ref}
+        maxLength={maxLength}
+        onChange={onChange}
+      />
     </S.Label>
   );
 });
