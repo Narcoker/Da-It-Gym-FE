@@ -1,5 +1,5 @@
 import New from "./pages/New/New";
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import UISample from "./pages/UISample/UISample";
 import * as S from "./App.style";
 import Profile from "./pages/Profile/Profile";
@@ -14,37 +14,71 @@ import FeedImport from "./pages/FeedImport/FeedImport";
 import FeedNewRoutine from "./pages/FeedNewRoutine/FeedNewRoutine";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Nav from "./components/Nav/Nav";
 import Chat from "./pages/Chat/Chat";
 import ChatSearchUser from "./pages/ChatSearchUser/ChatSearchUser";
 import ChatRooms from "./pages/ChatRooms/ChatRooms";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
+import { useEffect } from "react";
+import LoginLayout from "./pages/Login/\bLoginLayout";
+import PublicRoute from "./components/PublicRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
+  const LoginRoutes = [
+    { path: "/", element: <New /> },
+    { path: "/ui-sample", element: <UISample /> },
+    { path: "/profile/:nickname", element: <Profile /> },
+    { path: "/diary", element: <ExerciseDiary /> },
+    { path: "/feed/diary", element: <FeedDiary /> },
+    { path: "/feed/routine", element: <FeedRoutine /> },
+    { path: "/feed/routine/new", element: <FeedNewRoutine /> },
+    { path: "/feed/diary/:id", element: <FeedDiaryDetail /> },
+    { path: "/feed/routine/:id", element: <FeedRoutineDetail /> },
+    { path: "/profile/edit", element: <EditProfile /> },
+    { path: "/feed/search-user", element: <SearchUser /> },
+    { path: "/feed/import/:id", element: <FeedImport /> },
+    { path: "/chat/:chatId", element: <Chat /> },
+    { path: "/chat/search/user", element: <ChatSearchUser /> },
+    { path: "/chat/rooms", element: <ChatRooms /> },
+  ];
+  const LogOutRoutes = [
+    { path: "/login", element: <Login /> },
+    { path: "/signup", element: <Signup /> },
+  ];
+  const location = useLocation();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("accessToken");
+  const auth = token != null;
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate(auth ? "/" : "login");
+    }
+    console.log(location.pathname);
+  }, [location.pathname]);
   return (
     <S.Layout>
       <S.AppWrapper>
-        <Nav type="top" />
-        <Nav type="home" />
         <Routes>
-          <Route path="/" element={<New />} />
-          <Route path="/ui-sample" element={<UISample />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile/:nickname" element={<Profile />} />
-          <Route path="/diary" element={<ExerciseDiary />} />
-          <Route path="/feed/diary" element={<FeedDiary />} />
-          <Route path="/feed/routine" element={<FeedRoutine />} />
-          <Route path="/feed/routine/new" element={<FeedNewRoutine />} />
-          <Route path="/feed/diary/:id" element={<FeedDiaryDetail />} />
-          <Route path="/feed/routine/:id" element={<FeedRoutineDetail />} />
-          <Route path="/profile/edit" element={<EditProfile />} />
-          <Route path="/feed/search-user" element={<SearchUser />} />
-          <Route path="/feed/import/:id" element={<FeedImport />} />
-          <Route path="/chat/:chatId" element={<Chat />} />
-          <Route path="/chat/search/user" element={<ChatSearchUser />} />
-          <Route path="/chat/rooms" element={<ChatRooms />} />
+          {LogOutRoutes.map(({ path, element }) => (
+            <Route
+              key={path}
+              path={path}
+              element={<PublicRoute authenticated={auth} element={element} />}
+            />
+          ))}
+          {LoginRoutes.map(({ path, element }) => (
+            <>
+              <Route element={<LoginLayout />}>
+                <Route
+                  key={path}
+                  path={path}
+                  element={<PrivateRoute authenticated={auth} element={element} />}
+                />
+              </Route>
+            </>
+          ))}
         </Routes>
         <ToastContainer
           position="top-right"
