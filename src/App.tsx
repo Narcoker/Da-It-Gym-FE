@@ -23,6 +23,7 @@ import { useEffect } from "react";
 import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
   const LoginRoutes = [
@@ -41,6 +42,7 @@ function App() {
     { path: "/chat/:chatId", element: <Chat /> },
     { path: "/chat/search/user", element: <ChatSearchUser /> },
     { path: "/chat/rooms", element: <ChatRooms /> },
+    { path: "/admin", element: <Admin /> },
   ];
   const LogOutRoutes = [
     { path: "/login", element: <Login /> },
