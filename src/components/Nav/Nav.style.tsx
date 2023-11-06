@@ -12,7 +12,7 @@ export const NavTopWrapper = styled.div`
   height: 60px;
   top: 0;
   padding: 0px 40px;
-  z-index: 99;
+  z-index: 96;
 `;
 
 export const NavBottomWrapper = styled.div`
@@ -25,7 +25,7 @@ export const NavBottomWrapper = styled.div`
   max-width: 600px;
   height: 60px;
   bottom: 0;
-  z-index: 99;
+  z-index: 96;
 `;
 export const AllNoteBox = styled.div`
   display: flex;

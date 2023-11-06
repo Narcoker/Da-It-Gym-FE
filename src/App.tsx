@@ -22,7 +22,7 @@ import Login from "./pages/Login/Login";
 import { useEffect } from "react";
 import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
-import PrivateRoute from "./components/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoute";
 import FeedDiaryShare from "./pages/FeedDiaryShare/FeedDiaryShare";
 import Admin from "./pages/Admin/Admin";
 
@@ -75,11 +75,7 @@ function App() {
           {LoginRoutes.map(({ path, element }) => (
             <>
               <Route element={<LoginLayout />}>
-                <Route
-                  key={path}
-                  path={path}
-                  element={<PrivateRoute authenticated={auth} element={element} />}
-                />
+                <Route key={path} path={path} element={element} />
               </Route>
             </>
           ))}
