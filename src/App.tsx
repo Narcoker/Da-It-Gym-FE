@@ -20,7 +20,7 @@ import ChatRooms from "./pages/ChatRooms/ChatRooms";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
 import { useEffect } from "react";
-import LoginLayout from "./pages/Login/\bLoginLayout";
+import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 

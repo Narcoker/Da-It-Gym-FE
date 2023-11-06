@@ -9,7 +9,7 @@ interface PrivateRouteProps {
 export default function PrivateRoute({ authenticated, element }: PrivateRouteProps) {
   useEffect(() => {
     if (!authenticated) {
-      alert("로그인 후 이용해 주세요");
+      //   alert("로그인 후 이용해 주세요");
       localStorage.removeItem("accessToken");
     } else {
       // 🔥API
