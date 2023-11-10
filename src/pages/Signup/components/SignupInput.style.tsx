@@ -2,7 +2,7 @@ import styled from "styled-components";
 import * as COLOR from "../../../constants/color";
 import * as FONT from "../../../constants/font";
 interface Props {
-  duplicate: boolean;
+  duplicate: string;
 }
 export const SignupInputWrapper = styled.div`
   display: flex;
