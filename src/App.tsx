@@ -22,14 +22,17 @@ import Login from "./pages/Login/Login";
 import { useEffect } from "react";
 import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
-// import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 import FeedDiaryShare from "./pages/FeedDiaryShare/FeedDiaryShare";
 import Admin from "./pages/Admin/Admin";
+import LoginLoading from "./pages/LoginLoading/LoginLoading";
+import Recovery from "./pages/Recovery/Recovery";
 
 function App() {
   const LoginRoutes = [
     { path: "/", element: <New /> },
     { path: "/ui-sample", element: <UISample /> },
+    { path: "/signup", element: <Signup /> },
     { path: "/profile/:nickname", element: <Profile /> },
     { path: "/diary", element: <ExerciseDiary /> },
     { path: "/feed/diary", element: <FeedDiary /> },
@@ -48,7 +51,8 @@ function App() {
   ];
   const LogOutRoutes = [
     { path: "/login", element: <Login /> },
-    { path: "/signup", element: <Signup /> },
+    { path: "/login/oauth2/callback/kakao", element: <LoginLoading /> },
+    { path: "/account/recovery", element: <Recovery /> },
   ];
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,8 +60,8 @@ function App() {
   const auth = token != null;
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      navigate(auth ? "/" : "login");
+    if (location.pathname === "/profile/:1") {
+      navigate(auth ? "/profile/:1" : "login");
     }
     console.log(location.pathname);
   }, [location.pathname]);
@@ -74,8 +78,12 @@ function App() {
           ))}
           {LoginRoutes.map(({ path, element }) => (
             <>
-              <Route element={<LoginLayout />}>
-                <Route key={path} path={path} element={element} />
+              <Route element={location.pathname !== "/signup" && <LoginLayout />}>
+                <Route
+                  key={path}
+                  path={path}
+                  element={<PrivateRoute authenticated={auth} element={element} />}
+                />
               </Route>
             </>
           ))}
