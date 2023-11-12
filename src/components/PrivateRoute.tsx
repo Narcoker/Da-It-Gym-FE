@@ -7,6 +7,7 @@ interface PrivateRouteProps {
 }
 
 export default function PrivateRoute({ authenticated, element }: PrivateRouteProps) {
+  const alreadyJoined = localStorage.getItem("alreadyJoined");
   useEffect(() => {
     if (!authenticated) {
       //   alert("로그인 후 이용해 주세요");
@@ -16,5 +17,13 @@ export default function PrivateRoute({ authenticated, element }: PrivateRoutePro
       // requestUserInfo();
     }
   }, []);
-  return !authenticated ? element : <Navigate to="/login" />;
+  return authenticated ? (
+    !alreadyJoined ? (
+      <Navigate to="/signup" />
+    ) : (
+      element
+    )
+  ) : (
+    <Navigate to="/login" />
+  );
 }

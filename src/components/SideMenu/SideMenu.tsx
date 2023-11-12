@@ -3,15 +3,25 @@ import * as Icon from "../Icon";
 import { useNavigate } from "react-router";
 import { useSetRecoilState } from "recoil";
 import { sideMenuState } from "../../recoil/navState";
+import { useUserAPI } from "../../api/useUserAPI";
 interface Props {
   sideMenu: boolean;
 }
 function SideMenu({ sideMenu }: Props) {
+  const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
+  const LOGOUT_REDIRECT_URI = "http://localhost:5173/login";
+  const link = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+
   const navigate = useNavigate();
   const setSideMenu = useSetRecoilState(sideMenuState);
   const handleNav = (destination: string) => {
     navigate(destination);
     setSideMenu(false);
+  };
+  const { requestLogout } = useUserAPI();
+  const handleLogout = () => {
+    window.location.href = link;
+    requestLogout();
   };
   return (
     <S.SideWrapper sideMenu={sideMenu}>
@@ -64,7 +74,7 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>고객 센터</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
-      <S.SideMenuBox onClick={() => handleNav("/")}>
+      <S.SideMenuBox onClick={handleLogout}>
         <S.SearchIcon>
           <Icon.LogOut />
         </S.SearchIcon>

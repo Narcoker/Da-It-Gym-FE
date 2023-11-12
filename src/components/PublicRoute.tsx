@@ -7,5 +7,12 @@ interface PublicRouteProps {
 }
 
 export default function PublicRoute({ authenticated, element }: PublicRouteProps) {
-  return !authenticated ? element : <Navigate to="/" />;
+  const alreadyJoined = localStorage.getItem("alreadyJoined");
+  return !authenticated ? (
+    element
+  ) : !alreadyJoined ? (
+    <Navigate to="/signup" />
+  ) : (
+    <Navigate to="/login" />
+  );
 }
