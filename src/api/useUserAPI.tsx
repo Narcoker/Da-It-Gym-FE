@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router";
 import { useAxios } from "./useAxios";
 import { toast } from "react-toastify";
+import { useSetRecoilState } from "recoil";
+import { userInfoState } from "../recoil/userInfoState";
 
 export function useUserAPI() {
+  interface UserInfo {
+    nickname: string;
+    userImg: string;
+    preferredSplit: string;
+  }
   const axios = useAxios();
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-
+  const setUserInfo = useSetRecoilState(userInfoState);
   // 카카오 로그인
   const requestKaKaoLogin = async (code: string) => {
     await axios
@@ -18,15 +25,20 @@ export function useUserAPI() {
       })
       .then((response) => {
         console.log(response.data.data.alreadyJoined);
+        console.log("ddd", response.data.data.nickname);
         //계속 쓸 정보들( ex: 이름) 등은 localStorage에 저장
+        setUserInfo((prev: UserInfo) => ({
+          ...prev,
+          nickname: response.data.data.nickname,
+          userImg: response.data.data.userImg,
+          preferredSplit: response.data.data.preferredSplit,
+        }));
         localStorage.setItem("accessToken", response.headers.authorization);
         localStorage.setItem("alreadyJoined", response.data.data.alreadyJoined);
         // 처음 로그인 한 사람은 signup
         if (response.data.data.alreadyJoined) {
-          console.log('navigate("/profile/1");');
-          navigate("/profile/1");
+          navigate(`/profile/${response.data.data.nickname}`);
         } else {
-          console.log('navigate("/signup");');
           navigate("/signup");
         }
       })
@@ -53,7 +65,7 @@ export function useUserAPI() {
   // 회원 탈퇴
   const requestDeleteKaKaoWithdraw = async () => {
     await axios
-      .patch(`${API_URL}/users/withdraw`)
+      .patch(`${API_URL}/api/users/withdraw`)
       .then((response) => {
         console.log(response);
         if (response.data.message === "회원탈퇴 성공") {
@@ -67,8 +79,18 @@ export function useUserAPI() {
   // 회원가입시 닉네임 변경
   const requestPatchNickname = async (nickname: string) => {
     await axios
-      .patch(`${API_URL}/users/nickname`, nickname)
-      .then(() => {})
+      .patch(`${API_URL}/api/users/nickname`, nickname, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setUserInfo((prev: UserInfo) => ({
+          ...prev,
+          nickname: response.data.data.nickname,
+        }));
+      })
       .catch((error) => toast.error(error.message));
   };
 

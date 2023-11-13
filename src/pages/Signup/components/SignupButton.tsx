@@ -26,8 +26,8 @@ function SignupButton() {
     }
   };
   const isDuplicate = useRecoilValue(signupState);
-  console.log(isDuplicate);
-  console.log("debounceNickname", debounceNickname);
+  // console.log(isDuplicate);
+  // console.log("debounceNickname", debounceNickname);
   return (
     <S.ButtonWrapper>
       <Button display="flex" type="border" size="large" onClick={handleSkip}>

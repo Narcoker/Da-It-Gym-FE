@@ -27,6 +27,8 @@ import FeedDiaryShare from "./pages/FeedDiaryShare/FeedDiaryShare";
 import Admin from "./pages/Admin/Admin";
 import LoginLoading from "./pages/LoginLoading/LoginLoading";
 import Recovery from "./pages/Recovery/Recovery";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "./recoil/userInfoState";
 
 function App() {
   const LoginRoutes = [
@@ -58,10 +60,11 @@ function App() {
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
   const auth = token != null;
-
+  const userInfo = useRecoilValue(userInfoState);
+  console.log("📧", userInfo);
   useEffect(() => {
-    if (location.pathname === "/profile/:1") {
-      navigate(auth ? "/profile/:1" : "login");
+    if (location.pathname === `/profile/${userInfo.nickname}`) {
+      navigate(auth ? `/profile/${userInfo.nickname}` : "login");
     }
     console.log(location.pathname);
   }, [location.pathname]);

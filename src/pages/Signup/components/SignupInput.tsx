@@ -50,22 +50,33 @@ function SignupInput() {
     }
   }, [debounceNickname]);
   useEffect(() => {
-    if (isDuplicate === "사용가능" && regCheck) {
+    const regExp = /^[A-Za-z0-9_]{3,11}$/;
+    const isValidRegCheck = regExp.test(debounceNickname);
+    if (isValidRegCheck) {
+      setRegCheck(true);
+    } else {
+      setRegCheck(false);
+    }
+    if (isDuplicate === "사용가능" && isValidRegCheck) {
+      console.log("1,", isDuplicate, isValidRegCheck);
       setDuplicateMessage(`${debounceNickname}은 사용가능한 닉네임입니다.`);
     } else if (isDuplicate === "중복") {
+      console.log(isDuplicate, isValidRegCheck);
       setDuplicateMessage(`${nickname}은 이미 사용중인 닉네임값입니다.`);
-    } else if (!regCheck) {
-      setDuplicateMessage(`닉네임은 영어,_로 이뤄져야 합니다.`);
+    } else if (debounceNickname.length < 3) {
+      setDuplicateMessage("닉네임은 3~11 글자만 가능합니다.");
+    } else if (!isValidRegCheck) {
+      console.log(isDuplicate, isValidRegCheck);
+      setDuplicateMessage(`닉네임은 영어 알파벳과 밑줄(_)만 사용 가능합니다.`);
     } else {
       setDuplicateMessage("");
     }
-    return setIsDuplicate("");
-  }, [debounceNickname]);
-
+  }, [debounceNickname, regCheck, isDuplicate]);
+  console.log("duplicateMessage", duplicateMessage);
   return (
     <S.SignupInputWrapper>
       <Input
-        placeholder="닉네임을 설정해주세요. (1~11글자)"
+        placeholder="닉네임은 영어 알파벳과 밑줄(_)만 사용 가능합니다. (3~11글자)"
         defaultValue={debounceNickname}
         maxLength={11}
         onChange={handleChange}
