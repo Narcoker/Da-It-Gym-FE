@@ -1,8 +1,8 @@
 import * as S from "./KakaoLogin.style";
 
 function KakaoLogin() {
-  const REST_API_KEY = "55f00e84ed25e45f61e84c9b7da84656";
-  const REDIRECT_URI = "http://localhost:5173/login/oauth2/callback/kakao";
+  const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
+  const REDIRECT_URI = `http://localhost:5173/login/oauth2/callback/kakao`;
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const handleLoginLink = () => {
     window.location.href = link;

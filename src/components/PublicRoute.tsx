@@ -13,6 +13,6 @@ export default function PublicRoute({ authenticated, element }: PublicRouteProps
   ) : !alreadyJoined ? (
     <Navigate to="/signup" />
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/" />
   );
 }

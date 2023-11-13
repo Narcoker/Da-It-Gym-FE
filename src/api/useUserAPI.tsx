@@ -37,7 +37,7 @@ export function useUserAPI() {
         localStorage.setItem("alreadyJoined", response.data.data.alreadyJoined);
         // 처음 로그인 한 사람은 signup
         if (response.data.data.alreadyJoined) {
-          navigate(`/profile/${response.data.data.nickname}`);
+          navigate("/profile/1");
         } else {
           navigate("/signup");
         }

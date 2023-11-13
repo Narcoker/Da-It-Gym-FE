@@ -8,16 +8,14 @@ import { useUserAPI } from "../../api/useUserAPI";
 function LoginLoading() {
   const { requestKaKaoLogin } = useUserAPI();
   const code = new URL(window.location.href).searchParams.get("code");
-  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     console.log(code);
     if (code) {
       requestKaKaoLogin(code);
-      console.log("API_URL", API_URL);
     }
     //🔥 requestUseKAKAOLogin API
   }, []);
-  console.log("콘솔", API_URL);
 
   return (
     <S.LoginWrapper>

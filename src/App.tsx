@@ -58,15 +58,18 @@ function App() {
   ];
   const location = useLocation();
   const navigate = useNavigate();
+  // const alreadyJoined = localStorage.getItem("alreadyJoined");
   const token = localStorage.getItem("accessToken");
   const auth = token != null;
   const userInfo = useRecoilValue(userInfoState);
-  console.log("📧", userInfo);
+
   useEffect(() => {
-    if (location.pathname === `/profile/${userInfo.nickname}`) {
-      navigate(auth ? `/profile/${userInfo.nickname}` : "login");
+    if (location.pathname === "/") {
+      navigate(auth ? `/profile/${userInfo.nickname}` : "/login");
     }
-    console.log(location.pathname);
+    // else if (location.pathname === "/login") {
+    //   navigate(auth ? `/profile/${userInfo.nickname}` : "login");
+    // }
   }, [location.pathname]);
   return (
     <S.Layout>
