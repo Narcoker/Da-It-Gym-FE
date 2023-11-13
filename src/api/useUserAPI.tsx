@@ -35,7 +35,7 @@ export function useUserAPI() {
   // 근근근 로그아웃
   const requestLogout = () => {
     axios
-      .post(`${API_URL}/api/user/logout`)
+      .post(`${API_URL}/api/users/logout`)
       .then(() => {
         localStorage.clear();
       })
@@ -73,11 +73,15 @@ export function useUserAPI() {
   };
 
   // 닉네임 중복 검증
-  const requestDuplicatedNickname = async (nickname: string) => {
+  const requestDuplicatedNickname = async (
+    nickname: string,
+    setIsDuplicate: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
     await axios
-      .get(`${API_URL}/users/check-duplication?nickname=${nickname}`)
+      .get(`${API_URL}/api/users/check-duplication?nickname=${nickname}`)
       .then((response) => {
-        console.log(response);
+        console.log(response.data.status.message);
+        setIsDuplicate(response.data.status.message);
         //message 사용가능이면 setDuplicatedNicknameMessage("사용가능")
         //중복이면  setDuplicatedNicknameMessage("중복")
       })

@@ -2,28 +2,39 @@ import { useEffect, useState } from "react";
 import Input from "../../../components/Input/Input";
 import * as S from "./SignupInput.style";
 import useDebounce from "../../../hooks/useDebounce";
-import { signupState } from "../../../recoil/signupState";
-import { useRecoilState } from "recoil";
+import {
+  regCheckState,
+  signupState,
+  submitNicknameState,
+} from "../../../recoil/signupState";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { useUserAPI } from "../../../api/useUserAPI";
 
 function SignupInput() {
   // 중복 체크 백엔드에 닉네임 중복되는지 확인하는 것
   const [duplicateMessage, setDuplicateMessage] = useState<string>("");
   const [isDuplicate, setIsDuplicate] = useRecoilState<string>(signupState); // 🤗recoil로 선언해서 버튼 처리할 것
   const [nickname, setNickname] = useState<string>("");
+  const [regCheck, setRegCheck] = useRecoilState(regCheckState);
+  const setSubmitNickname = useSetRecoilState(submitNicknameState);
   const debounceNickname = useDebounce(nickname, 1000);
-
+  const { requestDuplicatedNickname } = useUserAPI();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newNickname = event.target.value;
-    if (newNickname.length <= 8) {
+
+    if (newNickname.length <= 11) {
       setNickname(event.target.value);
     }
   };
+  console.log("정규식 테스트", regCheck);
 
   useEffect(() => {
     const checkDuplicate = async () => {
-      if (debounceNickname) {
+      if (debounceNickname && debounceNickname.trim() !== "") {
+        setSubmitNickname(debounceNickname);
         try {
           //🔥 reqeust 날리고 요청값이 중복이라는 응답 받으면 -> setIsDuplicate에 따라서 duplicateMessage출력
+          requestDuplicatedNickname(debounceNickname, setIsDuplicate);
         } catch (error) {
           console.error("닉네임 중복 확인 에러", error);
           setIsDuplicate(""); // 에러 발생 시 중복 상태를 null로 설정
@@ -31,14 +42,22 @@ function SignupInput() {
       }
     };
     checkDuplicate();
+    const regExp = /^[A-Za-z_]+$/;
+    if (regExp.test(debounceNickname)) {
+      setRegCheck(true);
+    } else {
+      setRegCheck(false);
+    }
   }, [debounceNickname]);
   useEffect(() => {
-    if (isDuplicate === "") {
-      setDuplicateMessage("");
+    if (isDuplicate === "사용가능" && regCheck) {
+      setDuplicateMessage(`${debounceNickname}은 사용가능한 닉네임입니다.`);
     } else if (isDuplicate === "중복") {
       setDuplicateMessage(`${nickname}은 이미 사용중인 닉네임값입니다.`);
+    } else if (!regCheck) {
+      setDuplicateMessage(`닉네임은 영어,_로 이뤄져야 합니다.`);
     } else {
-      setDuplicateMessage("사용가능한 닉네임입니다.");
+      setDuplicateMessage("");
     }
     return setIsDuplicate("");
   }, [debounceNickname]);
@@ -51,8 +70,10 @@ function SignupInput() {
         maxLength={11}
         onChange={handleChange}
       />
-      {nickname !== "" && (
-        <S.SignupDuplicate duplicate={isDuplicate}>{duplicateMessage}</S.SignupDuplicate>
+      {debounceNickname.trim() !== "" && (
+        <S.SignupDuplicate duplicate={isDuplicate} check={regCheck}>
+          {duplicateMessage}
+        </S.SignupDuplicate>
       )}
     </S.SignupInputWrapper>
   );
