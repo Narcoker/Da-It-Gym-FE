@@ -158,7 +158,7 @@ export default function useRoutineAPI() {
     const size = 10;
     const response = await axios
       .get(
-        `${API_URL}/api/routines/following?page=${page}&size=${size}$division=${division}`,
+        `${API_URL}/api/routines/following?page=${page}&size=${size}&division=${division}`,
       )
       .then((response) => response.data.data)
       .catch(() => {});
@@ -174,7 +174,7 @@ export default function useRoutineAPI() {
     const size = 10;
     const response = await axios
       .get(
-        `${API_URL}/api/routines/recommend?page=${page}&size=${size}$division=${division}`,
+        `${API_URL}/api/routines/recommend?page=${page}&size=${size}&division=${division}`,
       )
       .then((response) => response.data.data)
       .catch(() => {});
