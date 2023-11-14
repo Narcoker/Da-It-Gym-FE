@@ -6,7 +6,15 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export const userInfoState = atom({
+export interface UserInfo {
+  nickname: string;
+  userImg: string;
+  preferredSplit: string;
+  introduction: string;
+  healthClubName: string;
+}
+
+export const userInfoState = atom<UserInfo>({
   key: "uesrInfoState",
   default: {
     nickname: "",

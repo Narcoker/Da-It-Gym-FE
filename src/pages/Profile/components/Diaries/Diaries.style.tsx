@@ -9,4 +9,7 @@ export const Diaries = styled.div`
 
 export const Diary = styled.div`
   width: 32%;
+  cursor: pointer;
 `;
+
+export const Observer = styled.div``;

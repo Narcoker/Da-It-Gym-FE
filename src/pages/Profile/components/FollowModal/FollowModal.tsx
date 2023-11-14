@@ -3,16 +3,38 @@ import * as S from "./FollowModal.style";
 import * as Icon from "../../../../components/Icon";
 import * as COLOR from "../../../../constants/color";
 import { FollowType } from "../UserProfile/UserProfile";
+import { useEffect, useState } from "react";
+import useProfileAPI from "../../../../api/useProfileAPI";
+import { useParams } from "react-router";
 
 interface Props {
   type: FollowType;
   setFollowType: React.Dispatch<React.SetStateAction<FollowType>>;
 }
 
+export interface FollowUser {
+  imageUrl: string;
+  nickname: string;
+  intro: string;
+  score: number;
+}
+
 export default function FollowModal({ type, setFollowType }: Props) {
   const cancelHandler = () => {
     setFollowType("");
   };
+  const { requestFollowList, requestFollowerList } = useProfileAPI();
+  const [users, setUsers] = useState<FollowUser[]>([]);
+
+  const params = useParams();
+
+  useEffect(() => {
+    if (type === "follow") {
+      requestFollowList(params.nickname as string, setUsers);
+    } else {
+      requestFollowerList(params.nickname as string, setUsers);
+    }
+  }, []);
   return (
     <S.Overlay>
       <S.Wrapper>
@@ -23,48 +45,18 @@ export default function FollowModal({ type, setFollowType }: Props) {
           </S.Icon>
         </S.Header>
         <S.Users>
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
-          <FollowUser
-            src=""
-            userName="user-nick"
-            info="description...."
-            inbodyScore={120}
-          />
+          {users.length > 0 ? (
+            users.map(({ imageUrl, nickname, intro, score }) => (
+              <FollowUser
+                src={imageUrl}
+                userName={nickname}
+                info={intro}
+                inbodyScore={score}
+              />
+            ))
+          ) : (
+            <S.Span>유저가 없습니다</S.Span>
+          )}
         </S.Users>
       </S.Wrapper>
     </S.Overlay>

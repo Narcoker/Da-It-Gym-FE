@@ -63,7 +63,7 @@ export default function UserContent() {
         {query === "routines" && <Routines />}
         {query === "diary" && <Diaries />}
         {query === "bookmark" && <Bookmark />}
-        {query === "inbody" && <Inbody score={120} />}
+        {query === "inbody" && <Inbody />}
       </S.Contents>
     </S.ContentWrapper>
   );

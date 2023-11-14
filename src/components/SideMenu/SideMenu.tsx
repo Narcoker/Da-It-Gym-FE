@@ -1,9 +1,10 @@
 import * as S from "./SideMenu.style";
 import * as Icon from "../Icon";
 import { useNavigate } from "react-router";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { sideMenuState } from "../../recoil/navState";
 import { useUserAPI } from "../../api/useUserAPI";
+import { userInfoState } from "../../recoil/userInfoState";
 interface Props {
   sideMenu: boolean;
 }
@@ -11,7 +12,7 @@ function SideMenu({ sideMenu }: Props) {
   const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
   const LOGOUT_REDIRECT_URI = `http://localhost:5173/login`;
   const link = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
-
+  const { nickname } = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const setSideMenu = useSetRecoilState(sideMenuState);
   const handleNav = (destination: string) => {
@@ -32,11 +33,11 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>유저 찾기</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
-      <S.SideMenuBox onClick={() => handleNav("/my?section=routines")}>
+      <S.SideMenuBox onClick={() => handleNav("/feed/routine/new")}>
         <S.SearchIcon>
           <Icon.MyRoutine />
         </S.SearchIcon>
-        <S.SideMenuTitle>내 루틴</S.SideMenuTitle>
+        <S.SideMenuTitle>루틴 작성</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
       <S.SideMenuBox onClick={() => handleNav("/diary")}>
@@ -60,7 +61,7 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>운동일지</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
-      <S.SideMenuBox onClick={() => handleNav("/profile/닉네임?section=routines")}>
+      <S.SideMenuBox onClick={() => handleNav(`/profile/${nickname}?section=routines`)}>
         <S.SearchIcon>
           <Icon.My />
         </S.SearchIcon>

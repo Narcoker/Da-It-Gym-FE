@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Button from "../../../../components/Button/Button";
 import Input from "../../../../components/Input/Input";
 import * as S from "./InbodyModal.style";
+import useProfileAPI from "../../../../api/useProfileAPI";
 
 interface Props {
   setIsInbodyClick: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +15,8 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
   const fat = useRef<HTMLInputElement>(null);
   const weight = useRef<HTMLInputElement>(null);
   const basal = useRef<HTMLInputElement>(null);
+
+  const { requestInbody } = useProfileAPI();
 
   const cancelHandler = () => {
     setIsInbodyClick(false);
@@ -43,7 +46,17 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
       if (!validCheck) {
         alert("숫자만 입력해주세요.");
       } else {
-        console.log("제출제출");
+        const payload = {
+          measureAt: date.current!.value,
+          inbodyScore: parseInt(score.current!.value),
+          skeletalMuscleMass: parseInt(muscle.current!.value),
+          bodyFatRatio: parseInt(fat.current!.value),
+          weight: parseInt(weight.current!.value),
+          basalMetabolicRate: parseInt(basal.current!.value),
+        };
+        requestInbody(payload);
+        setIsInbodyClick(false);
+        // console.log("제출제출");
       }
     }
   };

@@ -11,6 +11,7 @@ export default function EditProfile() {
   const deleteUserHandler = () => {
     console.log("회원탈퇴 요청");
   };
+
   return (
     <>
       <Nav type="top" />

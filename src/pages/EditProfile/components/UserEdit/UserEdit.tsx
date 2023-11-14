@@ -3,25 +3,37 @@ import * as S from "./UserEdit.style";
 import Button from "../../../../components/Button/Button";
 import * as Icon from "../../../../components/Icon";
 import Input from "../../../../components/Input/Input";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import FindGymModal from "../FindGymModal/FindGymModal";
 import { toast } from "react-toastify";
+import useProfileAPI from "../../../../api/useProfileAPI";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../../../recoil/userInfoState";
+import { ProfileData } from "../../../Profile/Profile";
 
 interface Preview {
   url: string;
-  file: File;
+  file?: File;
 }
 
 export default function UserEdit() {
   const navigate = useNavigate();
-  const [preview, setPreview] = useState<Preview | null>(null);
+
   const splitRef = useRef<HTMLSelectElement>(null);
   const nicknameRef = useRef<HTMLInputElement>(null);
   const descRef = useRef<HTMLTextAreaElement>(null);
-  const [gymName, setGymName] = useState("조재균 짐");
   const [gymFind, setGymFind] = useState(false);
-
+  const [profileData, setProfileData] = useState<ProfileData>({
+    healthClubName: "",
+    followerCount: 0,
+    followingCount: 0,
+    journalCount: 0,
+  });
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [gymName, setGymName] = useState(profileData.healthClubName);
+  const [preview, setPreview] = useState<Preview | null>({ url: userInfo.userImg });
+  const { requestEditProfile, requestProfile } = useProfileAPI();
   const previewHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -39,13 +51,27 @@ export default function UserEdit() {
   };
 
   const submitHandler = () => {
-    const split = splitRef.current!.value;
+    const userProfileImg = preview?.file;
     const nickname = nicknameRef.current!.value;
-    const desc = descRef.current!.value;
-
-    toast.error("빈 칸을 입력해 주세요");
-    console.log(split, nickname, desc);
+    const introduction = descRef.current!.value;
+    const preferredSplit = splitRef.current!.value;
+    const payload = {
+      userProfileImg,
+      request: { nickname, introduction, gymName, preferredSplit },
+    };
+    if (!preferredSplit && !nickname && !introduction) {
+      toast.error("빈 칸을 입력해 주세요");
+    } else {
+      console.log(userProfileImg);
+      requestEditProfile(userInfo.nickname, payload, setUserInfo);
+    }
   };
+
+  useEffect(() => {
+    console.log(userInfo);
+    requestProfile(userInfo.nickname, setProfileData);
+  }, []);
+
   return (
     <>
       <S.Wrapper>
@@ -56,36 +82,39 @@ export default function UserEdit() {
           </S.ProfileImgWrapper>
           <S.DivideBox>
             선호하는 분할
-            <S.Select name="split" defaultValue="two" ref={splitRef}>
-              <option value="none">무분할</option>
-              <option value="two">2분할</option>
-              <option value="three">3분할</option>
-              <option value="four">4분할</option>
-              <option value="five">5분할</option>
-              <option value="six">6+분할</option>
+            <S.Select name="split" defaultValue={userInfo.preferredSplit} ref={splitRef}>
+              <option value="무분할">무분할</option>
+              <option value="2분할">2분할</option>
+              <option value="3분할">3분할</option>
+              <option value="4분할">4분할</option>
+              <option value="5분할">5분할</option>
+              <option value="6분할">6분할+</option>
             </S.Select>
           </S.DivideBox>
         </S.ProfileWrapper>
-        <Input
-          inputTitle="닉네임"
-          placeholder="닉네임을 입력해주세요"
-          ref={nicknameRef}
-        />
-        <TextArea
-          textareaTitle="소개"
-          placeholder="소개를 입력해주세요"
-          height="200px"
-          ref={descRef}
-        />
-        <S.PlaceWrapper>
-          <S.Title>헬스장 찾기</S.Title>
-          <S.Place onClick={placeHandler}>
-            <S.GymName>{gymName}</S.GymName>
-            <S.Icon>
-              <Icon.Search />
-            </S.Icon>
-          </S.Place>
-        </S.PlaceWrapper>
+        <S.Inputs>
+          <Input
+            inputTitle="닉네임"
+            placeholder="닉네임을 입력해주세요"
+            defaultValue={userInfo.nickname}
+            ref={nicknameRef}
+          />
+          <TextArea
+            textareaTitle="소개"
+            placeholder="소개를 입력해주세요"
+            height="200px"
+            ref={descRef}
+          />
+          <S.PlaceWrapper>
+            <S.Title>헬스장 찾기</S.Title>
+            <S.Place onClick={placeHandler}>
+              <S.GymName>{gymName}</S.GymName>
+              <S.Icon>
+                <Icon.Search />
+              </S.Icon>
+            </S.Place>
+          </S.PlaceWrapper>
+        </S.Inputs>
         <S.ButtonBox>
           <Button display="flex" size="large" type="border" onClick={cancelHandler}>
             취소

@@ -5,21 +5,23 @@ import * as COLOR from "../../../../constants/color";
 import * as S from "./TrainerEdit..style";
 import Button from "../../../../components/Button/Button";
 import { useNavigate } from "react-router";
+import useProfileAPI from "../../../../api/useProfileAPI";
+import { toast } from "react-toastify";
 
 interface Image {
   url: string;
   file: File;
 }
 
-interface Award {
-  awardName: string;
-  awardDate: string;
-  awardOrg: string;
+export interface Award {
+  name: string;
+  awardAt: string;
+  org: string;
 }
 
-interface Cerificate {
-  certificateName: string;
-  certificateDate: string;
+export interface Cerificate {
+  name: string;
+  acquisitionAt: string;
 }
 
 export default function TrainerEdit() {
@@ -49,6 +51,7 @@ export default function TrainerEdit() {
 
   const [certificates, setCertificates] = useState<Cerificate[]>([]);
 
+  const { requestEvaluateTrainer } = useProfileAPI();
   const previewHandler = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
     if (!e.target.files) return;
     for (const file of e.target.files) {
@@ -93,14 +96,33 @@ export default function TrainerEdit() {
   };
 
   const submitHandler = () => {
-    console.log("변경하기 제출");
+    const payload = {
+      certificationImgs: certificateImages.map((certificate) => certificate.file),
+      awardImgs: awardImages.map((award) => award.file),
+      request: {
+        certifications: certificates,
+        awards,
+      },
+    };
+    const validation =
+      certificateImages.length > 0 &&
+      awardImages.length > 0 &&
+      certificates.length > 0 &&
+      awards.length > 0;
+
+    if (validation) {
+      requestEvaluateTrainer(payload);
+      console.log("변경하기 제출");
+    } else {
+      toast.error("빈 칸을 모두 채워주십시오");
+    }
   };
 
   const awardAddHandler = () => {
     const award: Award = {
-      awardName: awardRef.current!.value,
-      awardDate: awardDateRef.current!.value,
-      awardOrg: awardOrg.current!.value,
+      name: awardRef.current!.value,
+      awardAt: awardDateRef.current!.value,
+      org: awardOrg.current!.value,
     };
     setAwards((prev) => [...prev, award]);
 
@@ -116,8 +138,8 @@ export default function TrainerEdit() {
 
   const certAddHandler = () => {
     const cert: Cerificate = {
-      certificateName: certRef.current!.value,
-      certificateDate: certDateRef.current!.value,
+      name: certRef.current!.value,
+      acquisitionAt: certDateRef.current!.value,
     };
 
     setCertificates((prev) => [...prev, cert]);
@@ -153,8 +175,8 @@ export default function TrainerEdit() {
             <S.Contents>
               {certificates.map((certificate) => (
                 <S.ContentList>
-                  <S.Content>{certificate.certificateName}</S.Content>
-                  <S.Content>{certificate.certificateDate}</S.Content>
+                  <S.Content>{certificate.name}</S.Content>
+                  <S.Content>{certificate.acquisitionAt}</S.Content>
                 </S.ContentList>
               ))}
             </S.Contents>
@@ -214,9 +236,9 @@ export default function TrainerEdit() {
             <S.Contents>
               {awards.map((award) => (
                 <S.ContentList>
-                  <S.Content>{award.awardName}</S.Content>
-                  <S.Content>{award.awardDate}</S.Content>
-                  <S.Content>{award.awardOrg}</S.Content>
+                  <S.Content>{award.name}</S.Content>
+                  <S.Content>{award.awardAt}</S.Content>
+                  <S.Content>{award.org}</S.Content>
                 </S.ContentList>
               ))}
             </S.Contents>
@@ -262,10 +284,10 @@ export default function TrainerEdit() {
             </S.ImageBox>
           </S.TrainerInputBox>
           <S.ButtonBox>
-            <Button display="flex" size="large" type="fill" onClick={cancelHandler}>
+            <Button display="flex" size="large" type="border" onClick={cancelHandler}>
               취소
             </Button>
-            <Button display="flex" size="large" type="border" onClick={submitHandler}>
+            <Button display="flex" size="large" type="fill" onClick={submitHandler}>
               심사하기
             </Button>
           </S.ButtonBox>

@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import * as COLOR from "../../../../constants/color";
 import * as FONT from "../../../../constants/font";
-import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   height: 300px;
   display: flex;
   gap: 5px;
   padding: 0 10px;
+  justify-content: center;
 `;
 
-export const BookmarkWrapper = styled(Link)`
+export const BookmarkWrapper = styled.div`
   flex: 1;
   position: relative;
   cursor: pointer;
@@ -40,4 +40,15 @@ export const BookmarkTitle = styled.span`
 
 export const RoutineWrapper = styled.div`
   width: 100%;
+`;
+
+export const Span = styled.span`
+  display: flex;
+  align-items: center;
+  font-size: ${FONT.L};
+  font-weight: ${FONT.Bold};
+  color: ${COLOR.Gray1};
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
 `;

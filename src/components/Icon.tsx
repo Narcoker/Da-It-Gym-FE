@@ -11,6 +11,7 @@ import * as Bs from "react-icons/bs";
 import * as Lu from "react-icons/lu";
 import * as Io5 from "react-icons/io5";
 import * as Io from "react-icons/io";
+import * as Ci from "react-icons/ci";
 import * as COLOR from "../constants/color";
 const F_DEFAULT = "16";
 const C_DEFAULT = `${COLOR.Primary}`;
@@ -178,4 +179,8 @@ export const DownArrow = ({ size, color }: Props) => (
 
 export const Location = ({ size, color }: Props) => (
   <Md.MdLocationPin size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
+);
+
+export const Lock = ({ size, color }: Props) => (
+  <Ci.CiLock size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
 );

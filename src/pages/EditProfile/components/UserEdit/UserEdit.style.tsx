@@ -14,9 +14,7 @@ export const ButtonBox = styled.div`
   padding: 30px 0px;
 `;
 
-export const PlaceWrapper = styled.div`
-  padding: 20px 0;
-`;
+export const PlaceWrapper = styled.div``;
 
 export const Title = styled.h3`
   padding-left: 10px;
@@ -70,6 +68,7 @@ export const DivideBox = styled.div`
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
+  padding-left: 15px;
 `;
 
 export const Select = styled.select`
@@ -79,4 +78,10 @@ export const Select = styled.select`
   color: ${COLOR.Gray3};
   font-size: ${FONT.XS};
   font-weight: ${FONT.Bold};
+`;
+
+export const Inputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;

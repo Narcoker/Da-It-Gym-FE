@@ -1,49 +1,52 @@
 import * as S from "./Inbody.style";
 import ApexChart from "react-apexcharts";
 import * as COLOR from "../../../../constants/color";
+import { useEffect, useState } from "react";
+import useProfileAPI from "../../../../api/useProfileAPI";
+import { useParams } from "react-router";
 
-interface Props {
-  score: number;
+export interface InbodyRecord {
+  measureAt: string;
+  inbodyScore: number;
+  skeletalMuscleMass: number;
+  bodyFatRatio: number;
+  weight: number;
+  basalMetabolicRate: number;
 }
 
-export default function Inbody({ score }: Props) {
+export interface Inbody {
+  avg: number[];
+  records: InbodyRecord[];
+}
+
+export default function Inbody() {
   // const data = [120, 150, 67, 18, 32];
-  const inbodyData = {
-    avg: [80, 1100, 67, 24, 32],
+  const params = useParams();
+  const [inbodyData, setInbodyData] = useState<Inbody>({
+    avg: [0, 0, 0, 0, 0],
     records: [
       {
-        testDate: "2023-10-20",
-        inbodyScore: 77,
-        muscle: 29.9,
-        fatPercent: 21.4,
-        weight: 67.3,
-        basalMetabolicRate: 1573,
-      },
-      {
-        testDate: "2023-11-20",
-        inbodyScore: 80,
-        muscle: 30.2,
-        fatPercent: 18.4,
-        weight: 67.3,
-        basalMetabolicRate: 1602,
-      },
-      {
-        testDate: "2023-12-20",
-        inbodyScore: 90,
-        muscle: 30.5,
-        fatPercent: 15.4,
-        weight: 64.3,
-        basalMetabolicRate: 1610,
+        measureAt: "2023-11-14",
+        inbodyScore: 0,
+        skeletalMuscleMass: 0,
+        bodyFatRatio: 0,
+        weight: 0,
+        basalMetabolicRate: 0,
       },
     ],
-  };
+  });
+
+  const { requestGetInbody } = useProfileAPI();
+  useEffect(() => {
+    requestGetInbody(params.nickname as string, setInbodyData);
+  }, []);
   const len = inbodyData.records.length;
   const normData = [
     inbodyData.records[len - 1].inbodyScore,
     Math.floor((inbodyData.records[len - 1].basalMetabolicRate / 1700) * 100),
     inbodyData.records[len - 1].weight,
-    Math.floor((1 - inbodyData.records[len - 1].fatPercent / 50) * 100),
-    Math.floor((inbodyData.records[len - 1].muscle / 50) * 100),
+    Math.floor((1 - inbodyData.records[len - 1].bodyFatRatio / 50) * 100),
+    Math.floor((inbodyData.records[len - 1].skeletalMuscleMass / 50) * 100),
   ];
 
   const avgNormData = [
@@ -54,16 +57,16 @@ export default function Inbody({ score }: Props) {
     Math.floor((inbodyData.avg[4] / 50) * 100),
   ];
 
-  const muscles = inbodyData.records.map((record) => record.muscle);
-  const fats = inbodyData.records.map((record) => record.fatPercent);
+  const muscles = inbodyData.records.map((record) => record.skeletalMuscleMass);
+  const fats = inbodyData.records.map((record) => record.bodyFatRatio);
   const weights = inbodyData.records.map((record) => record.weight);
-  const dates = inbodyData.records.map((record) => record.testDate);
+  const dates = inbodyData.records.map((record) => record.measureAt);
   return (
     <S.Wrapper>
       <S.ScoreCard>
         <S.Title>인바디 점수</S.Title>
         <S.Score>
-          {score}
+          {inbodyData.records[len - 1].inbodyScore}
           <span>점</span>
         </S.Score>
       </S.ScoreCard>

@@ -8,7 +8,7 @@ interface Props {
 }
 
 function FollowUser({ src, userName, info, inbodyScore }: Props) {
-  const infomation = info.slice(0, Math.min(30, info.length));
+  const infomation = info ? info.slice(0, Math.min(30, info.length)) : "";
   return (
     <S.FollowUserWrapper>
       <S.FollowUserImg src={src} alt={src} />

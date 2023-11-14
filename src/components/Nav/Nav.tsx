@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router";
 import * as S from "./Nav.style";
 import * as Icon from "../../components/Icon";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { sideMenuState } from "../../recoil/navState";
 import SideMenu from "../SideMenu/SideMenu";
+import { userInfoState } from "../../recoil/userInfoState";
 
 interface Props {
   type: "top" | "home" | "chat";
@@ -12,7 +13,7 @@ interface Props {
 
 export default function Nav({ type }: Props) {
   const [sideMenu, setSideMenu] = useRecoilState(sideMenuState);
-
+  const { nickname } = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const handleNav = (destination: string) => {
     navigate(destination);
@@ -52,7 +53,7 @@ export default function Nav({ type }: Props) {
             </S.NavIcon>
             <S.NavMenuTitle>루틴</S.NavMenuTitle>
           </S.AllRoutineBox>
-          <S.MypageBox onClick={() => handleNav("/profile/닉네임?section=routines")}>
+          <S.MypageBox onClick={() => handleNav(`/profile/${nickname}?section=routines`)}>
             <S.NavIcon>
               <Icon.My />
             </S.NavIcon>

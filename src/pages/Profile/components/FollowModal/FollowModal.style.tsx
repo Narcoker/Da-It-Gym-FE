@@ -47,8 +47,17 @@ export const Icon = styled.div`
 export const Users = styled.div`
   overflow-y: scroll;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: center;
+  height: 100%;
+`;
+
+export const Span = styled.span`
+  text-align: center;
+  font-weight: ${FONT.Bold};
+  font-size: ${FONT.L};
+  color: ${COLOR.Gray1};
 `;
