@@ -29,6 +29,15 @@ export const WriterProfileImgWrapper = styled.div`
 
 export const WriterProfileImg = styled.img``;
 
+export const Select = styled.select`
+  padding: 2px 10px;
+  border-radius: 5px;
+  border: 1px solid ${COLOR.Gray2};
+  color: ${COLOR.Gray3};
+  font-size: ${FONT.XS};
+  font-weight: ${FONT.Bold};
+`;
+
 export const FunctionsWrapper = styled.div`
   display: flex;
   gap: 10px;

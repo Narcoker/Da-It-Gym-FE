@@ -7,8 +7,14 @@ import ChatRoom from "./ChatRoom";
 import { useNavigate } from "react-router";
 
 export interface Room {
-  roomId: number;
-  userImg: string;
+  id: number;
+  roomName: string;
+  sender: string; // 본인
+  redisRoomId: string; // 채팅방 접속에 필요한 id 
+  recevier: string  // 상대방
+  message: string; // 최근 메세지
+
+  
   userName: string;
   resentMessage: string;
   createdAt: Date;

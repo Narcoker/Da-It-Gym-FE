@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { Day, initDay } from "./useDay";
 import { RestTime, getNewExercise } from "./useExercise";
 import { initExerciseSet } from "./useExerciseSet";
-import { ExerciseName, ExercisePart } from "../constants/excercise";
+import { ExercisePart } from "../constants/excercise";
 
 export interface Routine {
   id: number | null;
@@ -16,7 +16,7 @@ export type Action =
   | {
       type: "CREATE_EXERCISE";
       dayIndex: number;
-      exerciseName: ExerciseName;
+      exerciseName: string;
       exercisePart: ExercisePart;
     }
   | { type: "DELETE_EXERCISE"; dayIndex: number }

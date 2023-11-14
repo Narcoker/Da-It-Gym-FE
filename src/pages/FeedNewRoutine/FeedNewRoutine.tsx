@@ -1,35 +1,63 @@
-import Nav from "../../components/Nav/Nav";
-import * as S from "./FeedNewRoutine.style";
-
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../../recoil/userInfoState";
+import { useRoutine } from "../../hooks/useRoutine";
+import useRoutineAPI, { CreateRoutinePayload } from "../../api/useRoutineAPI";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
+import Nav from "../../components/Nav/Nav";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
-import { useRoutine } from "../../hooks/useRoutine";
-
-const tmpWriter = "가슴왕 재규니";
+import * as S from "./FeedNewRoutine.style";
 
 function FeedNewRoutine() {
+  const user = useRecoilValue(userInfoState);
   const [routine, dispatch] = useRoutine();
-  const [writer, setWriter] = useState("");
-
+  const [selectedDivision, setSelectedDivision] = useState<number>(1);
   const titleRef = useRef<HTMLInputElement | null>(null);
-  useEffect(() => {
-    setWriter(tmpWriter);
-  }, []);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const { requestCreateRoutine } = useRoutineAPI();
+
+  const handleChangeDivision = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDivision(Number(e.target.value));
+  };
+
+  const handleSumbitRoutine = () => {
+    const payload: CreateRoutinePayload = {
+      title: titleRef.current!.value,
+      description: textareaRef.current!.value,
+      division: selectedDivision,
+      routine: routine,
+    };
+    requestCreateRoutine(payload);
+    console.log(payload);
+  };
+
   return (
     <>
       <Nav type="top" />
-
       <S.BoardContainer>
         <S.BoardHeader>
           <S.WriterInfoWrapper>
             <S.WriterProfileImgWrapper>
-              <S.WriterProfileImg src="" alt="img" />
+              <S.WriterProfileImg src={user.userImg} alt="img" />
             </S.WriterProfileImgWrapper>
-            <S.BoardTitle>{writer}</S.BoardTitle>
+            <S.BoardTitle>{user.nickname}</S.BoardTitle>
           </S.WriterInfoWrapper>
+          <S.Select
+            name="divide"
+            value={selectedDivision}
+            onChange={(e) => {
+              handleChangeDivision(e);
+            }}
+          >
+            <option value="1">무분할</option>
+            <option value="2">2분할</option>
+            <option value="3">3분할</option>
+            <option value="4">4분할</option>
+            <option value="5">5분할</option>
+            <option value="6">6분할+</option>
+          </S.Select>
         </S.BoardHeader>
 
         <S.BoardTitleWrapper>
@@ -37,7 +65,12 @@ function FeedNewRoutine() {
         </S.BoardTitleWrapper>
 
         <S.BoardDescriptionWrapper>
-          <TextArea placeholder="내용을 입력해주세요" defaultValue="" height="150px" />
+          <TextArea
+            placeholder="내용을 입력해주세요"
+            defaultValue=""
+            height="150px"
+            ref={textareaRef}
+          />
         </S.BoardDescriptionWrapper>
       </S.BoardContainer>
 
@@ -54,14 +87,7 @@ function FeedNewRoutine() {
         <Button display="flex" type="border" size="large" onClick={() => {}}>
           취소
         </Button>
-        <Button
-          display="flex"
-          type="fill"
-          size="large"
-          onClick={() => {
-            console.log("routine", routine);
-          }}
-        >
+        <Button display="flex" type="fill" size="large" onClick={handleSumbitRoutine}>
           공유하기
         </Button>
       </S.RoutineFunctionsContainer>

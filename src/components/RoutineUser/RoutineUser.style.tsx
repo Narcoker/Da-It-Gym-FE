@@ -10,6 +10,7 @@ export const RoutineUserWrapper = styled.div`
   box-shadow: 0px 4px 4px ${COLOR.Shadow};
   border-radius: 10px;
   padding: 6px 16px 6px 16px;
+  cursor: pointer;
 `;
 export const RoutineTop = styled.div`
   display: flex;

@@ -2,22 +2,23 @@ import * as S from "./FeedInteractionInfo.style";
 import * as Icon from "../../components/Icon";
 import * as COLOR from "../../constants/color";
 interface FeedInteractionInfoProps {
-  LikeCnt: string;
-  ShareCnt: string;
+  likeCnt: number;
+  shareCnt: number;
 }
 
-function FeedInteractionInfo({ LikeCnt, ShareCnt }: FeedInteractionInfoProps) {
+function FeedInteractionInfo({ likeCnt, shareCnt }: FeedInteractionInfoProps) {
+  console.log(likeCnt);
   return (
     <div>
       <S.CntBox>
         <S.IconDiv>
-          <Icon.Heart size="24" color={COLOR.Gray2} />
+          <Icon.HeartFill size="24" color={COLOR.Red} />
         </S.IconDiv>
-        <S.LikeCnt>{LikeCnt}</S.LikeCnt>
+        <S.LikeCnt>{likeCnt}</S.LikeCnt>
         <S.IconDiv>
-          <Icon.Share size="24" color={COLOR.Gray2} />
+          <Icon.Share size="24" color={COLOR.Primary} />
         </S.IconDiv>
-        <S.ShareCnt>{ShareCnt}</S.ShareCnt>
+        <S.ShareCnt>{shareCnt}</S.ShareCnt>
       </S.CntBox>
     </div>
   );

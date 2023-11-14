@@ -24,17 +24,23 @@ export const WriterProfileImgWrapper = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background-color: ${COLOR.Gray1};
+  background-color: ${COLOR.White};
 `;
 
-export const WriterProfileImg = styled.img``;
+export const WriterProfileImg = styled.img`
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+`;
 
 export const FunctionsWrapper = styled.div`
   display: flex;
   gap: 10px;
 `;
 
-export const FunctionIconWrapper = styled.div``;
+export const FunctionIconWrapper = styled.div`
+  cursor: pointer;
+`;
 
 export const BoardTitleWrapper = styled.div`
   display: flex;

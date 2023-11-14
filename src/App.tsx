@@ -42,7 +42,7 @@ function App() {
     { path: "/feed/routine", element: <FeedRoutine /> },
     { path: "/feed/routine/new", element: <FeedNewRoutine /> },
     { path: "/feed/diary/:id", element: <FeedDiaryDetail /> },
-    { path: "/feed/routine/:id", element: <FeedRoutineDetail /> },
+    { path: "/feed/routine/:routineId", element: <FeedRoutineDetail /> },
     { path: "/profile/edit", element: <EditProfile /> },
     { path: "/feed/search-user", element: <SearchUser /> },
     { path: "/feed/import/:id", element: <FeedImport /> },

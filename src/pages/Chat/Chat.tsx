@@ -4,23 +4,43 @@ import Nav from "../../components/Nav/Nav";
 import * as S from "./Chat.style";
 import FriendChat from "./FriendChat";
 import MyChat from "./MyChat";
-
-interface Chat {
-  name: string;
-  src: string;
-  message: string;
-}
+import useChatAPI, { Chat, ChatConfig } from "../../api/useChatAPI";
+import { useParams } from "react-router";
+import { Client } from "@stomp/stompjs";
 
 interface ChattingProps {
   chats: Chat[];
 }
 
-function Chat() {
-  const myName = "김준서";
+function ChatComponent() {
+  const userId = "";
+  const nickname = "김준서";
+  const userImg =
+    "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg";
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const [chats, setChats] = useState<Chat[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [isComposing, setIsComposing] = useState(false);
+  const { chatId } = useParams();
+  const client = useRef<Client>();
+
+  const chatConfig: ChatConfig = {
+    userId,
+    nickname,
+    userImg,
+    brokerURL: import.meta.env.VITE_WS_BROKER_URL,
+    token: "",
+    chatId: chatId as string,
+  };
+
+  const {
+    chats,
+    setChats,
+    createClient,
+    connect,
+    disConnect,
+    requestPastChats,
+    requestChatSumbit,
+  } = useChatAPI(chatConfig);
 
   const handleChatInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setChatInput(e.target.value);
@@ -34,27 +54,38 @@ function Chat() {
   };
 
   const handleSubmit = () => {
-    if (chatInput === "") return;
+    if (chatInput === "" || !client.current || client.current.connected) return;
 
-    setChats((prev) => [
-      ...prev,
-      {
-        name: myName,
-        src: "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
-        message: chatInput.trimEnd(),
-      } as Chat,
-    ]);
+    const submittedChat = requestChatSumbit(client.current, chatInput.trimEnd());
+    submittedChat && setChats((prev) => [...prev, submittedChat]);
 
     setChatInput("");
   };
 
   const handleComposition = (e: React.CompositionEvent) => {
-    if (e.type === "compositionstart") {
-      setIsComposing(true);
-    } else if (e.type === "compositionend") {
-      setIsComposing(false);
-    }
+    type CompositionEventType = "compositionstart" | "compositionend";
+
+    // 키 값 재한 -> [Type in CompositionEventType]
+    const compositionEventHandler: { [Type in CompositionEventType]: () => void } = {
+      compositionstart: () => setIsComposing(true),
+      compositionend: () => setIsComposing(false),
+    };
+
+    const handler = compositionEventHandler[e.type as CompositionEventType];
+    handler && handler(); // 핸들러 유무 검사 후 있으면 실행
   };
+
+  const initChat = async () => {
+    client.current = createClient(); // 클라이언트 생성
+    connect(client.current); // 연결(구독)
+    const pastedChats = await requestPastChats(client.current); // 과거 채팅 내역 불러오기(HTTP)
+    setChats(pastedChats);
+  };
+
+  useEffect(() => {
+    initChat();
+    return () => disConnect(client.current); // 연결 해제
+  }, []);
 
   useEffect(() => {
     if (chatContainerRef.current !== null) {
@@ -62,32 +93,19 @@ function Chat() {
     }
   }, [chats]);
 
-  useEffect(() => {
-    setChats([
-      {
-        name: "조재균",
-        src: "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
-        message: "준서 오늘 운동 몇시에 갈거야?",
-      },
-
-      {
-        name: "김준서",
-        src: "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg",
-        message:
-          "오늘 학교갔다가 수업 마치고 교수님 호출 있어서 교수님 뵙고 애들이랑 밥먹고 하면 한 9시 쯤 될 것 같은데 같이 갈 수 있어?",
-      },
-    ]);
-  }, []);
+  // 임시 데이터 로직
 
   function Chatting({ chats }: ChattingProps) {
     return (
       <>
-        {chats.map(({ name, src, message }: Chat, index) => {
-          const isMyChat = myName === name;
+        {chats.map(({ sender, img, message }: Chat, index) => {
+          const isMyChat = nickname === sender;
+          const isFriendChat = nickname !== sender;
+
           if (isMyChat)
-            return <MyChat key={index} name={name} src={src} message={message} />;
-          if (!isMyChat)
-            return <FriendChat key={index} name={name} src={src} message={message} />;
+            return <MyChat key={index} name={sender} src={img} message={message} />;
+          if (isFriendChat)
+            return <FriendChat key={index} name={sender} src={img} message={message} />;
         })}
       </>
     );
@@ -132,4 +150,4 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default ChatComponent;

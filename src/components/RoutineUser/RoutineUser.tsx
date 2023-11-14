@@ -3,16 +3,20 @@ import * as Icon from "../Icon";
 import * as COLOR from "../../constants/color";
 import HashTagButton from "../HashtagButton/HashtagButton";
 import { HashTagButtonProps } from "../HashtagButton/HashtagButton";
+import useCounts from "../../hooks/useCounts";
+import { useNavigate } from "react-router";
 interface Props extends HashTagButtonProps {
+  routineId: number;
   src: string;
   userName: string;
   info: string;
-  likeCount: string;
-  shareCount: string;
+  likeCount: number;
+  shareCount: number;
   timeAgo: string;
 }
 
 function RoutineUser({
+  routineId,
   src,
   userName,
   info,
@@ -22,8 +26,16 @@ function RoutineUser({
   label,
 }: Props) {
   const infomation = info.slice(0, Math.min(130, info.length)).concat("...");
+  const reduceCount = useCounts();
+
+  const navigate = useNavigate();
+
   return (
-    <S.RoutineUserWrapper>
+    <S.RoutineUserWrapper
+      onClick={() => {
+        navigate(`/feed/routine/${routineId}`);
+      }}
+    >
       <S.RoutineTop>
         <S.RoutineUserImg src={src} alt={src} />
         <S.UserBox>
@@ -36,13 +48,13 @@ function RoutineUser({
               <S.LikeIcon>
                 <Icon.HeartFill color={COLOR.Red} />
               </S.LikeIcon>
-              <S.LikeCount>{likeCount}</S.LikeCount>
+              <S.LikeCount>{reduceCount(likeCount)}</S.LikeCount>
             </S.LikeBox>
             <S.ShareBox>
               <S.ShareIcon>
                 <Icon.Share />
               </S.ShareIcon>
-              <S.ShareCount>{shareCount}</S.ShareCount>
+              <S.ShareCount>{reduceCount(shareCount)}</S.ShareCount>
             </S.ShareBox>
           </S.LikeShareBox>
         </S.UserBox>

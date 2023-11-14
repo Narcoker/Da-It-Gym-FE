@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { ExerciseSet, initExerciseSet } from "./useExerciseSet";
-import { ExerciseName, ExercisePart, getExcercisePartName } from "../constants/excercise";
+import { ExercisePart } from "../constants/excercise";
 
 export interface Exercise {
   id: number | null;
@@ -82,14 +82,14 @@ function exerciseReducer(exercise: Exercise, action: Action) {
 
 export const getNewExercise = (
   order: number,
-  exerciseName: ExerciseName,
+  exerciseName: string,
   exercisePart: ExercisePart,
 ): Exercise => {
   return {
     ...initExercise,
     order: order,
     name: exerciseName,
-    part: getExcercisePartName(exercisePart),
+    part: exercisePart,
   };
 };
 

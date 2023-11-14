@@ -1,16 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./AddExerciseModal.style";
 import { Action as RoutineAction } from "../../hooks/useRoutine";
 import { Action as DayAction } from "../../hooks/useDay";
 import ExercisePartLabel from "../ExercisePartLabel/ExercisePartLabel";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
-import {
-  ExerciseName,
-  ExercisePart,
-  exercises,
-  partLabels,
-} from "../../constants/excercise";
+import { ExercisePart, partLabels } from "../../constants/excercise";
 import Button from "../Button/Button";
+import useRoutineAPI, { ResponseExercise } from "../../api/useRoutineAPI";
 
 interface Props {
   dayIndex: number;
@@ -23,16 +19,15 @@ export default function AddExerciseModal({
   dispatch,
   setIsOpenedAddExerciseModal,
 }: Props) {
-  const [selectedPart, setSelectedPart] = useState<ExercisePart>("chest");
+  const [exercises, setExercises] = useState<ResponseExercise[]>([]);
+  const [selectedPart, setSelectedPart] = useState<ExercisePart>("가슴");
+  const { requestExerciseOfPart } = useRoutineAPI();
 
   const handleSelected = (exercisePart: ExercisePart): void => {
     setSelectedPart(exercisePart);
   };
 
-  const handleCreateExercise = (
-    exerciseName: ExerciseName,
-    exercisePart: ExercisePart,
-  ) => {
+  const handleCreateExercise = (exerciseName: string, exercisePart: ExercisePart) => {
     dispatch({
       type: "CREATE_EXERCISE",
       dayIndex,
@@ -45,18 +40,26 @@ export default function AddExerciseModal({
     setIsOpenedAddExerciseModal(false);
   };
 
+  const handleUpdateExercisesOfPart = async (selectedPart: ExercisePart) => {
+    const exercises = await requestExerciseOfPart(selectedPart);
+    setExercises(exercises);
+  };
+
+  useEffect(() => {
+    handleUpdateExercisesOfPart(selectedPart);
+  }, [selectedPart]);
+
   return (
     <S.Overlay>
       <S.Wrapper>
         <S.PartsWrapper>
-          {partLabels.map(({ name, exercisePart, type }) => (
+          {partLabels.map(({ exercisePart, type }) => (
             <S.ExercisePartLabelWrapper
               onClick={() => {
                 handleSelected(exercisePart);
               }}
             >
               <ExercisePartLabel
-                name={name}
                 exercisePart={exercisePart}
                 type={type}
                 selectedPart={selectedPart}
@@ -65,16 +68,13 @@ export default function AddExerciseModal({
           ))}
         </S.PartsWrapper>
         <S.ExercisesWrapper>
-          {exercises[selectedPart].map(({ exerciseName, exercisePart }) => (
+          {exercises.map(({ exerciseName, exercisePart }) => (
             <S.ExerciseCardWrapper
               onClick={() =>
-                handleCreateExercise(
-                  exerciseName as ExerciseName,
-                  exercisePart as ExercisePart,
-                )
+                handleCreateExercise(exerciseName, exercisePart as ExercisePart)
               }
             >
-              <ExerciseCard exerciseName={exerciseName} exercisePart={exercisePart} />
+              <ExerciseCard exerciseName={exerciseName} exercisePart={selectedPart} />
             </S.ExerciseCardWrapper>
           ))}
         </S.ExercisesWrapper>

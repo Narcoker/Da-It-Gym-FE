@@ -24,7 +24,7 @@ export default function useCounts() {
       return `${result}${KILO}`;
     }
 
-    return counts.toString();
+    return `${counts}`;
   };
 
   return reduceCount;
