@@ -54,6 +54,10 @@ export default function UserProfile() {
   const followHandler = () => {
     requestFollow(params.nickname as string);
   };
+
+  const followDeleteHandler = () => {
+    requestDeleteFollow(params.nickname as string);
+  };
   return (
     <>
       <S.ProfileWrapper>
@@ -68,6 +72,9 @@ export default function UserProfile() {
             <S.ProfileButton onClick={inbodyHandler}>인바디</S.ProfileButton>
             <S.ProfileButton onClick={sendMessageHandler}>메세지 보내기</S.ProfileButton>
             <S.ProfileButton onClick={followHandler}>팔로우</S.ProfileButton>
+            <S.FollowDeleteButton onClick={followDeleteHandler}>
+              팔로우 취소
+            </S.FollowDeleteButton>
           </S.ButtonBox>
           <S.CounterBox>
             <S.CounterButton>{`일지수 ${journalCount}`}</S.CounterButton>

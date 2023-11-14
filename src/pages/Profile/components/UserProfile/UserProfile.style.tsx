@@ -51,6 +51,11 @@ export const ProfileButton = styled.button`
   cursor: pointer;
 `;
 
+export const FollowDeleteButton = styled(ProfileButton)`
+  color: ${COLOR.Gray0};
+  background-color: ${COLOR.Gray1};
+`;
+
 export const CounterBox = styled(ButtonBox)`
   gap: 20px;
   flex-wrap: nowrap;
