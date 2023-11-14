@@ -30,14 +30,16 @@ export function useUserAPI() {
         setUserInfo((prev: UserInfo) => ({
           ...prev,
           nickname: response.data.data.nickname,
-          userImg: response.data.data.userImg,
           preferredSplit: response.data.data.preferredSplit,
+          userImg: response.data.data.userProfileImgUrl,
+          introduction: response.data.data.introduction,
+          healthClubName: response.data.data.healthClubName,
         }));
         localStorage.setItem("accessToken", response.headers.authorization);
         localStorage.setItem("alreadyJoined", response.data.data.alreadyJoined);
         // 처음 로그인 한 사람은 signup
         if (response.data.data.alreadyJoined) {
-          navigate("/profile/1");
+          navigate(`/profile/${response.data.data.nickname}`);
         } else {
           navigate("/signup");
         }

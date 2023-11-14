@@ -65,7 +65,7 @@ function App() {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      navigate(auth ? `/profile/${userInfo.nickname}` : "/login");
+      navigate(auth ? `/profile/${userInfo.nickname}?section=routines` : "login");
     }
     // else if (location.pathname === "/login") {
     //   navigate(auth ? `/profile/${userInfo.nickname}` : "login");
