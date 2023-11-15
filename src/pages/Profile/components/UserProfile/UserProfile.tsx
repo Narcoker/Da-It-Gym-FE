@@ -15,13 +15,30 @@ export default function UserProfile() {
   const [followType, setFollowType] = useState<FollowType>("");
   const [isInbodyClick, setIsInbodyClick] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData>({
-    healthClubName: "",
+    follower: false,
     followerCount: 0,
     followingCount: 0,
+    healthClubName: "",
+    introduction: "",
     journalCount: 0,
+    nickname: "",
+    perferredSplit: "무분할",
+    role: "일반",
+    userProfileImgUrl: "",
   });
 
-  const { followerCount, followingCount, healthClubName, journalCount } = profileData;
+  const {
+    follower,
+    followerCount,
+    followingCount,
+    healthClubName,
+    introduction,
+    journalCount,
+    nickname,
+    perferredSplit,
+    // role,
+    userProfileImgUrl,
+  } = profileData;
 
   const { requestProfile, requestFollow, requestDeleteFollow } = useProfileAPI();
   const userInfo = useRecoilValue(userInfoState);
@@ -61,21 +78,35 @@ export default function UserProfile() {
   return (
     <>
       <S.ProfileWrapper>
-        <S.ProfileImg src={profileData.userImg} />
+        <S.ProfileImg src={userProfileImgUrl} />
         <S.ProfileBox>
           <S.ProfileContent>
-            <S.Nickname>{userInfo.nickname}</S.Nickname>
+            <S.Nickname>{nickname}</S.Nickname>
             {healthClubName && <S.Place>{`${healthClubName}에서 운동 중`}</S.Place>}
           </S.ProfileContent>
           <S.ButtonBox>
-            <S.ProfileButton onClick={profileHandler}>프로필 편집</S.ProfileButton>
-            <S.ProfileButton onClick={inbodyHandler}>인바디</S.ProfileButton>
-            <S.ProfileButton onClick={sendMessageHandler}>메세지 보내기</S.ProfileButton>
-            <S.ProfileButton onClick={followHandler}>팔로우</S.ProfileButton>
-            <S.FollowDeleteButton onClick={followDeleteHandler}>
-              팔로우 취소
-            </S.FollowDeleteButton>
+            {userInfo.nickname === nickname && (
+              <>
+                <S.ProfileButton onClick={profileHandler}>프로필 편집</S.ProfileButton>
+                <S.ProfileButton onClick={inbodyHandler}>인바디</S.ProfileButton>
+              </>
+            )}
+            {userInfo.nickname !== nickname && (
+              <>
+                <S.ProfileButton onClick={sendMessageHandler}>
+                  메세지 보내기
+                </S.ProfileButton>
+                {follower ? (
+                  <S.FollowDeleteButton onClick={followDeleteHandler}>
+                    팔로우 취소
+                  </S.FollowDeleteButton>
+                ) : (
+                  <S.ProfileButton onClick={followHandler}>팔로우</S.ProfileButton>
+                )}
+              </>
+            )}
           </S.ButtonBox>
+
           <S.CounterBox>
             <S.CounterButton>{`일지수 ${journalCount}`}</S.CounterButton>
             <S.CounterButton
@@ -90,7 +121,7 @@ export default function UserProfile() {
       <S.Desc>
         <S.DivideBox>
           선호하는 분할
-          <S.Select name="divide" disabled value="two">
+          <S.Select name="divide" disabled value={perferredSplit}>
             <option value="무분할">무분할</option>
             <option value="2분할">2분할</option>
             <option value="3분할">3분할</option>
@@ -99,7 +130,7 @@ export default function UserProfile() {
             <option value="6분할">6분할+</option>
           </S.Select>
         </S.DivideBox>
-        <S.Introduce>자기소개 시작</S.Introduce>
+        <S.Introduce>{introduction}</S.Introduce>
       </S.Desc>
       {followType && <FollowModal type={followType} setFollowType={setFollowType} />}
       {isInbodyClick && <InbodyModal setIsInbodyClick={setIsInbodyClick} />}

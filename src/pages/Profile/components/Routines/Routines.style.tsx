@@ -6,3 +6,5 @@ export const RoutineUsers = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+
+export const Observer = styled.div``;

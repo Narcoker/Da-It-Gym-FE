@@ -51,7 +51,6 @@ export const Users = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  justify-content: center;
   height: 100%;
 `;
 
@@ -60,4 +59,8 @@ export const Span = styled.span`
   font-weight: ${FONT.Bold};
   font-size: ${FONT.L};
   color: ${COLOR.Gray1};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;

@@ -10,6 +10,7 @@ import {
 } from "../pages/EditProfile/components/TrainerEdit/TrainerEdit";
 import { SetterOrUpdater } from "recoil";
 import { UserInfo } from "../recoil/userInfoState";
+import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
 
 interface EditProfilePayload {
   userProfileImg?: File;
@@ -42,6 +43,7 @@ export default function useProfileAPI() {
     axios
       .get(`${API_URL}/api/users/${nickname}`)
       .then((res) => {
+        console.log(res.data.data);
         setProfileData(res.data.data);
       })
       .catch((err) => toast.error(err.message));
@@ -63,9 +65,8 @@ export default function useProfileAPI() {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(() => {
-        // setUserInfo(payload.request);
-
+      .then((res) => {
+        setUserInfo(res.data.data);
         navigate(`/profile/${payload.request.nickname}?section=routines`);
       })
       .catch((err) => toast.error(err.message));
@@ -166,6 +167,46 @@ export default function useProfileAPI() {
       .then((res) => console.log(res))
       .catch((err) => toast.error(err.message));
   };
+
+  // 피드 루틴 조회
+  const requestFeedRoutineList = (
+    nickname: string,
+    page: number,
+    setRoutines: React.Dispatch<React.SetStateAction<RoutineSummary[]>>,
+    setHasNext: React.Dispatch<React.SetStateAction<boolean>>,
+    setPage: React.Dispatch<React.SetStateAction<number>>,
+  ) => {
+    axios
+      .get(`${API_URL}/api/routines/${nickname}?page=${page}&size=1`)
+      .then((res) => {
+        setRoutines((prev) => [...prev, ...res.data.data.routines]);
+        setHasNext(res.data.data.hasNext);
+        if (res.data.data.hasNext) {
+          setPage((prev) => prev + 1);
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 피드 운동일지 보관함 조회
+  const requestFeedRoutineScrap = (
+    setRoutines: React.Dispatch<React.SetStateAction<RoutineSummary[]>>,
+    page: number,
+    setHasNext: React.Dispatch<React.SetStateAction<boolean>>,
+    setPage: React.Dispatch<React.SetStateAction<number>>,
+  ) => {
+    axios
+      .get(`${API_URL}/api/routines/scraps?page=${page}&size=20`)
+      .then((res) => {
+        setRoutines((prev) => [...prev, ...res.data.data.routines]);
+        setHasNext(res.data.data.hasNext);
+        if (res.data.data.hasNext) {
+          setPage((prev) => prev + 1);
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
   return {
     requestEditProfile,
     requestEvaluateTrainer,
@@ -178,5 +219,7 @@ export default function useProfileAPI() {
     requestDeleteFollow,
     requestFeedDiaryList,
     requestFeedDiaryScrap,
+    requestFeedRoutineList,
+    requestFeedRoutineScrap,
   };
 }

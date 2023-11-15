@@ -3,14 +3,13 @@ import * as S from "./UserEdit.style";
 import Button from "../../../../components/Button/Button";
 import * as Icon from "../../../../components/Icon";
 import Input from "../../../../components/Input/Input";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import FindGymModal from "../FindGymModal/FindGymModal";
 import { toast } from "react-toastify";
 import useProfileAPI from "../../../../api/useProfileAPI";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../../../recoil/userInfoState";
-import { ProfileData } from "../../../Profile/Profile";
 
 interface Preview {
   url: string;
@@ -24,16 +23,13 @@ export default function UserEdit() {
   const nicknameRef = useRef<HTMLInputElement>(null);
   const descRef = useRef<HTMLTextAreaElement>(null);
   const [gymFind, setGymFind] = useState(false);
-  const [profileData, setProfileData] = useState<ProfileData>({
-    healthClubName: "",
-    followerCount: 0,
-    followingCount: 0,
-    journalCount: 0,
-  });
+
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const [gymName, setGymName] = useState(profileData.healthClubName);
-  const [preview, setPreview] = useState<Preview | null>({ url: userInfo.userImg });
-  const { requestEditProfile, requestProfile } = useProfileAPI();
+  const [gymName, setGymName] = useState(userInfo.healthClubName);
+  const [preview, setPreview] = useState<Preview | null>({
+    url: userInfo.userProfileImgUrl,
+  });
+  const { requestEditProfile } = useProfileAPI();
   const previewHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -67,11 +63,6 @@ export default function UserEdit() {
     }
   };
 
-  useEffect(() => {
-    console.log(userInfo);
-    requestProfile(userInfo.nickname, setProfileData);
-  }, []);
-
   return (
     <>
       <S.Wrapper>
@@ -103,6 +94,7 @@ export default function UserEdit() {
             textareaTitle="소개"
             placeholder="소개를 입력해주세요"
             height="200px"
+            defaultValue={userInfo.introduction}
             ref={descRef}
           />
           <S.PlaceWrapper>

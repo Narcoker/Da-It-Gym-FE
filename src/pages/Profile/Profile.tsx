@@ -4,10 +4,16 @@ import UserContent from "./components/UserContent/UserContent";
 import UserProfile from "./components/UserProfile/UserProfile";
 
 export interface ProfileData {
-  healthClubName: string;
+  follower: boolean;
   followerCount: number;
   followingCount: number;
+  healthClubName: string;
+  introduction: string;
   journalCount: number;
+  nickname: string;
+  perferredSplit: string;
+  role: string;
+  userProfileImgUrl: string;
 }
 
 export default function Profile() {

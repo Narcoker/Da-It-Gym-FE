@@ -4,6 +4,7 @@ import * as COLOR from "../../../../constants/color";
 
 export const Wrapper = styled.div`
   padding: 20px;
+  padding-bottom: 80px;
 `;
 
 export const ScoreCard = styled.div`

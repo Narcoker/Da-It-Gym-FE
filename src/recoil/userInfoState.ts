@@ -8,10 +8,11 @@ const { persistAtom } = recoilPersist({
 
 export interface UserInfo {
   nickname: string;
-  userImg: string;
+  userProfileImgUrl: string;
   preferredSplit: string;
   introduction: string;
   healthClubName: string;
+  role: "일반" | "관리자" | "트레이너";
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -19,9 +20,10 @@ export const userInfoState = atom<UserInfo>({
   default: {
     nickname: "",
     preferredSplit: "",
-    userImg: "",
+    userProfileImgUrl: "",
     introduction: "",
     healthClubName: "",
+    role: "일반",
   },
   effects_UNSTABLE: [persistAtom],
 });
