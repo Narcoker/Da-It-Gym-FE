@@ -9,6 +9,7 @@ import {
 } from "../../../recoil/signupState";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useUserAPI } from "../../../api/useUserAPI";
+import * as R from "../../../constants/regExp";
 
 function SignupInput() {
   // 중복 체크 백엔드에 닉네임 중복되는지 확인하는 것
@@ -42,7 +43,7 @@ function SignupInput() {
       }
     };
     checkDuplicate();
-    const regExp = /^[A-Za-z_]+$/;
+    const regExp = R.nicknameRegExp;
     if (regExp.test(debounceNickname)) {
       setRegCheck(true);
     } else {
@@ -50,7 +51,7 @@ function SignupInput() {
     }
   }, [debounceNickname]);
   useEffect(() => {
-    const regExp = /^[A-Za-z0-9_]{3,11}$/;
+    const regExp = R.nicknameRegExp;
     const isValidRegCheck = regExp.test(debounceNickname);
     if (isValidRegCheck) {
       setRegCheck(true);

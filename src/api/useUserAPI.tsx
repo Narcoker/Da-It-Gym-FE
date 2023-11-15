@@ -2,14 +2,9 @@ import { useNavigate } from "react-router";
 import { useAxios } from "./useAxios";
 import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
-import { userInfoState } from "../recoil/userInfoState";
+import { UserInfo, userInfoState } from "../recoil/userInfoState";
 
 export function useUserAPI() {
-  interface UserInfo {
-    nickname: string;
-    userImg: string;
-    preferredSplit: string;
-  }
   const axios = useAxios();
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
@@ -31,9 +26,10 @@ export function useUserAPI() {
           ...prev,
           nickname: response.data.data.nickname,
           preferredSplit: response.data.data.preferredSplit,
-          userImg: response.data.data.userProfileImgUrl,
+          userProfileImgUrl: response.data.data.userProfileImgUrl,
           introduction: response.data.data.introduction,
           healthClubName: response.data.data.healthClubName,
+          role: response.data.data.healthClubName,
         }));
         localStorage.setItem("accessToken", response.headers.authorization);
         localStorage.setItem("alreadyJoined", response.data.data.alreadyJoined);
