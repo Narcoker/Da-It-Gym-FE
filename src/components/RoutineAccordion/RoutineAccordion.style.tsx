@@ -20,7 +20,7 @@ export const RoutineHeader = styled.div`
   width: 100%;
   border-bottom: 1px solid ${COLOR.Gray2};
   font-weight: ${FONT.Bold};
-  padding: 15px;
+  padding: 15px 45px 15px 15px;
   margin-bottom: 10px;
   cursor: pointer;
 `;
@@ -59,4 +59,27 @@ export const FunctionText = styled.span`
   padding-left: 5px;
   color: ${COLOR.Primary};
   transform: translateY(1px);
+`;
+
+export const UserInterectionWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 5px;
+  width: inherit;
+`;
+
+export const UseFunctionText = styled.span`
+  font-size: ${FONT.S};
+  color: ${COLOR.Gray2};
+`;
+
+export const UseDayWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;

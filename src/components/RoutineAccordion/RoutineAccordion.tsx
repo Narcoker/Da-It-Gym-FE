@@ -6,6 +6,8 @@ import { Day } from "../../hooks/useDay";
 import { Action as RoutineAction } from "../../hooks/useRoutine";
 import { Action as DayAction } from "../../hooks/useDay";
 import * as FONT from "../../constants/font";
+import * as COLOR from "../../constants/color";
+import { useNavigate } from "react-router";
 export interface Props {
   routine: Routine;
   dispatch: React.Dispatch<RoutineAction> | React.Dispatch<DayAction>;
@@ -21,6 +23,8 @@ export default function RoutineAccordion({
   mulitple,
   title,
 }: Props) {
+  const navigate = useNavigate();
+
   const handleSpread = (dayIndex: number) => {
     dispatch({ type: "UPDATE_EXERCISES_IS_SPREAD", dayIndex });
   };
@@ -33,6 +37,14 @@ export default function RoutineAccordion({
     (dispatch as React.Dispatch<RoutineAction>)({ type: "DELETE_DAY" });
   };
 
+  const handleDayForWriteMyDiary = (day: Day) => {
+    navigate(`/feed/import/?id=${day.id}`, {
+      state: {
+        day: day,
+      },
+    });
+  };
+
   return (
     <>
       {mulitple &&
@@ -42,7 +54,18 @@ export default function RoutineAccordion({
               <S.IconWrapper spread={day.spread}>
                 <Icon.DownArrow size="24" />
               </S.IconWrapper>
-              {`Day ${day.order}`}
+
+              <S.UserInterectionWrapper>
+                {`Day ${day.order}`}
+                <S.UseDayWrapper
+                  onClick={() => {
+                    handleDayForWriteMyDiary(day);
+                  }}
+                >
+                  <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
+                  <S.UseFunctionText>내 운동일지로 작성하기</S.UseFunctionText>
+                </S.UseDayWrapper>
+              </S.UserInterectionWrapper>
             </S.RoutineHeader>
             <S.Exercises>
               {day.spread && (

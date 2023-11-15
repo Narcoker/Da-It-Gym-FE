@@ -5,15 +5,16 @@ import * as COLOR from "../../constants/color";
 import * as FONT from "../../constants/font";
 import { useEffect } from "react";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
-import { useRoutine } from "../../hooks/useRoutine";
+import { Routine, useRoutine } from "../../hooks/useRoutine";
 import FeedInteractionInfo from "../../components/FeedInteractionInfo/FeedInteractionInfo";
 import useRoutineAPI from "../../api/useRoutineAPI";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useRoutineDetailState from "../../hooks/useRoutineDetailState";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../recoil/userInfoState";
 
 export default function FeedRoutineDetail() {
+  const navigate = useNavigate();
   const { routineId } = useParams();
   const [routine, dispatch] = useRoutine();
   const {
@@ -59,6 +60,19 @@ export default function FeedRoutineDetail() {
     setRoutineDetailState(routineDetail);
   };
 
+  const handleWriteMyRoutine = (routine: Routine) => {
+    navigate(`/feed/routine/new`, {
+      state: {
+        routine,
+      },
+    });
+  };
+
+  const handleRoutineForWriteMyDiary = (routine: Routine) => {
+    const dayIds = routine.days.map((day) => day.id).join(",");
+    navigate(`/feed/import/?id=${dayIds}`);
+  };
+
   useEffect(() => {
     handleUpdateRoutine(Number(routineId));
   }, []);
@@ -81,7 +95,12 @@ export default function FeedRoutineDetail() {
                 handleToggleScrap(routineDetailState.scraped);
               }}
             >
-              <Icon.BookMark size={FONT.L} color={COLOR.Gray1} />
+              {!routineDetailState.scraped && (
+                <Icon.BookMark size={FONT.L} color={COLOR.Gray1} />
+              )}
+              {routineDetailState.scraped && (
+                <Icon.BookMark size={FONT.L} color={COLOR.Primary} />
+              )}
             </S.FunctionIconWrapper>
             <S.FunctionIconWrapper
               onClick={() => {
@@ -129,14 +148,22 @@ export default function FeedRoutineDetail() {
             />
           </S.LikeShareWrapper>
 
-          <S.UserInterectionWrapper>
+          <S.UserInterectionWrapper
+            onClick={() => {
+              handleWriteMyRoutine(routine);
+            }}
+          >
             <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
             <S.UseFunctionText>내 루틴으로 작성하기</S.UseFunctionText>
           </S.UserInterectionWrapper>
         </S.BoardFooter>
 
         <S.BoardFooter>
-          <S.UserInterectionWrapperRight>
+          <S.UserInterectionWrapperRight
+            onClick={() => {
+              handleRoutineForWriteMyDiary(routine);
+            }}
+          >
             <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
             <S.UseFunctionText>모든 루틴을 일지에 추가하기</S.UseFunctionText>
           </S.UserInterectionWrapperRight>

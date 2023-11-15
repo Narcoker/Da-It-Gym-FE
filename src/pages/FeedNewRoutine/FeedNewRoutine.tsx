@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../recoil/userInfoState";
-import { useRoutine } from "../../hooks/useRoutine";
+import { Routine, useRoutine } from "../../hooks/useRoutine";
 import useRoutineAPI, { CreateRoutinePayload } from "../../api/useRoutineAPI";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
 import Nav from "../../components/Nav/Nav";
@@ -9,8 +9,10 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 import * as S from "./FeedNewRoutine.style";
+import { useLocation } from "react-router";
 
 function FeedNewRoutine() {
+  const location = useLocation();
   const user = useRecoilValue(userInfoState);
   const [routine, dispatch] = useRoutine();
   const [selectedDivision, setSelectedDivision] = useState<number>(1);
@@ -30,8 +32,12 @@ function FeedNewRoutine() {
       routine: routine,
     };
     requestCreateRoutine(payload);
-    console.log(payload);
   };
+
+  useEffect(() => {
+    const friendRoutine: Routine = location.state?.routine;
+    friendRoutine && dispatch({ type: "UPDATE_ROUTINE", newRoutine: friendRoutine });
+  }, []);
 
   return (
     <>
@@ -40,7 +46,7 @@ function FeedNewRoutine() {
         <S.BoardHeader>
           <S.WriterInfoWrapper>
             <S.WriterProfileImgWrapper>
-              <S.WriterProfileImg src={user.userImg} alt="img" />
+              <S.WriterProfileImg src={user.userProfileImgUrl} alt="img" />
             </S.WriterProfileImgWrapper>
             <S.BoardTitle>{user.nickname}</S.BoardTitle>
           </S.WriterInfoWrapper>

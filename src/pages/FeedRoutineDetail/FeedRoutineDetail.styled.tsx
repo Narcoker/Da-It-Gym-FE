@@ -81,6 +81,7 @@ export const UserInterectionWrapper = styled.div`
   align-items: flex-end;
   gap: 5px;
   border: 1px soild red;
+  cursor: pointer;
 `;
 
 export const UserInterectionWrapperRight = styled(UserInterectionWrapper)`
