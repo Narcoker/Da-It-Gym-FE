@@ -5,12 +5,12 @@ import { useAxios } from "./useAxios";
 import { Action } from "../hooks/useDay";
 import { ExerciseSet } from "../hooks/useExerciseSet";
 import { SetterOrUpdater } from "recoil";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 export default function useExerciseDiaryAPI() {
   const API_URL = import.meta.env.VITE_API_URL;
   const axios = useAxios();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // 휴식시간 변경
   const requestPatchRestTime = (exerciseListId: number) => {
     axios
@@ -77,7 +77,9 @@ export default function useExerciseDiaryAPI() {
   const requestDeleteJournal = (journalId: number) => {
     axios
       .delete(`${API_URL}/api/journals/${journalId}`)
-      .then()
+      .then(() => {
+        window.location.reload();
+      })
       .catch((err) => toast.error(err.message));
   };
 
@@ -90,10 +92,18 @@ export default function useExerciseDiaryAPI() {
   };
 
   // 운동일지 생성
-  const requestPostJournal = (journalDate: string) => {
+  const requestPostJournal = (
+    journalDate: string,
+    setIsExist: SetterOrUpdater<boolean>,
+    setMark: SetterOrUpdater<string[]>,
+  ) => {
     axios
       .post(`${API_URL}/api/journals`, { journalDate })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        setIsExist(true);
+        setMark((prev) => [...prev, journalDate]);
+      })
       .catch((err) => toast.error(err.message));
   };
 
@@ -130,10 +140,18 @@ export default function useExerciseDiaryAPI() {
   };
 
   // 운동에 운동기록 추가하기
-  const requestAddHistory = (payload: AddHistory) => {
+  const requestAddHistory = (
+    payload: AddHistory,
+    exerciseIndex: number,
+    dispatch: React.Dispatch<Action>,
+  ) => {
     axios
       .post(`${API_URL}/api/journals/exercise-history`, payload)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data.data.id);
+        const exerciseSetId = res.data.data.id;
+        dispatch({ type: "UPDATE_EXERSISE_SET", exerciseIndex, exerciseSetId });
+      })
       .catch((err) => toast.error(err.message));
   };
 
@@ -141,7 +159,7 @@ export default function useExerciseDiaryAPI() {
   const requestDeleteHistory = (exerciseHistoryId: number) => {
     axios
       .delete(`${API_URL}/api/journals/exercise-history/${exerciseHistoryId}`)
-      .then(() => navigate(-1))
+      .then()
       .catch((err) => toast.error(err.message));
   };
 

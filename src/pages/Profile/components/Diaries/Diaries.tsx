@@ -18,7 +18,7 @@ export default function Diaries() {
   const params = useParams();
   const [searchParams] = useSearchParams();
   const section = searchParams.get("section");
-  const [page, setPage] = useState(0);
+  const page = useRef(0);
   const { requestFeedDiaryList, requestFeedDiaryScrap } = useProfileAPI();
   const [feedDiaryData, setFeedDiaryData] = useState<Diary[]>([
     {
@@ -104,16 +104,16 @@ export default function Diaries() {
     console.log("요청");
     if (feedDiaryData) {
       setFeedDiaryData((prev) => [...prev, ...feedDiaryData]);
-      setPage((prev) => prev + 1);
+      page.current += 1;
     }
     console.log(page);
   };
   // 무한 스크롤
   useEffect(() => {
     if (section === "diary") {
-      requestFeedDiaryList(params.nickname as string, page);
+      requestFeedDiaryList(params.nickname as string, page.current);
     } else if (section === "bookmark") {
-      requestFeedDiaryScrap(params.nickname as string, page);
+      requestFeedDiaryScrap(params.nickname as string, page.current);
     }
     const observer = new IntersectionObserver((entries) =>
       entries.forEach((entry) => {

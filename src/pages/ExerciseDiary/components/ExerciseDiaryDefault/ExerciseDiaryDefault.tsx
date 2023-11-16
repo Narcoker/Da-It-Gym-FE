@@ -10,8 +10,8 @@ import { Action, Day } from "../../../../hooks/useDay";
 import moment from "moment";
 import Button from "../../../../components/Button/Button";
 import useExerciseDiaryAPI from "../../../../api/useExerciseDiaryAPI";
-import { isExistState } from "../../../../recoil/exerciseState";
-import { useRecoilValue } from "recoil";
+import { isExistState, markState } from "../../../../recoil/exerciseState";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 interface Props {
   day: Day;
@@ -24,7 +24,8 @@ export default function ExerciseDiaryDefault({ day, dayDispatch }: Props) {
   // console.log(date);
   const [showCalendar, setShowCalendar] = useState(true);
   const [value, onChange] = useState<Value>(new Date());
-  const isExist = useRecoilValue(isExistState);
+  const [isExist, setIsExist] = useRecoilState(isExistState);
+  const setMark = useSetRecoilState(markState);
   const showCalendarHandler = () => {
     setShowCalendar((prev) => !prev);
   };
@@ -33,7 +34,7 @@ export default function ExerciseDiaryDefault({ day, dayDispatch }: Props) {
 
   const addDiaryHandler = () => {
     const date = moment(value as Date).format("YYYY-MM-DD");
-    requestPostJournal(date);
+    requestPostJournal(date, setIsExist, setMark);
   };
   // console.log(isExist);
   return (

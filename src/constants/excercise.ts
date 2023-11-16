@@ -48,10 +48,6 @@ export const partLabels: partLabel[] = [
     type: "part",
   },
   {
-    exercisePart: "어깨",
-    type: "part",
-  },
-  {
     exercisePart: "이두",
     type: "part",
   },

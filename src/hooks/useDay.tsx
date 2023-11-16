@@ -46,6 +46,11 @@ export type Action =
       type: "UPDATE_EXERSISE_SET_COMPLETED";
       exerciseIndex: number;
       exerciseSetIndex: number;
+    }
+  | {
+      type: "UPDATE_EXERSISE_SET";
+      exerciseSetId: number;
+      exerciseIndex: number;
     };
 
 export function dayRecucer(day: Day, action: Action) {
@@ -132,7 +137,15 @@ export function dayRecucer(day: Day, action: Action) {
         !newDay.exercises[exerciseIndex].exerciseSets[exerciseSetIndex].completed;
       return newDay;
     }
-
+    case "UPDATE_EXERSISE_SET": {
+      const { exerciseIndex, exerciseSetId } = action;
+      const newExerciseSet = { ...initExerciseSet, id: exerciseSetId };
+      newDay.exercises[exerciseIndex].spread = true;
+      newExerciseSet.order = newDay.exercises[exerciseIndex].exerciseSets.length + 1;
+      newDay.exercises[exerciseIndex].exerciseSets.push(newExerciseSet);
+      console.log(newDay);
+      return newDay;
+    }
     default: {
       throw new Error("Unknown action type");
     }

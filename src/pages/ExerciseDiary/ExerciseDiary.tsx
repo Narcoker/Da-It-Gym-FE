@@ -20,6 +20,7 @@ export default function ExerciseDiary() {
     if (mark.includes(date as string)) {
       requestJournalDetail(date as string, dayDispatch);
     }
+    console.log("실행");
     // console.log(day);
   }, [date]);
 

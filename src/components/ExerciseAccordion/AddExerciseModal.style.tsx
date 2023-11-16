@@ -31,9 +31,10 @@ export const Wrapper = styled.div`
 export const PartsWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 10px 10px 0;
   gap: 5px;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 export const ExercisePartLabelWrapper = styled.span``;

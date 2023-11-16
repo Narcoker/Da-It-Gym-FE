@@ -14,6 +14,8 @@ import {
 } from "../../../../recoil/timerState";
 import { setInterval, clearInterval } from "worker-timers";
 import useExerciseDiaryAPI, { DiaryComplete } from "../../../../api/useExerciseDiaryAPI";
+import { useSearchParams } from "react-router-dom";
+import moment from "moment";
 
 interface Props {
   journalId: number;
@@ -26,7 +28,8 @@ export default function ExerciseNav({ journalId }: Props) {
   const [play, setPlay] = useRecoilState(playState);
   const [startTime, setStartTime] = useRecoilState(startTimeState);
   const { requestDiaryComplete } = useExerciseDiaryAPI();
-
+  const [query] = useSearchParams();
+  const date = query.get("date");
   const startTimer = () => {
     // 시작시간이 없는 경우 -> play
     if (play !== "play") {
@@ -109,20 +112,24 @@ export default function ExerciseNav({ journalId }: Props) {
   };
 
   return (
-    <S.FooterNav>
-      <CountDown />
-      <Timer />
-      <S.ButtonBox>
-        <S.Icon onClick={pauseTimer}>
-          <Icon.Pause size="24" color={`${COLOR.White}`} />
-        </S.Icon>
-        <S.StartIcon onClick={startHandler}>
-          <Icon.Start size="24" color={`${COLOR.White}`} />
-        </S.StartIcon>
-        <S.CheckIcon onClick={checkHandler}>
-          <Icon.CheckCircle size="24" color={`${COLOR.White}`} />
-        </S.CheckIcon>
-      </S.ButtonBox>
-    </S.FooterNav>
+    <>
+      {date === moment(new Date()).format("YYYY-MM-DD") && (
+        <S.FooterNav>
+          <CountDown />
+          <Timer />
+          <S.ButtonBox>
+            <S.Icon onClick={pauseTimer}>
+              <Icon.Pause size="24" color={`${COLOR.White}`} />
+            </S.Icon>
+            <S.StartIcon onClick={startHandler}>
+              <Icon.Start size="24" color={`${COLOR.White}`} />
+            </S.StartIcon>
+            <S.CheckIcon onClick={checkHandler}>
+              <Icon.CheckCircle size="24" color={`${COLOR.White}`} />
+            </S.CheckIcon>
+          </S.ButtonBox>
+        </S.FooterNav>
+      )}
+    </>
   );
 }

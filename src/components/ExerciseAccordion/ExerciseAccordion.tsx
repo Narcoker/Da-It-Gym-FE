@@ -75,7 +75,6 @@ export default function ExerciseAccordion({
     exerciseListId?: number,
   ): void => {
     console.log(exerciseListId);
-    dispatch({ type: "CREATE_EXERSISE_SET", dayIndex, exerciseIndex });
 
     if (exerciseListId) {
       const exercise = day!.exercises.filter(
@@ -87,7 +86,9 @@ export default function ExerciseAccordion({
         weights: 10,
         counts: 10,
       };
-      requestAddHistory(payload);
+      requestAddHistory(payload, exerciseIndex, dispatch as React.Dispatch<DayAction>);
+    } else {
+      dispatch({ type: "CREATE_EXERSISE_SET", dayIndex, exerciseIndex });
     }
   };
 

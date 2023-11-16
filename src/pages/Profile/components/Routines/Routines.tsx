@@ -65,6 +65,11 @@ export default function Routines() {
     }
   }, []);
 
+  useEffect(() => {
+    page.current = 0;
+    setRoutines([]);
+  }, [params.nickname]);
+
   return (
     <S.RoutineUsers>
       {routines.map(

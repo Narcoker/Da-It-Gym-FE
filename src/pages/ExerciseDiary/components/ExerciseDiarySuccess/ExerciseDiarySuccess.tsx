@@ -31,7 +31,7 @@ export default function ExerciseDiarySuccess({ day, dayDispatch, journalId }: Pr
     // spread,
   } = day;
   const backHandler = () => {
-    navigate("/diary");
+    navigate(-1);
   };
 
   const shareHandler = () => {
@@ -79,7 +79,7 @@ export default function ExerciseDiarySuccess({ day, dayDispatch, journalId }: Pr
               </Button>
             </>
           ) : (
-            <Button display="block" size="medium" type="fill" onClick={shareHandler}>
+            <Button display="block" size="medium" type="fill" onClick={backHandler}>
               뒤로
             </Button>
           )}
