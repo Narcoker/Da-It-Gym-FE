@@ -41,7 +41,7 @@ export default function Nav({ type }: Props) {
       )}
       {type === "home" && (
         <S.NavBottomWrapper>
-          <S.AllNoteBox onClick={() => handleNav("/feed/diary")}>
+          <S.AllNoteBox onClick={() => handleNav("/feed/diary?section=total")}>
             <S.NavIcon>
               <Icon.ExerciseLogs />
             </S.NavIcon>

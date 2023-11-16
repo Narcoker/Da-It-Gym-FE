@@ -13,6 +13,7 @@ export default function FeedDiary() {
   const query = searchParams.get("section");
   console.log("쿼리", query);
 
+  // scrollTop
   const scrollToTop = () => {
     if (topRef.current) {
       topRef.current.focus();

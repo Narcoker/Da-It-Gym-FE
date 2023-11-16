@@ -54,7 +54,7 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>루틴</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
-      <S.SideMenuBox onClick={() => handleNav("/feed/diary")}>
+      <S.SideMenuBox onClick={() => handleNav("/feed/diary?section=total")}>
         <S.SearchIcon>
           <Icon.ExerciseLogs />
         </S.SearchIcon>

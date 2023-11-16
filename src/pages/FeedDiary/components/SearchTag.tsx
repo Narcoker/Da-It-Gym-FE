@@ -1,6 +1,8 @@
 import { useState } from "react";
 import HashTagButton from "../../../components/HashtagButton/HashtagButton";
 import * as S from "./SearchTag.style";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { partListState, splitSearchState } from "../../../recoil/feedDiaryState";
 const division = [
   { id: "d1", label: "무분할", type: "division" },
   { id: "d2", label: "2분할", type: "division" },
@@ -20,21 +22,23 @@ const body = [
   { id: "b8", label: "유산소", type: "division" },
 ];
 function SearchTag() {
-  const [ActiveButtonId, setActiveButtonId] = useState("d2");
-  const [ActiveBody, setActiveBody] = useState<Array<string>>([]);
+  const [ActiveButtonId, setActiveButtonId] = useState("d1");
+  const setSplit = useSetRecoilState(splitSearchState);
+  const [PartList, setPartList] = useRecoilState<Array<string>>(partListState);
   const handleDivisionIsActive = (id: string, label: string) => {
-    console.log(id, label);
+    // console.log(id, label);
     setActiveButtonId(id);
+    setSplit(label);
   };
 
   const handleBodyIsActive = (label: string) => {
-    if (ActiveBody.includes(label)) {
-      setActiveBody(ActiveBody.filter((ele) => ele !== label));
+    if (PartList.includes(label)) {
+      setPartList(PartList.filter((ele) => ele !== label));
     } else {
-      setActiveBody([...ActiveBody, label]);
+      setPartList([...PartList, label]);
     }
-    console.log(ActiveBody);
   };
+  // console.log(PartList);
   return (
     <S.TagWrapper>
       <S.TagDivistionBox>
@@ -60,8 +64,8 @@ function SearchTag() {
               onClick={() => {
                 handleBodyIsActive(data.label);
               }}
-              isActive={ActiveBody.includes(data.label)}
-              //ActiveBody 배열에 label있으면 isActive값 true 로 전달
+              isActive={PartList.includes(data.label)}
+              //PartList 배열에 label있으면 isActive값 true 로 전달
             />
           </>
         ))}

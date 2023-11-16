@@ -9,7 +9,7 @@ export const BodyWrapper = styled.div`
   /* display: flex; */
   /* flex-wrap: wrap; */
   width: 100%;
-  height: 900px;
+  max-height: 830px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -23,12 +23,12 @@ export const BodyWrapper = styled.div`
 export const BodyBox = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  flex: 1;
   width: 100%;
 `;
 export const FeedElementBox = styled.div`
   width: 200px;
   max-height: 200px;
+  min-height: 200px;
   padding: 2px;
   background-color: ${COLOR.Gray1};
   @media (max-width: 600px) {
@@ -40,9 +40,8 @@ export const FeedElementBox = styled.div`
 export const Observer = styled.div`
   width: 100%;
   height: 10px;
-
-  background-color: green;
   opacity: 0.8;
+  background-color: ${COLOR.Green3};
 `;
 export const UpIcon = styled.div`
   display: flex;
