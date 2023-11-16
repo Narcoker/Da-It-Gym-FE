@@ -96,6 +96,7 @@ export function dayRecucer(day: Day, action: Action) {
 
     case "UPDATE_EXERCISE_REST_TIME": {
       const { exerciseIndex, newRestTime } = action;
+      console.log(exerciseIndex);
       newDay.exercises[exerciseIndex].restTime = newRestTime;
       return newDay;
     }

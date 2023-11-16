@@ -101,12 +101,13 @@ export default function ExerciseSetComponent({
     exerciseSetIndex: number,
   ) => {
     if (!exerciseSet?.completed) {
-      // console.log(restTime);
+      console.log(restTime);
       setRestTime({
         min: restTime!.minutes,
         sec: restTime!.seconds,
       });
-
+      localStorage.setItem("min", JSON.stringify(restTime!.minutes));
+      localStorage.setItem("sec", JSON.stringify(restTime!.seconds));
       startTimer();
     }
     dispatch!({

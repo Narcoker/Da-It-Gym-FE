@@ -23,7 +23,6 @@ export default function RestTimerSettingModal({
   restTime,
   dispatch,
   setIsOpenedRestTimerModal,
-  // day,
   exerciseListId,
 }: Props) {
   const minutesRef = useRef<HTMLInputElement>(null);
@@ -43,9 +42,11 @@ export default function RestTimerSettingModal({
     dispatch({ type: "UPDATE_EXERCISE_REST_TIME", dayIndex, exerciseIndex, newRestTime });
 
     if (location.pathname === "/diary") {
+      const minutes = parseInt(minutesRef.current?.value as string);
+      const seconds = parseInt(seconedsRef.current?.value as string);
       requestChangeRestTime(exerciseListId as number, {
-        minutes: parseInt(minutesRef.current?.value as string),
-        seconds: parseInt(seconedsRef.current?.value as string),
+        minutes: minutes,
+        seconds: seconds,
       });
     }
 

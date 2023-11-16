@@ -33,13 +33,13 @@ export default function ExerciseAccordion({
   // const [searchParams] = useSearchParams();
   // const date = searchParams.get("date");
 
-  const [isOpenedRestTimerModal, setIsOpenedRestTimerModal] = useState(false);
+  const [isOpenedRestTimerModal, setIsOpenedRestTimerModal] = useState(-1);
   const [isOpendAddExerciseModal, setIsOpenedAddExerciseModal] = useState(false);
   const { requestAddHistory, requestDeleteHistory, requestDeleteExercise } =
     useExerciseDiaryAPI();
 
-  const handleIsOpendRestTimeModal = () => {
-    setIsOpenedRestTimerModal(true);
+  const handleIsOpendRestTimeModal = (exerciseIndex: number) => {
+    setIsOpenedRestTimerModal(exerciseIndex);
   };
 
   const handleIsOpendAddExerciseModal = () => {
@@ -115,7 +115,7 @@ export default function ExerciseAccordion({
               <S.Part>{exercise.part}</S.Part>
             </S.LeftHeader>
             {type === "record" && (
-              <S.RightHeader onClick={handleIsOpendRestTimeModal}>
+              <S.RightHeader onClick={() => handleIsOpendRestTimeModal(exerciseIndex)}>
                 휴식시간 변경
               </S.RightHeader>
             )}
@@ -165,15 +165,14 @@ export default function ExerciseAccordion({
             </S.AccordionFooter>
           )}
 
-          {isOpenedRestTimerModal && (
+          {isOpenedRestTimerModal === exerciseIndex && (
             <RestTimerSettingModal
               dayIndex={dayIndex}
               exerciseIndex={exerciseIndex}
               restTime={exercise.restTime}
               dispatch={dispatch}
-              day={day}
               exerciseListId={exercise.id}
-              setIsOpenedRestTimerModal={setIsOpenedRestTimerModal}
+              setIsOpenedRestTimerModal={() => setIsOpenedRestTimerModal(-1)}
             />
           )}
         </S.Accordion>

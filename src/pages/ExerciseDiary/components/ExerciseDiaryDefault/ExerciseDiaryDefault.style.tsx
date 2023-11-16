@@ -52,6 +52,7 @@ export const ExerciseBox = styled.div`
   padding: 30px 30px 0 30px;
   gap: 10px;
   text-align: center;
+  padding-bottom: 100px;
 `;
 
 export const NoDiary = styled.span`

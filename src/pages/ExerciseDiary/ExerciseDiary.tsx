@@ -23,7 +23,7 @@ export default function ExerciseDiary() {
     console.log("실행");
     // console.log(day);
   }, [date]);
-
+  console.log(day);
   return (
     <>
       {day.completed ? (

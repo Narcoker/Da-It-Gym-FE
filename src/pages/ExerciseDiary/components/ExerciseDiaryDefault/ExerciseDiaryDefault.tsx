@@ -12,6 +12,7 @@ import Button from "../../../../components/Button/Button";
 import useExerciseDiaryAPI from "../../../../api/useExerciseDiaryAPI";
 import { isExistState, markState } from "../../../../recoil/exerciseState";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSearchParams } from "react-router-dom";
 
 interface Props {
   day: Day;
@@ -19,9 +20,8 @@ interface Props {
 }
 
 export default function ExerciseDiaryDefault({ day, dayDispatch }: Props) {
-  // const [searchParams] = useSearchParams();
-  // const date = searchParams.get("date");
-  // console.log(date);
+  const [searchParams] = useSearchParams();
+  const date = searchParams.get("date");
   const [showCalendar, setShowCalendar] = useState(true);
   const [value, onChange] = useState<Value>(new Date());
   const [isExist, setIsExist] = useRecoilState(isExistState);
@@ -49,25 +49,38 @@ export default function ExerciseDiaryDefault({ day, dayDispatch }: Props) {
         {showCalendar && <ExerciseCalendar value={value} onChange={onChange} />}
       </S.CalendarAccordion>
       {/* 운동목록들 */}
-      {!isExist ? (
-        <S.ExerciseBox>
-          <S.NoDiary>아직 일지를 작성하지 않았어요!</S.NoDiary>
-          <S.NoDiary>일지를 작성해 보세요</S.NoDiary>
-          <Button display="flex" size="medium" type="fill" onClick={addDiaryHandler}>
-            운동일지 추가하기
-          </Button>
-        </S.ExerciseBox>
-      ) : (
-        <S.ExerciseBox>
-          <ExerciseAccordion
-            exercises={day.exercises}
-            dayIndex={0}
-            dispatch={dayDispatch}
-            type="record"
-            day={day}
-          />
-        </S.ExerciseBox>
-      )}
+      <>
+        {date ? (
+          <>
+            {!isExist ? (
+              <S.ExerciseBox>
+                <S.NoDiary>아직 일지를 작성하지 않았어요!</S.NoDiary>
+                <S.NoDiary>일지를 작성해 보세요</S.NoDiary>
+                <Button
+                  display="flex"
+                  size="medium"
+                  type="fill"
+                  onClick={addDiaryHandler}
+                >
+                  운동일지 추가하기
+                </Button>
+              </S.ExerciseBox>
+            ) : (
+              <S.ExerciseBox>
+                <ExerciseAccordion
+                  exercises={day.exercises}
+                  dayIndex={0}
+                  dispatch={dayDispatch}
+                  type="record"
+                  day={day}
+                />
+              </S.ExerciseBox>
+            )}
+          </>
+        ) : (
+          <S.NoDiary>날짜를 선택해 주세요</S.NoDiary>
+        )}
+      </>
     </S.Wrapper>
   );
 }
