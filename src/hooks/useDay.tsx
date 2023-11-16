@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { Exercise, RestTime, getNewExercise } from "./useExercise";
 import { initExerciseSet } from "./useExerciseSet";
-import { ExerciseName, ExercisePart } from "../constants/excercise";
+import { ExercisePart } from "../constants/excercise";
 
 export interface ExerciseTime {
   hours: number;
@@ -21,7 +21,7 @@ export interface Day {
 
 export type Action =
   | { type: "CREATE_DAY"; newDay: Day }
-  | { type: "CREATE_EXERCISE"; exerciseName: ExerciseName; exercisePart: ExercisePart }
+  | { type: "CREATE_EXERCISE"; exerciseName: string; exercisePart: ExercisePart }
   | { type: "DELETE_EXERCISE" }
   | { type: "UPDATE_EXERCISES_IS_SPREAD" }
   | { type: "UPDATE_EXERCISE_NAME"; exerciseIndex: number; newName: string }

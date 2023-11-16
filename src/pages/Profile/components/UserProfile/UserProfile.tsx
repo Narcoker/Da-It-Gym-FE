@@ -44,9 +44,8 @@ export default function UserProfile() {
   const userInfo = useRecoilValue(userInfoState);
   const params = useParams();
   useEffect(() => {
-    console.log(params.nickname);
     requestProfile(params.nickname as string, setProfileData);
-  }, []);
+  }, [params.nickname]);
 
   const followModalHandler = () => {
     setFollowType("follow");

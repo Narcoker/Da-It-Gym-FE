@@ -49,9 +49,9 @@ export const ExerciseBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: center;
   padding: 30px 30px 0 30px;
   gap: 10px;
+  text-align: center;
 `;
 
 export const NoDiary = styled.span`

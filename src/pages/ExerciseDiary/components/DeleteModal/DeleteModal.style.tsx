@@ -25,6 +25,7 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100vh;
   background-color: ${COLOR.Shadow};
+  z-index: 1000;
 `;
 
 export const ButtonBox = styled.div`

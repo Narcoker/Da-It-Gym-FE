@@ -6,14 +6,17 @@ import * as Icon from "../Icon";
 import RestTimerSettingModal from "./RestTimerSettingModal";
 import { Exercise } from "../../hooks/useExercise";
 import { Action as RoutineAction } from "../../hooks/useRoutine";
-import { Action as DayAction } from "../../hooks/useDay";
+import { Day, Action as DayAction } from "../../hooks/useDay";
 import AddExerciseModal from "./AddExerciseModal";
+import useExerciseDiaryAPI, { AddHistory } from "../../api/useExerciseDiaryAPI";
+// import { useSearchParams } from "react-router-dom";
 
 export interface Props {
   exercises: Exercise[];
   dayIndex: number;
   dispatch: React.Dispatch<RoutineAction> | React.Dispatch<DayAction>;
   type: "record" | "recorded";
+  day?: Day;
 }
 
 // exerciseName에는 운동이름을 exercisePart에는 운동부위 코드를 입력하면됩니다.
@@ -25,9 +28,15 @@ export default function ExerciseAccordion({
   dayIndex,
   dispatch,
   type,
+  day,
 }: Props) {
+  // const [searchParams] = useSearchParams();
+  // const date = searchParams.get("date");
+
   const [isOpenedRestTimerModal, setIsOpenedRestTimerModal] = useState(false);
   const [isOpendAddExerciseModal, setIsOpenedAddExerciseModal] = useState(false);
+  const { requestAddHistory, requestDeleteHistory, requestDeleteExercise } =
+    useExerciseDiaryAPI();
 
   const handleIsOpendRestTimeModal = () => {
     setIsOpenedRestTimerModal(true);
@@ -41,20 +50,54 @@ export default function ExerciseAccordion({
     dispatch({ type: "UPDATE_EXERCISES_SETS_IS_SPREAD", dayIndex, exerciseIndex });
   };
 
-  const handleDeleteExersizeSet = (dayIndex: number, exerciseIndex: number): void => {
+  const handleDeleteExerciseSet = (
+    dayIndex: number,
+    exerciseIndex: number,
+    exerciseListId?: number,
+  ): void => {
     if (exercises[exerciseIndex].exerciseSets.length > 0) {
       dispatch({ type: "DELETE_EXERSISE_SET", dayIndex, exerciseIndex });
+
+      if (exerciseListId) {
+        const exercise = day!.exercises.filter(
+          (exercise) => exercise.id === exerciseListId,
+        );
+        const length = exercise[0].exerciseSets.length;
+        const exerciseSet = exercise[0].exerciseSets[length - 1];
+        requestDeleteHistory(exerciseSet.id as number);
+      }
     }
   };
 
-  const handleCreateExersizeSet = (dayIndex: number, exerciseIndex: number): void => {
+  const handleCreateExerciseSet = (
+    dayIndex: number,
+    exerciseIndex: number,
+    exerciseListId?: number,
+  ): void => {
+    console.log(exerciseListId);
     dispatch({ type: "CREATE_EXERSISE_SET", dayIndex, exerciseIndex });
+
+    if (exerciseListId) {
+      const exercise = day!.exercises.filter(
+        (exercise) => exercise.id === exerciseListId,
+      );
+      const payload: AddHistory = {
+        id: exerciseListId,
+        setNum: (exercise[0].exerciseSets.length + 1) as number,
+        weights: 10,
+        counts: 10,
+      };
+      requestAddHistory(payload);
+    }
   };
 
   const handleDeleteExercise = (dayIndex: number): void => {
     dispatch({ type: "DELETE_EXERCISE", dayIndex });
+    if (day && day.exercises.length > 0) {
+      const length = day.exercises.length;
+      requestDeleteExercise(day.exercises[length - 1].id as number);
+    }
   };
-
   return (
     <>
       {exercises.map((exercise, exerciseIndex) => (
@@ -89,6 +132,8 @@ export default function ExerciseAccordion({
                     exerciseIndex={exerciseIndex}
                     exerciseSetIndex={index}
                     dispatch={dispatch}
+                    exerciseSetId={exerciseSet.id}
+                    restTime={exercise.restTime}
                   />
                 ))}
               </>
@@ -100,7 +145,9 @@ export default function ExerciseAccordion({
                 display="flex"
                 type="border"
                 size="medium"
-                onClick={() => handleDeleteExersizeSet(dayIndex, exerciseIndex)}
+                onClick={() =>
+                  handleDeleteExerciseSet(dayIndex, exerciseIndex, exercise.id as number)
+                }
               >
                 세트 삭제
               </Button>
@@ -108,7 +155,9 @@ export default function ExerciseAccordion({
                 display="flex"
                 type="fill"
                 size="medium"
-                onClick={() => handleCreateExersizeSet(dayIndex, exerciseIndex)}
+                onClick={() =>
+                  handleCreateExerciseSet(dayIndex, exerciseIndex, exercise.id as number)
+                }
               >
                 세트 추가
               </Button>
@@ -121,6 +170,8 @@ export default function ExerciseAccordion({
               exerciseIndex={exerciseIndex}
               restTime={exercise.restTime}
               dispatch={dispatch}
+              day={day}
+              exerciseListId={exercise.id}
               setIsOpenedRestTimerModal={setIsOpenedRestTimerModal}
             />
           )}
@@ -150,6 +201,7 @@ export default function ExerciseAccordion({
 
       {isOpendAddExerciseModal && (
         <AddExerciseModal
+          day={day as Day}
           dayIndex={dayIndex}
           dispatch={dispatch}
           setIsOpenedAddExerciseModal={setIsOpenedAddExerciseModal}

@@ -2,10 +2,9 @@ import { useEffect, useRef } from "react";
 import * as S from "./ExerciseNav.style";
 import * as Icon from "../../../../components/Icon";
 import * as COLOR from "../../../../constants/color";
-import { useNavigate } from "react-router";
 import CountDown from "./CountDown";
 import Timer from "./Timer";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   Timer as TimerType,
   pauseTimeState,
@@ -14,17 +13,19 @@ import {
   timerState,
 } from "../../../../recoil/timerState";
 import { setInterval, clearInterval } from "worker-timers";
-import { useSearchParams } from "react-router-dom";
+import useExerciseDiaryAPI, { DiaryComplete } from "../../../../api/useExerciseDiaryAPI";
 
-export default function ExerciseNav() {
-  const navigate = useNavigate();
-  const setTimer = useSetRecoilState(timerState);
+interface Props {
+  journalId: number;
+}
+
+export default function ExerciseNav({ journalId }: Props) {
+  const [timer, setTimer] = useRecoilState(timerState);
   const [pauseTime, setPauseTime] = useRecoilState(pauseTimeState);
   const timerId = useRef(0);
   const [play, setPlay] = useRecoilState(playState);
   const [startTime, setStartTime] = useRecoilState(startTimeState);
-  const [searchParams] = useSearchParams();
-  const date = searchParams.get("date");
+  const { requestDiaryComplete } = useExerciseDiaryAPI();
 
   const startTimer = () => {
     // 시작시간이 없는 경우 -> play
@@ -86,7 +87,16 @@ export default function ExerciseNav() {
   };
 
   const checkHandler = () => {
-    navigate(`/diary?type=success&date=${date}`);
+    const payload: DiaryComplete = {
+      completed: true,
+      exerciseTime: {
+        hours: timer.hour,
+        minutes: timer.min,
+        seconds: timer.sec,
+      },
+    };
+    requestDiaryComplete(journalId, payload);
+    // navigate(`/diary?type=success&date=${date}`);
     // 운동시간 초기화
     setStartTime(0);
     setTimer({ hour: 0, min: 0, sec: 0 });

@@ -1,9 +1,11 @@
 import * as S from "./ExerciseCalendar.style";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useExerciseDiary from "../../api/useExerciseDiaryAPI";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { isExistState, markState } from "../../recoil/exerciseState";
 export type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
@@ -12,7 +14,7 @@ interface Props {
   onChange: React.Dispatch<React.SetStateAction<Value>>;
 }
 
-export interface Journals {
+export interface Journal {
   journalId: number;
   journalDate: string;
 }
@@ -23,36 +25,27 @@ export default function ExerciseCalendar({ value, onChange }: Props) {
   const currDateTime = moment(currDate).format("MM-DD");
   const { requestJournals } = useExerciseDiary();
   const navigate = useNavigate();
-  const [journals, setJournals] = useState<Journals[]>([
-    {
-      journalId: 1,
-      journalDate: "2023-10-03",
-    },
-    {
-      journalId: 2,
-      journalDate: "2023-10-10",
-    },
-    {
-      journalId: 3,
-      journalDate: "2023-10-13",
-    },
-  ]);
-  const mark = journals.map((journal) => journal.journalDate);
-
+  const [mark, setMark] = useRecoilState(markState);
+  // const mark = journals.map((journal) => journal.journalDate);
+  const setIsExist = useSetRecoilState(isExistState);
+  const location = useLocation();
+  // console.log(location.pathname);
   const dayHandler = (value: Value) => {
     const date = moment(value as Date).format("YYYY-MM-DD");
-    console.log(date);
-    if (mark.includes(date)) {
-      navigate(`/diary?type=success&date=${date}`);
-    } else {
+    if (location.pathname === "/diary") {
       navigate(`/diary?date=${date}`);
+      // console.log(mark);
+      if (mark.includes(date)) {
+        setIsExist(true);
+      } else {
+        setIsExist(false);
+      }
     }
   };
 
   useEffect(() => {
-    requestJournals(setJournals);
+    requestJournals(setMark);
   }, []);
-
   return (
     <S.StyleCalendar
       onChange={onChange}

@@ -6,6 +6,11 @@ import { Action as RoutineAction } from "../../hooks/useRoutine";
 import { Action as DayAction } from "../../hooks/useDay";
 import { ChangeEvent } from "react";
 import useRestTimer from "../../hooks/useRestTimer";
+import useExerciseDiaryAPI, { ChangeHistory } from "../../api/useExerciseDiaryAPI";
+import { useLocation } from "react-router";
+import { useSetRecoilState } from "recoil";
+import { restTimeState } from "../../recoil/timerState";
+import { RestTime } from "../../hooks/useExercise";
 
 interface Props {
   type: "title" | "record" | "recorded";
@@ -14,6 +19,8 @@ interface Props {
   exerciseIndex?: number;
   exerciseSetIndex?: number;
   dispatch?: React.Dispatch<RoutineAction> | React.Dispatch<DayAction>;
+  exerciseSetId?: number | null;
+  restTime?: RestTime;
 }
 
 export default function ExerciseSetComponent({
@@ -23,9 +30,13 @@ export default function ExerciseSetComponent({
   exerciseIndex,
   exerciseSet,
   exerciseSetIndex,
+  exerciseSetId,
+  restTime,
 }: Props) {
   const { startTimer } = useRestTimer();
-
+  const location = useLocation();
+  const { requestChangeHistory } = useExerciseDiaryAPI();
+  const setRestTime = useSetRecoilState(restTimeState);
   const weightsCheckHandler = (
     e: ChangeEvent<HTMLInputElement>,
     dayIndex: number,
@@ -41,6 +52,15 @@ export default function ExerciseSetComponent({
       exerciseSetIndex,
       newWeight: parseInt(newWeight),
     });
+
+    if (location.pathname === "/diary") {
+      const payload: ChangeHistory = {
+        weight: parseInt(newWeight),
+        count: exerciseSet!.counts,
+        completed: exerciseSet!.completed,
+      };
+      requestChangeHistory(exerciseSetId as number, payload);
+    }
 
     //중량이 변하면 list의 값을 업데이트하고 앞에 0이 연속적으로 등장하거나 숫자외의 값이 나오면 입력받지 않는 함
     newWeight = newWeight.replace(/^0+/, "");
@@ -62,6 +82,15 @@ export default function ExerciseSetComponent({
       newCounts: parseInt(newCounts),
     });
 
+    if (location.pathname === "/diary") {
+      const payload: ChangeHistory = {
+        weight: exerciseSet!.weights,
+        count: parseInt(newCounts),
+        completed: exerciseSet!.completed,
+      };
+      requestChangeHistory(exerciseSetId as number, payload);
+    }
+
     newCounts = newCounts.replace(/^0+/, "");
     e.target.value = newCounts;
   };
@@ -71,13 +100,30 @@ export default function ExerciseSetComponent({
     exerciseIndex: number,
     exerciseSetIndex: number,
   ) => {
-    startTimer();
+    if (!exerciseSet?.completed) {
+      // console.log(restTime);
+      setRestTime({
+        min: restTime!.minutes,
+        sec: restTime!.seconds,
+      });
+
+      startTimer();
+    }
     dispatch!({
       type: "UPDATE_EXERSISE_SET_COMPLETED",
       dayIndex,
       exerciseIndex,
       exerciseSetIndex,
     });
+
+    if (location.pathname === "/diary") {
+      const payload: ChangeHistory = {
+        weight: exerciseSet!.weights,
+        count: exerciseSet!.counts,
+        completed: !exerciseSet!.completed,
+      };
+      requestChangeHistory(exerciseSetId as number, payload);
+    }
   };
 
   return (

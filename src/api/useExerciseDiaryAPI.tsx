@@ -1,11 +1,16 @@
-import axios from "axios";
 import { toast } from "react-toastify";
-import { Journals } from "../components/ExerciseCalendar/ExerciseCalendar";
-import { Exercise } from "../hooks/useExercise";
+import { Journal } from "../components/ExerciseCalendar/ExerciseCalendar";
+import { Exercise, RestTime } from "../hooks/useExercise";
+import { useAxios } from "./useAxios";
+import { Action } from "../hooks/useDay";
+import { ExerciseSet } from "../hooks/useExerciseSet";
+import { SetterOrUpdater } from "recoil";
+import { useNavigate } from "react-router";
 
-export default function useExerciseDiary() {
+export default function useExerciseDiaryAPI() {
   const API_URL = import.meta.env.VITE_API_URL;
-
+  const axios = useAxios();
+  const navigate = useNavigate();
   // 휴식시간 변경
   const requestPatchRestTime = (exerciseListId: number) => {
     axios
@@ -15,36 +20,48 @@ export default function useExerciseDiary() {
   };
 
   // 운동일지 조회
-  const requestJournals = (
-    setJournals: React.Dispatch<React.SetStateAction<Journals[]>>,
-  ) => {
+  const requestJournals = (setMark: SetterOrUpdater<string[]>) => {
     axios
       .get(`${API_URL}/api/journals`)
       .then((res) => {
-        console.log(res.data);
-        setJournals(res.data);
+        // console.log(res.data.data.journals);
+        const journals: Journal[] = res.data.data.journals;
+        setMark(journals.map((journal) => journal.journalDate));
       })
       .catch((err) => toast.error(err.message));
   };
 
   //운동일지 상세조회
-  const requestJournalDetail = (journalDate: string) => {
+  const requestJournalDetail = (
+    journalDate: string,
+    dayDispatch?: React.Dispatch<Action>,
+  ) => {
     axios
       .get(`${API_URL}/api/journals/${journalDate}`)
       .then((res) => {
-        console.log(res.data);
+        if (dayDispatch) {
+          dayDispatch({ type: "CREATE_DAY", newDay: res.data.data.journal });
+        }
       })
-      .catch((err) => toast.error(err.message));
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   // 운동 기록 변경
   const requestPatchExerciseHistory = (
     exerciseHistoryId: number,
     payload: ExerciseHistoryPayload,
+    journalDate: string,
+    dayDispatch?: React.Dispatch<Action>,
   ) => {
     axios
       .patch(`${API_URL}/api/journals/${exerciseHistoryId}`, payload)
-      .then()
+      .then(() => {
+        if (dayDispatch) {
+          requestJournalDetail(journalDate, dayDispatch);
+        }
+      })
       .catch((err) => toast.error(err.message));
   };
 
@@ -76,7 +93,7 @@ export default function useExerciseDiary() {
   const requestPostJournal = (journalDate: string) => {
     axios
       .post(`${API_URL}/api/journals`, { journalDate })
-      .then()
+      .then((res) => console.log(res))
       .catch((err) => toast.error(err.message));
   };
 
@@ -96,6 +113,72 @@ export default function useExerciseDiary() {
       .catch((err) => toast.error(err.message));
   };
 
+  // 운동일지 완료
+  const requestDiaryComplete = (journalId: number, payload: DiaryComplete) => {
+    axios
+      .patch(`${API_URL}/api/journals/${journalId}/complete`, payload)
+      .then(() => window.location.reload())
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 일지에 운동 추가하기
+  const requestAddExercise = (payload: AddExercise) => {
+    axios
+      .post(`${API_URL}/api/journals/exercise-list`, payload)
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 운동에 운동기록 추가하기
+  const requestAddHistory = (payload: AddHistory) => {
+    axios
+      .post(`${API_URL}/api/journals/exercise-history`, payload)
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 운동기록 삭제하기
+  const requestDeleteHistory = (exerciseHistoryId: number) => {
+    axios
+      .delete(`${API_URL}/api/journals/exercise-history/${exerciseHistoryId}`)
+      .then(() => navigate(-1))
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 운동목록 삭제하기
+  const requestDeleteExercise = (exerciseListId: number) => {
+    axios
+      .delete(`${API_URL}/api/journals/exercise-list/${exerciseListId}`)
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 휴식시간 변경
+  const requestChangeRestTime = (exerciseListId: number, payload: RestTimePayload) => {
+    axios
+      .post(`${API_URL}/api/journals/exercise-list/${exerciseListId}/rest-time`, {
+        restTime: payload,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 운동 기록 변경
+  const requestChangeHistory = (exerciseHistoryId: number, payload: ChangeHistory) => {
+    axios
+      .patch(`${API_URL}/api/journals/exercise-history/${exerciseHistoryId}`, payload)
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
+  // 내 운동일지에 추가
+  const requestJournalReplication = (journalId: string, journalDate: string) => {
+    axios
+      .post(`${API_URL}/api/journals/${journalId}/replication`, { journalDate })
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
   return {
     requestPatchRestTime,
     requestJournals,
@@ -107,6 +190,14 @@ export default function useExerciseDiary() {
     requestDeleteExerciseHistory,
     requestPostExerciseList,
     requestPostExerciseHistory,
+    requestDiaryComplete,
+    requestAddExercise,
+    requestJournalReplication,
+    requestAddHistory,
+    requestDeleteHistory,
+    requestDeleteExercise,
+    requestChangeRestTime,
+    requestChangeHistory,
   };
 }
 
@@ -121,4 +212,42 @@ interface PostExerciseHistoryPayload {
   setNum: number;
   weight: number;
   repetitionCount: number;
+}
+
+export interface DiaryComplete {
+  completed: true;
+  exerciseTime: {
+    hours: number;
+    minutes: number;
+    seconds: number;
+  };
+}
+
+export interface AddExercise {
+  exerciseNum: number;
+  id: number | null;
+  order: number;
+  name: string;
+  part: string;
+  restTime: RestTime;
+  spread: boolean;
+  exerciseSets: ExerciseSet[];
+}
+
+export interface AddHistory {
+  id: number;
+  setNum: number;
+  weights: number;
+  counts: number;
+}
+
+interface RestTimePayload {
+  minutes: number;
+  seconds: number;
+}
+
+export interface ChangeHistory {
+  weight: number;
+  count: number;
+  completed: boolean;
 }

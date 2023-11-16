@@ -70,7 +70,7 @@ export default function FeedRoutineDetail() {
 
   const handleRoutineForWriteMyDiary = (routine: Routine) => {
     const dayIds = routine.days.map((day) => day.id).join(",");
-    navigate(`/feed/import/?id=${dayIds}`);
+    navigate(`/feed/import?id=${dayIds}`);
   };
 
   useEffect(() => {

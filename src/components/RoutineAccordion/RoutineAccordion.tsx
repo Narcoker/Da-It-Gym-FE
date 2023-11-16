@@ -38,7 +38,7 @@ export default function RoutineAccordion({
   };
 
   const handleDayForWriteMyDiary = (day: Day) => {
-    navigate(`/feed/import/?id=${day.id}`, {
+    navigate(`/feed/import?id=${day.id}`, {
       state: {
         day: day,
       },

@@ -173,17 +173,14 @@ export default function useProfileAPI() {
     nickname: string,
     page: number,
     setRoutines: React.Dispatch<React.SetStateAction<RoutineSummary[]>>,
-    setHasNext: React.Dispatch<React.SetStateAction<boolean>>,
-    setPage: React.Dispatch<React.SetStateAction<number>>,
+    hasNext: React.MutableRefObject<boolean>,
+    // setPage: React.Dispatch<React.SetStateAction<number>>,
   ) => {
     axios
-      .get(`${API_URL}/api/routines/${nickname}?page=${page}&size=1`)
+      .get(`${API_URL}/api/routines/${nickname}?page=${page}&size=20`)
       .then((res) => {
         setRoutines((prev) => [...prev, ...res.data.data.routines]);
-        setHasNext(res.data.data.hasNext);
-        if (res.data.data.hasNext) {
-          setPage((prev) => prev + 1);
-        }
+        hasNext.current = res.data.data.hasNext;
       })
       .catch((err) => toast.error(err.message));
   };
@@ -192,17 +189,14 @@ export default function useProfileAPI() {
   const requestFeedRoutineScrap = (
     setRoutines: React.Dispatch<React.SetStateAction<RoutineSummary[]>>,
     page: number,
-    setHasNext: React.Dispatch<React.SetStateAction<boolean>>,
-    setPage: React.Dispatch<React.SetStateAction<number>>,
+    hasNext: React.MutableRefObject<boolean>,
+    // setPage: React.Dispatch<React.SetStateAction<number>>,
   ) => {
     axios
       .get(`${API_URL}/api/routines/scraps?page=${page}&size=20`)
       .then((res) => {
         setRoutines((prev) => [...prev, ...res.data.data.routines]);
-        setHasNext(res.data.data.hasNext);
-        if (res.data.data.hasNext) {
-          setPage((prev) => prev + 1);
-        }
+        hasNext.current = res.data.data.hasNext;
       })
       .catch((err) => toast.error(err.message));
   };

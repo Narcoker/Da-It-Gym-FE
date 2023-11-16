@@ -14,18 +14,21 @@ export default function CountDown() {
   const timerId = useRef(0);
   const [restStart, setRestStart] = useRecoilState(restStartState);
   const [restTime, setRestTime] = useRecoilState(restTimeState);
+  const rest = useRef((restTime.min * 60 + restTime.sec) * 1000 + 2000);
+  const resetTime = useRef(restTime);
   useEffect(() => {
     if (restStart) {
       clearInterval(timerId.current);
+
       timerId.current = setInterval(() => {
         if (restTime.min <= 0 && restTime.sec <= 0) {
           // console.log("d");
           clearInterval(timerId.current);
           setRestStart(false);
-          setRestTime({ min: 1, sec: 0 });
+          setRestTime(resetTime.current);
         } else {
           setRestTime(() => {
-            const tmpSec = Math.floor((countDown + 7000 - Date.now()) / 1000);
+            const tmpSec = Math.floor((countDown + rest.current - Date.now()) / 1000);
             const newSec = tmpSec % 60;
             const tmpMin = Math.floor(tmpSec / 60);
             const newMin = tmpMin % 60;

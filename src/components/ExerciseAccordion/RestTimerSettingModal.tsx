@@ -2,8 +2,10 @@ import { ChangeEvent, useRef } from "react";
 import Button from "../Button/Button";
 import * as S from "./RestTimerSettingModal.style";
 import { Action as RoutineAction } from "../../hooks/useRoutine";
-import { Action as DayAction } from "../../hooks/useDay";
+import { Day, Action as DayAction } from "../../hooks/useDay";
 import { RestTime } from "../../hooks/useExercise";
+import useExerciseDiaryAPI from "../../api/useExerciseDiaryAPI";
+import { useLocation } from "react-router";
 
 interface Props {
   dayIndex: number;
@@ -11,6 +13,8 @@ interface Props {
   restTime: RestTime;
   dispatch: React.Dispatch<RoutineAction> | React.Dispatch<DayAction>;
   setIsOpenedRestTimerModal: React.Dispatch<React.SetStateAction<boolean>>;
+  day?: Day;
+  exerciseListId: number | null;
 }
 
 export default function RestTimerSettingModal({
@@ -19,10 +23,13 @@ export default function RestTimerSettingModal({
   restTime,
   dispatch,
   setIsOpenedRestTimerModal,
+  // day,
+  exerciseListId,
 }: Props) {
   const minutesRef = useRef<HTMLInputElement>(null);
   const seconedsRef = useRef<HTMLInputElement>(null);
-
+  const { requestChangeRestTime } = useExerciseDiaryAPI();
+  const location = useLocation();
   const handleIsOpendRestTimerModal = () => {
     setIsOpenedRestTimerModal(false);
   };
@@ -34,6 +41,14 @@ export default function RestTimerSettingModal({
       seconds: parseInt(seconedsRef.current?.value as string),
     };
     dispatch({ type: "UPDATE_EXERCISE_REST_TIME", dayIndex, exerciseIndex, newRestTime });
+
+    if (location.pathname === "/diary") {
+      requestChangeRestTime(exerciseListId as number, {
+        minutes: parseInt(minutesRef.current?.value as string),
+        seconds: parseInt(seconedsRef.current?.value as string),
+      });
+    }
+
     setIsOpenedRestTimerModal(false);
   };
 

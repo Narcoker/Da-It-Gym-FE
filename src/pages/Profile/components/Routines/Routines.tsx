@@ -24,29 +24,29 @@ export default function Routines() {
   const [query] = useSearchParams();
   const section = query.get("section");
   const [routines, setRoutines] = useState<RoutineSummary[]>([]);
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
+  const page = useRef(0);
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const [hasNext, setHasNext] = useState(true);
-  useEffect(() => {}, []);
+  const hasNext = useRef(true);
   const loadMoreFeed = () => {
     // 🔥 API 요청 loadMoreFeed() 불러오기 : 1) 불러올때 setFeedDiaryData에 담아서 가져오기 requestFeedDiary(nickname as string, page, 9, setFeedDiaryData);
     // 📧 요청할때 보내야할 데이터 1. 분할 2.가슴 어깨 등 .. 3. 전체보기 + 팔로우보기 + 추천 중에 무엇인지 담아서 요청
-    console.log("요청");
-    if (hasNext) {
+    if (hasNext.current) {
       switch (section) {
         case "routines":
           requestFeedRoutineList(
             params.nickname as string,
-            page,
+            page.current,
             setRoutines,
-            setHasNext,
-            setPage,
+            hasNext,
           );
           break;
         case "bookmark":
-          requestFeedRoutineScrap(setRoutines, page, setHasNext, setPage);
+          requestFeedRoutineScrap(setRoutines, page.current, hasNext);
           break;
       }
+
+      page.current += 1;
     }
   };
   // 무한 스크롤
@@ -55,6 +55,7 @@ export default function Routines() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           loadMoreFeed();
+          // console.log(page + 1);
           // isIntersecting 관찰 되었을때 🔥 API 요청 loadMoreFeed() 불러오기
         }
       }),
@@ -62,7 +63,8 @@ export default function Routines() {
     if (observerRef.current) {
       observer.observe(observerRef.current);
     }
-  }, [routines]);
+  }, []);
+
   return (
     <S.RoutineUsers>
       {routines.map(

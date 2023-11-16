@@ -45,7 +45,7 @@ function App() {
     { path: "/feed/routine/:routineId", element: <FeedRoutineDetail /> },
     { path: "/profile/edit", element: <EditProfile /> },
     { path: "/feed/search-user", element: <SearchUser /> },
-    { path: "/feed/import/:id", element: <FeedImport /> },
+    { path: "/feed/import", element: <FeedImport /> },
     { path: "/chat/:chatId", element: <Chat /> },
     { path: "/chat/search/user", element: <ChatSearchUser /> },
     { path: "/chat/rooms", element: <ChatRooms /> },
