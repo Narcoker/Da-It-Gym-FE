@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import * as Icon from "../Icon";
 import * as S from "./Carousel.style";
+import { imagesList } from "../../pages/FeedDiaryDetail/FeedDiaryDetail";
 interface Props {
-  list: List[];
-}
-interface List {
-  id: number;
-  url: string;
+  list: imagesList[];
 }
 
 function Carousel({ list }: Props) {
   console.log("list", list);
-  const ImgLength = list.length;
+  const ImgLength = list?.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const handlePrev = () => {
     console.log(currentIndex);
@@ -35,13 +32,18 @@ function Carousel({ list }: Props) {
     <>
       <S.CarouselWrapper>
         <S.CarouselListBox ImgLength={ImgLength} currentIndex={currentIndex}>
-          {list.map((data) => {
-            return (
-              <>
-                <S.CarouselElement src={data.url} alt={`img${data.id}`} />
-              </>
-            );
-          })}
+          {list &&
+            list.map((data) => {
+              return (
+                <>
+                  <S.CarouselElement
+                    key={data.imageId}
+                    src={data.imageUrl}
+                    alt={`img${data.imageId}`}
+                  />
+                </>
+              );
+            })}
         </S.CarouselListBox>
         {ImgLength > 1 && (
           <S.IconBox>
@@ -54,13 +56,14 @@ function Carousel({ list }: Props) {
           </S.IconBox>
         )}
         <S.DotBox>
-          {list.map((_, index) => {
-            return (
-              <S.Dot key={index} index={index} currentIndex={currentIndex}>
-                ●
-              </S.Dot>
-            );
-          })}
+          {list &&
+            list.map((_, index) => {
+              return (
+                <S.Dot key={index} index={index} currentIndex={currentIndex}>
+                  ●
+                </S.Dot>
+              );
+            })}
         </S.DotBox>
       </S.CarouselWrapper>
     </>

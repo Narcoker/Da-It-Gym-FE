@@ -5,7 +5,8 @@ export interface Props {
   display: "flex" | "block";
   type: "border" | "fill" | "deactivated";
   size: "medium" | "large";
-  onClick: () => void;
+  onClick?: () => void;
+  onClickWithEvent?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 // 기존의 type을 display로 변경했습니다.
@@ -15,28 +16,32 @@ export interface Props {
 // deactivated는 버튼이 비활성화일 때 사용하면 됩니다.
 // 불필요하게 큰 버튼도 있는 것 같아 size를 추가했습니다.
 
-export default function Button({ children, display, type, size, onClick }: Props) {
+export default function Button({
+  children,
+  display,
+  type,
+  size,
+  onClick,
+  onClickWithEvent,
+}: Props) {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (type !== "deactivated") {
+      if (onClick) {
+        onClick();
+      } else if (onClickWithEvent) {
+        onClickWithEvent(e);
+      }
+    }
+  };
   return (
     <>
       {display === "block" && (
-        <S.BlockButton
-          onClick={() => {
-            type !== "deactivated" && onClick();
-          }}
-          type={type}
-          size={size}
-        >
+        <S.BlockButton onClick={handleClick} type={type} size={size}>
           {children}
         </S.BlockButton>
       )}
       {display === "flex" && (
-        <S.FlexButton
-          onClick={() => {
-            type !== "deactivated" && onClick();
-          }}
-          type={type}
-          size={size}
-        >
+        <S.FlexButton onClick={handleClick} type={type} size={size}>
           {children}
         </S.FlexButton>
       )}

@@ -3,84 +3,84 @@ import * as S from "./FDSAccordion.style";
 import * as Icon from "../../../components/Icon";
 import { Action, Day } from "../../../hooks/useDay";
 import ExerciseAccordion from "../../../components/ExerciseAccordion/ExerciseAccordion";
-const tmpDay: Day = {
-  id: 21345,
-  order: 1, // 순서, dayNum -> order o
-  dayDate: new Date(), // 추가 o
-  exerciseTime: {
-    // 추가, 운동별 운동시간 o
-    hours: 0, // 무조건 0
-    minutes: 0, // 무조건 0
-    seconds: 0, // 무조건 0
-  },
-  completed: false, // 무조건 false, 추가 o
-  spread: false, // 무조건 false, isSpread -> spread o
-  exercises: [
-    {
-      id: 343567,
-      order: 0, //exerciseNum -> order o
-      name: "벤치 프레스",
-      part: "가슴",
-      restTime: {
-        hours: 0, //무조건 0, 추가 o
-        minutes: 1,
-        seconds: 0,
-      },
-      spread: false, // 무조건 false isSpread -> spread o
-      exerciseSets: [
-        {
-          id: 987654,
-          order: 1, // setNums -> order o
-          weights: 10,
-          counts: 1,
-          completed: false,
-        },
-        {
-          id: 987654,
-          order: 1, // setNums -> order o
-          weights: 10,
-          counts: 1,
-          completed: false,
-        },
-      ],
-    },
-    {
-      id: 343567,
-      order: 0, //exerciseNum -> order o
-      name: "데드리프트",
-      part: "등",
-      restTime: {
-        hours: 0, //무조건 0, 추가 o
-        minutes: 1,
-        seconds: 0,
-      },
-      spread: false, // 무조건 false isSpread -> spread o
-      exerciseSets: [
-        {
-          id: 987654,
-          order: 1, // setNums -> order o
-          weights: 10,
-          counts: 1,
-          completed: false,
-        },
-        {
-          id: 987654,
-          order: 1, // setNums -> order o
-          weights: 10,
-          counts: 1,
-          completed: false,
-        },
-        {
-          id: 987654,
-          order: 1, // setNums -> order o
-          weights: 10,
-          counts: 1,
-          completed: false,
-        },
-      ],
-    },
-  ],
-};
+// const tmpDay: Day = {
+//   id: 21345,
+//   order: 1, // 순서, dayNum -> order o
+//   dayDate: new Date(), // 추가 o
+//   exerciseTime: {
+//     // 추가, 운동별 운동시간 o
+//     hours: 0, // 무조건 0
+//     minutes: 0, // 무조건 0
+//     seconds: 0, // 무조건 0
+//   },
+//   completed: false, // 무조건 false, 추가 o
+//   spread: false, // 무조건 false, isSpread -> spread o
+//   exercises: [
+//     {
+//       id: 343567,
+//       order: 0, //exerciseNum -> order o
+//       name: "벤치 프레스",
+//       part: "가슴",
+//       restTime: {
+//         hours: 0, //무조건 0, 추가 o
+//         minutes: 1,
+//         seconds: 0,
+//       },
+//       spread: false, // 무조건 false isSpread -> spread o
+//       exerciseSets: [
+//         {
+//           id: 987654,
+//           order: 1, // setNums -> order o
+//           weights: 10,
+//           counts: 1,
+//           completed: false,
+//         },
+//         {
+//           id: 987654,
+//           order: 1, // setNums -> order o
+//           weights: 10,
+//           counts: 1,
+//           completed: false,
+//         },
+//       ],
+//     },
+//     {
+//       id: 343567,
+//       order: 0, //exerciseNum -> order o
+//       name: "데드리프트",
+//       part: "등",
+//       restTime: {
+//         hours: 0, //무조건 0, 추가 o
+//         minutes: 1,
+//         seconds: 0,
+//       },
+//       spread: false, // 무조건 false isSpread -> spread o
+//       exerciseSets: [
+//         {
+//           id: 987654,
+//           order: 1, // setNums -> order o
+//           weights: 10,
+//           counts: 1,
+//           completed: false,
+//         },
+//         {
+//           id: 987654,
+//           order: 1, // setNums -> order o
+//           weights: 10,
+//           counts: 1,
+//           completed: false,
+//         },
+//         {
+//           id: 987654,
+//           order: 1, // setNums -> order o
+//           weights: 10,
+//           counts: 1,
+//           completed: false,
+//         },
+//       ],
+//     },
+//   ],
+// };
 interface Props {
   day: Day;
   dayDispatch: React.Dispatch<Action>;
@@ -94,7 +94,7 @@ function FDSAccordion({ day, dayDispatch }: Props) {
     dayDispatch({ type: "CREATE_DAY", newDay });
   };
   useEffect(() => {
-    handleUpdateDiary(tmpDay);
+    handleUpdateDiary(day);
   }, []);
   return (
     <S.FDSAccoWrapper>

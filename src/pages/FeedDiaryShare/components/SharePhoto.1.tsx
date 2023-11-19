@@ -5,12 +5,7 @@ import Carousel from "../../../components/Carousel/Carousel";
 import { fileListState } from "../../../recoil/diaryshareState";
 import { useSetRecoilState } from "recoil";
 
-interface Props {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-}
-
-function SharePhoto({ formData }: Props) {
+export function SharePhoto() {
   const [showImages, setShowImages] = useState<{ imageId: number; imageUrl: string }[]>(
     [],
   );
@@ -20,7 +15,7 @@ function SharePhoto({ formData }: Props) {
     const ImagefileList = e.target.files;
     const imageUrlLists = [...showImages];
 
-    // 프론트에서 이미지 보여주기 임의로 위한 showImages 리스트
+    // 이미지 보여주기 임의로 위한 showImages 리스트
     if (ImagefileList) {
       for (let i = 0; i < ImagefileList.length; i++) {
         const currentImageURL = URL.createObjectURL(ImagefileList[i]);
@@ -29,19 +24,6 @@ function SharePhoto({ formData }: Props) {
     }
     setShowImages(imageUrlLists);
 
-    // formData에 값 넣어서 보내기
-    if (ImagefileList) {
-      Array.from(ImagefileList).forEach((file) => {
-        formData.append("imgFiles", file, "imgFiles");
-      });
-      setImagesList(formData);
-    }
-    console.log("FormData 내용:");
-    if (formData) {
-      for (const pair of formData.entries()) {
-        console.log("이미지 폼 데이터", pair[0], pair[1]);
-      }
-    }
     // if (ImagefileList) {
     //   const newData = Array.from(ImagefileList).map((file) => ({
     //     name: file.name,
@@ -49,9 +31,23 @@ function SharePhoto({ formData }: Props) {
     //   }));
     //   setImagesList(newData);
     // }
+    // formData에 값 넣어서 보내기
+    const formData = new FormData();
+    if (ImagefileList) {
+      Array.from(ImagefileList).forEach((file) => {
+        formData.append("files", file);
+      });
+      setImagesList(formData);
+      console.log(formData);
+    }
+    console.log("FormData 내용:");
+    if (ImageList) {
+      for (const pair of ImageList.entries()) {
+        console.log("ㅇㅇㅇ", pair[0], pair[1]);
+      }
+    }
   };
-  console.log("url", showImages);
-  console.log(showImages.length);
+
   const SubmitUpload = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -94,5 +90,3 @@ function SharePhoto({ formData }: Props) {
     </>
   );
 }
-
-export default SharePhoto;

@@ -35,6 +35,8 @@ export default function useExerciseDiaryAPI() {
   const requestJournalDetail = (
     journalDate: string,
     dayDispatch?: React.Dispatch<Action>,
+    setJournalId?: React.Dispatch<React.SetStateAction<number>> | undefined,
+    setSplitList?: React.Dispatch<React.SetStateAction<string[]>>,
     setIsExist?: SetterOrUpdater<boolean>,
   ) => {
     axios
@@ -42,10 +44,17 @@ export default function useExerciseDiaryAPI() {
       .then((res) => {
         if (dayDispatch) {
           dayDispatch({ type: "CREATE_DAY", newDay: res.data.data.journal });
-
-          if (setIsExist) {
-            setIsExist(true);
-          }
+        }
+        // 공유할때 jornalId값 저장해야함
+        if (res && setJournalId) {
+          setJournalId(res.data.data.journal.id);
+        }
+        // Split label 값 저장해야함
+        if (res && setSplitList) {
+          const parts = new Set<string>(
+            res.data.data.journal.exercises.map((exercise: AddExercise) => exercise.part),
+          );
+          setSplitList(Array.from<string>(parts));
         }
       })
       .catch(() => {

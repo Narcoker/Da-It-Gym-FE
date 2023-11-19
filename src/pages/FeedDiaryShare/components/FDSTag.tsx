@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import HashTagButton from "../../../components/HashtagButton/HashtagButton";
 import * as S from "./FDSTag.style";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userInfoState } from "../../../recoil/userInfoState";
+import { splitState } from "../../../recoil/diaryshareState";
+
+interface FDSTagProps {
+  splitList: Array<string>;
+}
 const division = [
   { id: "d1", label: "무분할", type: "division" },
   { id: "d2", label: "2분할", type: "division" },
@@ -19,14 +26,19 @@ const body = [
   { id: "b7", label: "복근", type: "division" },
   { id: "b8", label: "유산소", type: "division" },
 ];
-function FDSTag() {
-  const [ActiveButtonId, setActiveButtonId] = useState("d2");
-  const [ActiveBody, setActiveBody] = useState<Array<string>>([]);
+function FDSTag({ splitList }: FDSTagProps) {
+  const userInfo = useRecoilValue(userInfoState);
+  console.log(userInfo.preferredSplit);
+  const defaultSplitId = division.find((data) => data.label === userInfo.preferredSplit)
+    ?.id;
+  console.log("dasd", defaultSplitId);
+  const [ActiveButtonId, setActiveButtonId] = useState(defaultSplitId);
+  const setSplit = useSetRecoilState(splitState); // 리코일로 split값 저장하고 공유 버튼에서 split값 넣어서 제출
   const handleDivisionIsActive = (id: string, label: string) => {
     console.log(id, label);
     setActiveButtonId(id);
+    setSplit(label);
   };
-
   // const handleBodyIsActive = (label: string) => {
   //   if (ActiveBody.includes(label)) {
   //     setActiveBody(ActiveBody.filter((ele) => ele !== label));
@@ -36,7 +48,7 @@ function FDSTag() {
   //   console.log(ActiveBody);
   // };
   useEffect(() => {
-    setActiveBody(["가슴", "등", "어깨"]);
+    // setActiveBody(["가슴", "등", "어깨"]);
   }, []);
   return (
     <S.TagWrapper>
@@ -61,7 +73,7 @@ function FDSTag() {
               id={data.id}
               label={data.label}
               type="body"
-              isActive={ActiveBody.includes(data.label)}
+              isActive={splitList.includes(data.label)}
               //ActiveBody 배열에 label있으면 isActive값 true 로 전달
             />
           </>
