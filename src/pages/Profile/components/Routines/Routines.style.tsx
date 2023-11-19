@@ -9,3 +9,8 @@ export const RoutineUsers = styled.div`
 `;
 
 export const Observer = styled.div``;
+
+export const EmptySpan = styled.span`
+  display: flex;
+  text-align: center;
+`;

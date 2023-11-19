@@ -129,7 +129,9 @@ export default function UserProfile() {
             <option value="6분할">6분할+</option>
           </S.Select>
         </S.DivideBox>
-        <S.Introduce>{introduction}</S.Introduce>
+        <S.Introduce>
+          <pre>{introduction}</pre>
+        </S.Introduce>
       </S.Desc>
       {followType && <FollowModal type={followType} setFollowType={setFollowType} />}
       {isInbodyClick && <InbodyModal setIsInbodyClick={setIsInbodyClick} />}

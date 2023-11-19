@@ -35,16 +35,23 @@ export default function useExerciseDiaryAPI() {
   const requestJournalDetail = (
     journalDate: string,
     dayDispatch?: React.Dispatch<Action>,
+    setIsExist?: SetterOrUpdater<boolean>,
   ) => {
     axios
       .get(`${API_URL}/api/journals/${journalDate}`)
       .then((res) => {
         if (dayDispatch) {
           dayDispatch({ type: "CREATE_DAY", newDay: res.data.data.journal });
+
+          if (setIsExist) {
+            setIsExist(true);
+          }
         }
       })
-      .catch((err) => {
-        toast.error(err.message);
+      .catch(() => {
+        if (setIsExist) {
+          setIsExist(false);
+        }
       });
   };
 

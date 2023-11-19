@@ -90,5 +90,6 @@ export const Select = styled.select`
 export const Introduce = styled.div`
   width: 100%;
   height: 72px;
-  background-color: ${COLOR.Gray1};
+  font-size: ${FONT.S};
+  line-height: 1.2em;
 `;

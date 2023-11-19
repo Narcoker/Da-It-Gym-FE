@@ -31,7 +31,7 @@ export default function ExerciseDiarySuccess({ day, dayDispatch, journalId }: Pr
     // spread,
   } = day;
   const backHandler = () => {
-    navigate(-1);
+    navigate("/diary");
   };
 
   const shareHandler = () => {

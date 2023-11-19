@@ -20,7 +20,6 @@ export interface Journal {
 }
 
 export default function ExerciseCalendar({ value, onChange }: Props) {
-  // const day = moment(value).format("YYYY-MM-DD");
   const currDate = new Date();
   const currDateTime = moment(currDate).format("MM-DD");
   const { requestJournals } = useExerciseDiary();
@@ -46,6 +45,7 @@ export default function ExerciseCalendar({ value, onChange }: Props) {
   useEffect(() => {
     requestJournals(setMark);
   }, []);
+
   return (
     <S.StyleCalendar
       onChange={onChange}

@@ -6,27 +6,26 @@ import Nav from "../../components/Nav/Nav";
 import { useEffect } from "react";
 import useExerciseDiaryAPI from "../../api/useExerciseDiaryAPI";
 import { useDay } from "../../hooks/useDay";
-import { useRecoilValue } from "recoil";
-import { markState } from "../../recoil/exerciseState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isExistState, markState } from "../../recoil/exerciseState";
 
 export default function ExerciseDiary() {
   const [searchParams] = useSearchParams();
   const date = searchParams.get("date");
-
+  const [isExist, setIsExist] = useRecoilState(isExistState);
   const { requestJournalDetail } = useExerciseDiaryAPI();
   const [day, dayDispatch] = useDay();
   const mark = useRecoilValue(markState);
   useEffect(() => {
     if (mark.includes(date as string)) {
-      requestJournalDetail(date as string, dayDispatch);
+      if (date) {
+        requestJournalDetail(date as string, dayDispatch, setIsExist);
+      }
     }
-    console.log("실행");
-    // console.log(day);
-  }, [date]);
-  console.log(day);
+  }, [date, isExist]);
   return (
     <>
-      {day.completed ? (
+      {date && day.completed ? (
         <>
           <ExerciseDiarySuccess
             day={day}

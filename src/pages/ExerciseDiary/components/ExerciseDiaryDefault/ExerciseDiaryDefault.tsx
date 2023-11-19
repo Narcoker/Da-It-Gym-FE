@@ -13,6 +13,7 @@ import useExerciseDiaryAPI from "../../../../api/useExerciseDiaryAPI";
 import { isExistState, markState } from "../../../../recoil/exerciseState";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useSearchParams } from "react-router-dom";
+import FeedDiaryEmpty from "../../../../components/FeedEmptyDataUI/FeedDiaryEmpty";
 
 interface Props {
   day: Day;
@@ -78,7 +79,9 @@ export default function ExerciseDiaryDefault({ day, dayDispatch }: Props) {
             )}
           </>
         ) : (
-          <S.NoDiary>날짜를 선택해 주세요</S.NoDiary>
+          <FeedDiaryEmpty>
+            <S.NoDiary>날짜를 선택해 주세요</S.NoDiary>
+          </FeedDiaryEmpty>
         )}
       </>
     </S.Wrapper>

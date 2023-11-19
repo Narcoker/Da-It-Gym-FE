@@ -11,6 +11,7 @@ import {
 import { SetterOrUpdater } from "recoil";
 import { UserInfo } from "../recoil/userInfoState";
 import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
+import { Diary } from "../pages/Profile/components/Diaries/Diaries";
 
 interface EditProfilePayload {
   userProfileImg?: File;
@@ -153,18 +154,36 @@ export default function useProfileAPI() {
   };
 
   // 사용자 피드 운동일지 조회 요청
-  const requestFeedDiaryList = (nickname: string, page: number) => {
+  const requestFeedDiaryList = (
+    nickname: string,
+    page: number,
+    setFeedDiaryData: React.Dispatch<React.SetStateAction<Diary[]>>,
+  ) => {
     axios
       .get(`${API_URL}/api/feeds/user/${nickname}?page=${page}`)
-      .then((res) => console.log(res))
+      .then((res) => {
+        const totalPage = res.data.data.totalPage;
+        if (page <= totalPage) {
+          setFeedDiaryData(res.data.data.feedExerciseJournalLists);
+        }
+      })
       .catch((err) => toast.error(err.message));
   };
 
   // 피드 운동일지 보관함 조회
-  const requestFeedDiaryScrap = (nickname: string, page: number) => {
+  const requestFeedDiaryScrap = (
+    nickname: string,
+    page: number,
+    setFeedDiaryData: React.Dispatch<React.SetStateAction<Diary[]>>,
+  ) => {
     axios
       .get(`${API_URL}/api/feeds/user/${nickname}/scrap?page=${page}`)
-      .then((res) => console.log(res))
+      .then((res) => {
+        const totalPage = res.data.data.totalPage;
+        if (page <= totalPage) {
+          setFeedDiaryData(res.data.data.feedExerciseJournalLists);
+        }
+      })
       .catch((err) => toast.error(err.message));
   };
 

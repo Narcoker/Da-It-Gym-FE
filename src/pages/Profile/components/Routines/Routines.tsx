@@ -4,6 +4,7 @@ import RoutineUser from "../../../../components/RoutineUser/RoutineUser";
 import * as S from "./Routines.style";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
+import FeedDiaryEmpty from "../../../../components/FeedEmptyDataUI/FeedDiaryEmpty";
 
 export interface RoutineSummary {
   id: number;
@@ -16,6 +17,7 @@ export interface RoutineSummary {
   scraped: boolean;
   scrapCounts: number;
   createdAt: string;
+  division: number;
 }
 
 export default function Routines() {
@@ -72,21 +74,43 @@ export default function Routines() {
 
   return (
     <S.RoutineUsers>
-      {routines.map(
-        ({ title, author, authorImg, createdAt, likeCounts, scrapCounts, id }) => (
-          <RoutineUser
-            key={id}
-            routineId={id}
-            src={authorImg}
-            userName={author}
-            info={title}
-            timeAgo={createdAt}
-            likeCount={likeCounts}
-            shareCount={scrapCounts}
-            label="3분할"
-          />
-        ),
+      {routines.length > 0 ? (
+        <>
+          {routines.map(
+            ({
+              title,
+              author,
+              authorImg,
+              createdAt,
+              likeCounts,
+              scrapCounts,
+              id,
+              division,
+            }) => (
+              <RoutineUser
+                key={id}
+                routineId={id}
+                src={authorImg}
+                userName={author}
+                info={title}
+                timeAgo={createdAt}
+                likeCount={likeCounts}
+                shareCount={scrapCounts}
+                label={`${division}분할`}
+              />
+            ),
+          )}
+        </>
+      ) : (
+        <FeedDiaryEmpty>
+          <S.EmptySpan>
+            루틴이 없습니다.
+            <br />
+            나만의 루틴을 만들어 보세요!
+          </S.EmptySpan>
+        </FeedDiaryEmpty>
       )}
+
       <S.Observer ref={observerRef} />
     </S.RoutineUsers>
   );
