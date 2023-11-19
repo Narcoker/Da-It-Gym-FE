@@ -9,8 +9,9 @@ const membersData = [
     name: "쿼카",
     grade: "관리자",
     joinDate: "2023-01-01",
-    status: "가입",
+    status: "승인 대기",
     details: "보기",
+    approvalId: "approvalId1",
   },
   {
     no: 2,
@@ -18,8 +19,19 @@ const membersData = [
     name: "득근득근",
     grade: "트레이너",
     joinDate: "2023-01-01",
-    status: "승인 대기 중",
+    status: "트레이너 승인",
     details: "보기",
+    approvalId: "approvalId2", 
+  },
+  {
+    no: 3,
+    id: "user2",
+    name: "득근",
+    grade: "유저",
+    joinDate: "2023-01-01",
+    status: "승인 거부",
+    details: "보기",
+    approvalId: "approvalId3",
   },
 ];
 

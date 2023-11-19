@@ -14,6 +14,7 @@ interface Member {
   status: string; // 상태
   refusalReason?: string; // 거부 사유
   details: string; // 회원상세정보
+  approvalId: string;
 }
 
 interface CertificationAndAwards {
@@ -36,10 +37,6 @@ const AdminTable: React.FC<AdminTableProps> = ({ members }) => {
     awards: "수상 경력 정보",
     awardsProof: "수상 경력 증빙 자료",
   };
-
-  // const handleApproveClick = () => {
-  //   // 승인 로직 구현
-  // };
 
   // "보기" 클릭 시 상세 모달 열기
   const handleViewClick = (member: Member) => {
@@ -64,8 +61,8 @@ const AdminTable: React.FC<AdminTableProps> = ({ members }) => {
           <thead>
             <tr>
               <S.Th>No</S.Th>
-              <S.Th>아이디</S.Th>
-              <S.Th>이름</S.Th>
+              <S.Th>이메일</S.Th>
+              <S.Th>닉네임</S.Th>
               <S.Th>등급</S.Th>
               <S.Th>가입일</S.Th>
               <S.Th>상태</S.Th>

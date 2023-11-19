@@ -13,14 +13,19 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 97;
 `;
 
 export const Content = styled.div`
+  position: absolute;
   background-color: ${COLOR.White};
   padding: 20px;
   border-radius: 5px;
   box-shadow: ${COLOR.Shadow};
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
 `;
 
 export const TableBox = styled.div``;

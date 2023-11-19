@@ -1,6 +1,7 @@
-import * as S from "../../components/UserDetailModal/UserDetailModal.style";
+import React, { useState } from "react";
+import * as S from "./UserDetailModal.style";
 import Button from "../Button/Button";
-import { useState } from "react";
+import axios from "axios";
 
 interface Member {
   no: number;
@@ -10,13 +11,14 @@ interface Member {
   joinDate: string;
   status: string;
   refusalReason?: string;
+  approvalId: string;
 }
 
 interface CertificationAndAwards {
-  certification: string; //자격증
-  certificationProof: string; //수상경력 증빙자료
-  awards: string; // 수상경력
-  awardsProof: string; //수상경력 증빙자료
+  certification: string;
+  certificationProof: string;
+  awards: string;
+  awardsProof: string;
 }
 
 interface UserDetailModalProps {
@@ -30,26 +32,57 @@ function UserDetailModal({
   certificationAndAwards,
   onClose,
 }: UserDetailModalProps) {
-  const [selectedStatus, setSelectedStatus] = useState<string>(member.status); //상태값
-
-  const [refusalReason, setRefusalReason] = useState<string>(member.refusalReason || ""); //거부 사유
-  const [isConfirmButtonEnabled, setConfirmButtonEnabled] = useState<boolean>(
-    member.status !== "승인 거부" && member.status !== "트레이너 승인"
-  );
+  const [selectedStatus, setSelectedStatus] = useState<string>(member.status);
+  const [refusalReason, setRefusalReason] = useState<string>(member.refusalReason || "");
+  const [isConfirmButtonEnabled, setConfirmButtonEnabled] = useState<boolean>(false);
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStatus(e.target.value);
-    setConfirmButtonEnabled(e.target.value === "승인 거부" || e.target.value === "트레이너 승인");
+    const comparedStatus = member.status;
+    if (comparedStatus !== selectedStatus) {
+      setConfirmButtonEnabled(true);
+    }
   };
 
   const handleRefusalReasonChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setRefusalReason(e.target.value);
   };
 
-  const handleConfirmClick = () => {};
+  // 승인,거부 api
+  const handleConfirmClick = () => {
+    if (selectedStatus === "승인 거부") {
+      axios
+        .post(`/api/admins/approvals/${member.approvalId}/deny`, {
+          reason: refusalReason,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            member.status = "승인 거부";
+            member.refusalReason = refusalReason;
+          }
+        })
+        .catch((error) => {
+          console.error("API 호출 오류:", error);
+        });
+    } else if (selectedStatus === "트레이너 승인") {
+      axios
+        .post(`/api/admins/approvals/${member.approvalId}/ok`)
+        .then((response) => {
+          if (response.status === 200) {
+            member.status = "트레이너 승인";
+          }
+        })
+        .catch((error) => {
+          console.error("API 호출 오류:", error);
+        });
+    }
+    // 모달 닫기
+    onClose();
+  };
 
   return (
-    <S.Overlay>
+    <>
+      <S.Overlay />
       <S.Content>
         <S.Title>회원 상세 정보</S.Title>
         <S.Table>
@@ -78,7 +111,7 @@ function UserDetailModal({
               <S.HeadTd>상태</S.HeadTd>
               <S.Td>
                 <select value={selectedStatus} onChange={handleStatusChange}>
-                  <option value="승인대기">승인대기</option>
+                  <option value="승인 대기">승인 대기</option>
                   <option value="트레이너 승인">트레이너 승인</option>
                   <option value="승인 거부">승인 거부</option>
                 </select>
@@ -146,7 +179,7 @@ function UserDetailModal({
           </Button>
         </S.BtnBox>
       </S.Content>
-    </S.Overlay>
+    </>
   );
 }
 
