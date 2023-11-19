@@ -20,18 +20,20 @@ export default function useFeedDiaryAPI() {
     await axios
       .get(`${FeedDetail_Base_URL}?page=${page}&split=${split}&${partParams}`)
       .then((response) => {
-        console.log(response.data.data);
-        setFeedDiaryData((prevData) => ({
-          ...prevData,
-          totalPage: response.data.data.totalPage,
-          feedExerciseJournalList:
-            page !== 0
-              ? [
-                  ...(prevData.feedExerciseJournalList || []),
-                  ...(response.data.data.feedExerciseJournalList || []),
-                ]
-              : response.data.data.feedExerciseJournalList || [],
-        }));
+        console.log("전체보기 데이터", response.data.data);
+        if (response.data.data) {
+          setFeedDiaryData((prevData) => ({
+            ...prevData,
+            totalPage: response.data.data.totalPage,
+            feedExerciseJournalLists:
+              page !== 0
+                ? [
+                    ...(prevData.feedExerciseJournalLists || []),
+                    ...(response.data.data.feedExerciseJournalLists || []),
+                  ]
+                : [...(response.data.data.feedExerciseJournalLists || [])],
+          }));
+        }
       })
       .catch((err) => toast.error(err.message));
   };
@@ -50,13 +52,13 @@ export default function useFeedDiaryAPI() {
         setFeedDiaryData((prevData) => ({
           ...prevData,
           totalPage: response.data.data.totalPage,
-          feedExerciseJournalList:
+          feedExerciseJournalLists:
             page !== 0
               ? [
-                  ...(prevData.feedExerciseJournalList || []),
-                  ...(response.data.data.feedExerciseJournalList || []),
+                  ...(prevData.feedExerciseJournalLists || []),
+                  ...(response.data.data.feedExerciseJournalLists || []),
                 ]
-              : response.data.data.feedExerciseJournalList || [],
+              : [...(response.data.data.feedExerciseJournalLists || [])],
         }));
       })
       .catch((err) => toast.error(err.message));

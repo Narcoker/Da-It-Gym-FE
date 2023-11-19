@@ -19,6 +19,10 @@ export const TitleLink = styled(Link)<Props>`
   align-items: center;
   text-decoration: none;
   color: ${(props) => (props.active ? COLOR.Primary : COLOR.Gray2)};
-  border: ${(props) =>
-    props.active ? `2px solid ${COLOR.Primary}` : `1px solid ${COLOR.Gray2}`};
+  border-bottom: 1px solid ${COLOR.Gray1};
+  border-right: 1px solid ${COLOR.Gray1};
+  border-top: ${(props) => (props.active ? `1px solid ${COLOR.Primary}` : `transparent`)};
+  &:last-child {
+    border-right: 1px solid transparent;
+  }
 `;

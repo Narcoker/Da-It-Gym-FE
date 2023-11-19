@@ -18,13 +18,13 @@ import FeedDiaryEmpty from "../../../components/FeedEmptyDataUI/FeedDiaryEmpty";
 // }
 export interface FeedDiaryData {
   totalPage: number;
-  feedExerciseJournalList: FeedListProps[];
+  feedExerciseJournalLists: FeedListProps[];
 }
 interface FeedListProps {
   id: number;
   likes: number;
   scrapCounts: number;
-  images: string;
+  image: string;
 }
 function FeedDiaryBody() {
   const [searchParams] = useSearchParams();
@@ -34,7 +34,7 @@ function FeedDiaryBody() {
   const [page, setPage] = useState(0);
   const [feedDiaryData, setFeedDiaryData] = useState<FeedDiaryData>({
     totalPage: 0,
-    feedExerciseJournalList: [],
+    feedExerciseJournalLists: [],
   });
   const split = useRecoilValue(splitSearchState);
   const partList = useRecoilValue(partListState);
@@ -69,8 +69,8 @@ function FeedDiaryBody() {
       observer.observe(observerRef.current);
     }
   }, []);
-  console.log(page, feedDiaryData.totalPage, page < feedDiaryData.totalPage);
-  console.log("page", page);
+  // console.log(page, feedDiaryData.totalPage, page < feedDiaryData.totalPage);
+  // console.log("page", page);
   // console.log("피드 다이어리 데이터", feedDiaryData.feedExerciseJournalList);
   useEffect(() => {
     const fetchData = async () => {
@@ -79,12 +79,13 @@ function FeedDiaryBody() {
       } else if (query === "follow") {
         await requestFeedDetailFollow(page, split, partList, setFeedDiaryData);
       }
-      console.log("page", page);
-      console.log(feedDiaryData.totalPage);
+      // console.log("page", page);
+      // console.log(feedDiaryData);
     };
     fetchData();
     // console.log("page", page);
   }, [split, partList, query]);
+  console.log("feedDiaryData", feedDiaryData);
   useEffect(() => {
     setPage(0);
     console.log("🔥");
@@ -92,14 +93,14 @@ function FeedDiaryBody() {
   return (
     <>
       <S.BodyWrapper>
-        {feedDiaryData.feedExerciseJournalList.length > 0 ? (
+        {feedDiaryData.feedExerciseJournalLists.length > 0 ? (
           <>
             <S.BodyBox>
-              {feedDiaryData.feedExerciseJournalList.map((data) => (
+              {feedDiaryData.feedExerciseJournalLists.map((data) => (
                 <>
                   <S.FeedElementBox key={data.id} onClick={() => handleNavigate(data.id)}>
                     <FeedPreview
-                      src={data.images}
+                      src={data.image}
                       likeCount={data.likes}
                       shareCount={data.scrapCounts}
                     />
@@ -107,7 +108,7 @@ function FeedDiaryBody() {
                 </>
               ))}
             </S.BodyBox>
-            <S.Observer ref={observerRef} />
+            {page <= feedDiaryData.totalPage && <S.Observer ref={observerRef} />}
           </>
         ) : (
           <FeedDiaryEmpty
