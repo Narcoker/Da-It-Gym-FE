@@ -12,11 +12,11 @@ function FeedInteractionInfo({ likeCnt, shareCnt }: FeedInteractionInfoProps) {
     <div>
       <S.CntBox>
         <S.IconDiv>
-          <Icon.HeartFill size="24" color={COLOR.Red} />
+          <Icon.Heart size="16" color={COLOR.Red} />
         </S.IconDiv>
         <S.LikeCnt>{likeCnt}</S.LikeCnt>
         <S.IconDiv>
-          <Icon.Share size="24" color={COLOR.Primary} />
+          <Icon.Share size="16" color={COLOR.Primary} />
         </S.IconDiv>
         <S.ShareCnt>{shareCnt}</S.ShareCnt>
       </S.CntBox>

@@ -25,6 +25,7 @@ export const WriterProfileImgWrapper = styled.div`
   height: 48px;
   border-radius: 10px;
   background-color: ${COLOR.White};
+  cursor: pointer;
 `;
 
 export const WriterProfileImg = styled.img`
@@ -59,7 +60,9 @@ export const BoardWritedTime = styled.span`
   color: ${COLOR.Gray2};
 `;
 
-export const BoardDescriptionWrapper = styled.div``; // 고민 중
+export const BoardDescriptionWrapper = styled.div`
+  margin-bottom: 40px;
+`;
 
 export const Description = styled.p`
   padding: 2px 0;

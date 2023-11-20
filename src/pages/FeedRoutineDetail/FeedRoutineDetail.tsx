@@ -36,6 +36,10 @@ export default function FeedRoutineDetail() {
   const user = useRecoilValue(userInfoState);
   const isMyFeed = user.nickname === routineDetailState.writer;
 
+  const handleClickProfileImg = (nickname: string) => {
+    navigate(`/profile/${nickname}?section=routines`);
+  };
+
   const handleToggleLike = async (liked: boolean) => {
     const newLikeCounts = liked
       ? await requestDislike(routineId as string)
@@ -57,15 +61,16 @@ export default function FeedRoutineDetail() {
   const handleUpdateRoutine = async (routineId: number) => {
     const response = await requestDetailRoutine(routineId);
     const { routine, ...routineDetail } = response;
-
+    console.log(response);
     dispatch({ type: "UPDATE_ROUTINE", newRoutine: routine });
     setRoutineDetailState(routineDetail);
   };
 
-  const handleWriteMyRoutine = (routine: Routine) => {
+  const handleWriteMyRoutine = (routine: Routine, division: number) => {
     navigate(`/feed/routine/new`, {
       state: {
         routine,
+        division,
       },
     });
   };
@@ -85,7 +90,11 @@ export default function FeedRoutineDetail() {
       <S.BoardContainer>
         <S.BoardHeader>
           <S.WriterInfoWrapper>
-            <S.WriterProfileImgWrapper>
+            <S.WriterProfileImgWrapper
+              onClick={() => {
+                handleClickProfileImg(routineDetailState.writer);
+              }}
+            >
               <S.WriterProfileImg src={routineDetailState.writerImg} alt="img" />
             </S.WriterProfileImgWrapper>
             <S.BoardTitle>{routineDetailState.writer}</S.BoardTitle>
@@ -152,7 +161,7 @@ export default function FeedRoutineDetail() {
 
           <S.UserInterectionWrapper
             onClick={() => {
-              handleWriteMyRoutine(routine);
+              handleWriteMyRoutine(routine, routineDetailState.division);
             }}
           >
             <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />

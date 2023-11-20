@@ -24,7 +24,7 @@ export const WriterProfileImgWrapper = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background-color: ${COLOR.Gray1};
+  background-color: ${COLOR.White};
   overflow: hidden;
 `;
 

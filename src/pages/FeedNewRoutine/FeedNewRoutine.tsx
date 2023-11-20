@@ -40,6 +40,8 @@ function FeedNewRoutine() {
 
   useEffect(() => {
     const friendRoutine: Routine = location.state?.routine;
+    const friendRoutineDivision = location.state?.division;
+    friendRoutineDivision && setSelectedDivision(location.state?.division);
     friendRoutine && dispatch({ type: "UPDATE_ROUTINE", newRoutine: friendRoutine });
   }, []);
 

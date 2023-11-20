@@ -9,6 +9,7 @@ import { Action as RoutineAction } from "../../hooks/useRoutine";
 import { Day, Action as DayAction } from "../../hooks/useDay";
 import AddExerciseModal from "./AddExerciseModal";
 import useExerciseDiaryAPI, { AddHistory } from "../../api/useExerciseDiaryAPI";
+import { useLocation } from "react-router";
 // import { useSearchParams } from "react-router-dom";
 
 export interface Props {
@@ -32,7 +33,7 @@ export default function ExerciseAccordion({
 }: Props) {
   // const [searchParams] = useSearchParams();
   // const date = searchParams.get("date");
-
+  const location = useLocation();
   const [isOpenedRestTimerModal, setIsOpenedRestTimerModal] = useState(-1);
   const [isOpendAddExerciseModal, setIsOpenedAddExerciseModal] = useState(false);
   const { requestAddHistory, requestDeleteHistory, requestDeleteExercise } =
@@ -74,14 +75,12 @@ export default function ExerciseAccordion({
     exerciseIndex: number,
     exerciseListId?: number,
   ): void => {
-    console.log(exerciseListId);
-
-    if (exerciseListId) {
+    if (location.pathname === "/diary") {
       const exercise = day!.exercises.filter(
         (exercise) => exercise.id === exerciseListId,
       );
       const payload: AddHistory = {
-        id: exerciseListId,
+        id: exerciseListId as number,
         setNum: (exercise[0].exerciseSets.length + 1) as number,
         weights: 10,
         counts: 10,

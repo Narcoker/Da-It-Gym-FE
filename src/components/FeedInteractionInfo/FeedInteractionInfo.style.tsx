@@ -16,5 +16,8 @@ export const IconDiv = styled.div`
 `;
 export const LikeCnt = styled.div`
   margin-right: 14px;
+  font-size: ${FONT.S};
 `;
-export const ShareCnt = styled.div``;
+export const ShareCnt = styled.div`
+  font-size: ${FONT.S};
+`;

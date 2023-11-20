@@ -6,6 +6,7 @@ type RoutineDetail = {
   createdAt: string;
   title: string;
   description: string;
+  division: number;
   liked: boolean;
   likeCounts: number;
   scraped: boolean;
@@ -18,6 +19,7 @@ const initialState = {
   createdAt: "",
   title: "제목",
   description: "내용을 불러오는 중 입니다...",
+  division: 1,
   liked: false,
   likeCounts: 0,
   scraped: false,

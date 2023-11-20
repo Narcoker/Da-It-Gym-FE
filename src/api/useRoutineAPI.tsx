@@ -31,6 +31,7 @@ export interface ResponseDetailRoutine {
   createdAt: string;
   title: string;
   description: string;
+  division: number;
   liked: boolean;
   likeCounts: number;
   scraped: boolean;

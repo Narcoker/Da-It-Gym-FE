@@ -4,6 +4,13 @@ import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 import { UserInfo, userInfoState } from "../recoil/userInfoState";
 
+export interface ResponseSearchUser {
+  userImg: string;
+  nickname: string;
+  info: string;
+  inbodyScore: number;
+}
+
 export function useUserAPI() {
   const axios = useAxios();
   const API_URL = import.meta.env.VITE_API_URL;
@@ -108,11 +115,25 @@ export function useUserAPI() {
       .catch((error) => toast.error(error.message));
   };
 
+  // 유저 검색
+  const requestSearchUser = async (
+    nickname: string,
+    page: number,
+  ): Promise<ResponseSearchUser> => {
+    const size = 10;
+    const response = await axios
+      .get(`${API_URL}/api/users/search?nickname=${nickname}&page=${page}&size=${size}`)
+      .then((response) => response.data.data)
+      .catch((error) => toast.error(error.message));
+    return response;
+  };
+
   return {
     requestKaKaoLogin,
     requestLogout,
     requestDeleteKaKaoWithdraw,
     requestPatchNickname,
     requestDuplicatedNickname,
+    requestSearchUser,
   };
 }
