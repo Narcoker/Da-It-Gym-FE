@@ -4,6 +4,7 @@ import Nav from "../../components/Nav/Nav";
 import RoutineUser from "../../components/RoutineUser/RoutineUser";
 import * as S from "./FeedRoutine.style";
 import useRoutineAPI, { RoutineInfo } from "../../api/useRoutineAPI";
+import FeedDiaryEmpty from "../../components/FeedEmptyDataUI/FeedDiaryEmpty";
 
 // const tempData: RoutineInfo[] = [
 //   {
@@ -241,6 +242,15 @@ export default function FeedRoutine() {
       </S.Header>
 
       <S.Routines ref={routinesRef}>
+        {routines.length === 0 && (
+          <FeedDiaryEmpty>
+            <S.EmptySpan>
+              루틴이 없습니다.
+              <br />
+              누구보다 먼저 루틴을 만들어보세요!
+            </S.EmptySpan>
+          </FeedDiaryEmpty>
+        )}
         {routines.map((routine) => (
           <RoutineUser
             key={routine.id}

@@ -69,3 +69,8 @@ export const Routines = styled.div`
     display: none;
   }
 `;
+
+export const EmptySpan = styled.span`
+  display: flex;
+  text-align: center;
+`;
