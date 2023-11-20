@@ -25,9 +25,13 @@ export const WriterProfileImgWrapper = styled.div`
   height: 48px;
   border-radius: 10px;
   background-color: ${COLOR.Gray1};
+  overflow: hidden;
 `;
 
-export const WriterProfileImg = styled.img``;
+export const WriterProfileImg = styled.img`
+  width: inherit;
+  height: inherit;
+`;
 
 export const Select = styled.select`
   padding: 2px 10px;

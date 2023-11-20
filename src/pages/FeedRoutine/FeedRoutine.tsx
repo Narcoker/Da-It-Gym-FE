@@ -245,12 +245,12 @@ export default function FeedRoutine() {
           <RoutineUser
             key={routine.id}
             routineId={routine.id}
-            src={routine.userImg}
+            src={routine.authorImg}
             userName={routine.author}
             info={routine.title}
             likeCount={routine.likeCounts}
             shareCount={routine.scrapCounts}
-            timeAgo={new Date(routine.createdAt).toLocaleString()}
+            timeAgo={routine.createdAt}
             label={selectedDivision}
           />
         ))}

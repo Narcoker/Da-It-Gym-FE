@@ -42,6 +42,7 @@ export const Tab = styled.div<TabProps>`
   justify-content: center;
   height: 60px;
   flex: 1;
+  color: ${({ isSelected }) => (isSelected ? COLOR.Primary : COLOR.Gray2)};
   border-top: 1px solid ${COLOR.Gray1};
   border-top-color: ${({ isSelected }) => (isSelected ? COLOR.Primary : "transparent")};
   border-right: 1px solid ${COLOR.Gray1};

@@ -55,7 +55,7 @@ export interface RoutineInfo {
   title: string;
   likeCounts: number;
   scrapCounts: number;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface ResponseExercise {

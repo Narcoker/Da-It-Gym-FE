@@ -5,6 +5,7 @@ import HashTagButton from "../HashtagButton/HashtagButton";
 import { HashTagButtonProps } from "../HashtagButton/HashtagButton";
 import useCounts from "../../hooks/useCounts";
 import { useNavigate } from "react-router";
+import { useTimeCalculate } from "../../api/useTimeCalculate";
 interface Props extends HashTagButtonProps {
   routineId: number;
   src: string;
@@ -25,10 +26,11 @@ function RoutineUser({
   timeAgo,
   label,
 }: Props) {
-  const infomation = info.slice(0, Math.min(130, info.length)).concat("...");
+  const infomation = info.slice(0, Math.min(130, info.length));
   const reduceCount = useCounts();
 
   const navigate = useNavigate();
+  const timeCalculator = useTimeCalculate();
 
   return (
     <S.RoutineUserWrapper
@@ -64,7 +66,7 @@ function RoutineUser({
           <S.RoutineDivide>
             <HashTagButton label={label} type="division" />
           </S.RoutineDivide>
-          <S.RoutineTime>{timeAgo}</S.RoutineTime>
+          <S.RoutineTime>{timeCalculator(timeAgo)}</S.RoutineTime>
         </S.BottomBox>
       </S.RoutineBottom>
     </S.RoutineUserWrapper>

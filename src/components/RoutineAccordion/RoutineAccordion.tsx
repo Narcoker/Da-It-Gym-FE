@@ -62,8 +62,12 @@ export default function RoutineAccordion({
                     handleDayForWriteMyDiary(day);
                   }}
                 >
-                  <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
-                  <S.UseFunctionText>내 운동일지로 작성하기</S.UseFunctionText>
+                  {type === "recorded" && (
+                    <>
+                      <Icon.AddCircle size={FONT.M} color={COLOR.Gray2} />
+                      <S.UseFunctionText>내 운동일지로 작성하기</S.UseFunctionText>
+                    </>
+                  )}
                 </S.UseDayWrapper>
               </S.UserInterectionWrapper>
             </S.RoutineHeader>

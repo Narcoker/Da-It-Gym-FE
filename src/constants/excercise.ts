@@ -13,27 +13,6 @@ export interface partLabel {
   type: "part" | "exercise";
 }
 
-// export const getExcercisePartName = (exercisePart: ExercisePart) => {
-//   switch (exercisePart) {
-//     case "chest":
-//       return "가슴";
-//     case "back":
-//       return "등";
-//     case "shoulders":
-//       return "어깨";
-//     case "legs":
-//       return "하체";
-//     case "biceps":
-//       return "이두";
-//     case "triceps":
-//       return "삼두";
-//     case "abs":
-//       return "복근";
-//     case "cardio":
-//       return "유산소";
-//   }
-// };
-
 export const partLabels: partLabel[] = [
   {
     exercisePart: "가슴",
@@ -61,6 +40,10 @@ export const partLabels: partLabel[] = [
   },
   {
     exercisePart: "유산소",
+    type: "part",
+  },
+  {
+    exercisePart: "하체",
     type: "part",
   },
 ];
