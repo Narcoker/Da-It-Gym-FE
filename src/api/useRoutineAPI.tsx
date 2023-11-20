@@ -50,7 +50,7 @@ export interface ResponseRoutines {
 
 export interface RoutineInfo {
   id: number;
-  userImg: string;
+  authorImg: string;
   author: string;
   title: string;
   likeCounts: number;

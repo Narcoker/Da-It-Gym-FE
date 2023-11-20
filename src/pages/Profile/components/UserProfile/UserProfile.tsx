@@ -7,6 +7,9 @@ import { ProfileData } from "../../Profile";
 import useProfileAPI from "../../../../api/useProfileAPI";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../../recoil/userInfoState";
+import useCreateChatRoomAPI, {
+  RequestCreateChatRoom,
+} from "../../../../api/useChatRoomAPI";
 
 export type FollowType = "" | "follow" | "follower";
 
@@ -41,6 +44,7 @@ export default function UserProfile() {
   } = profileData;
 
   const { requestProfile, requestFollow, requestDeleteFollow } = useProfileAPI();
+  const { requestCreateChatRoom } = useCreateChatRoomAPI();
   const userInfo = useRecoilValue(userInfoState);
   const params = useParams();
   useEffect(() => {
@@ -63,8 +67,10 @@ export default function UserProfile() {
     navigate("/profile/edit");
   };
 
-  const sendMessageHandler = () => {
-    console.log("채팅방 열기");
+  const sendMessageHandler = async () => {
+    const payload: RequestCreateChatRoom = { receiver: nickname };
+    const roomId = await requestCreateChatRoom(payload);
+    navigate(`/chat/${roomId}`);
   };
 
   const followHandler = () => {

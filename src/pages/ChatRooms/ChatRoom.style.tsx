@@ -9,6 +9,11 @@ export const ChatRoomWrapper = styled.div`
   box-shadow: 0px 4px 4px ${COLOR.Shadow};
   border-radius: 10px;
   padding: 6px 0px 6px 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const UserImg = styled.img`

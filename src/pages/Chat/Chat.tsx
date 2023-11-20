@@ -5,31 +5,35 @@ import * as S from "./Chat.style";
 import FriendChat from "./FriendChat";
 import MyChat from "./MyChat";
 import useChatAPI, { Chat, ChatConfig } from "../../api/useChatAPI";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Client } from "@stomp/stompjs";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../../recoil/userInfoState";
 
 interface ChattingProps {
   chats: Chat[];
 }
 
 function ChatComponent() {
-  const userId = "";
-  const nickname = "김준서";
-  const userImg =
-    "https://images.chosun.com/resizer/lGyzt5Hi0efXfaeVhy5gXwXHilc=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/52PNRX6QMNCRDD3QBAFB6XJJ6M.jpg";
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const [chatInput, setChatInput] = useState("");
-  const [isComposing, setIsComposing] = useState(false);
+  const chatInputRef = useRef<HTMLTextAreaElement>(null);
+  const isComposing = useRef<boolean>(false);
   const { chatId } = useParams();
   const client = useRef<Client>();
+  const user = useRecoilValue(userInfoState);
+  const [roomName, setRoomName] = useState("");
+  const navigate = useNavigate();
+
+  const handleClickProfileImg = () => {
+    navigate(`/profile/${roomName}?section=routines`);
+  };
 
   const chatConfig: ChatConfig = {
-    userId,
-    nickname,
-    userImg,
+    nickname: user.nickname,
+    userImg: user.userProfileImgUrl,
     brokerURL: import.meta.env.VITE_WS_BROKER_URL,
-    token: "",
-    chatId: chatId as string,
+    token: localStorage.getItem("accessToken") as string,
+    redisRoomId: chatId as string,
   };
 
   const {
@@ -42,24 +46,19 @@ function ChatComponent() {
     requestChatSumbit,
   } = useChatAPI(chatConfig);
 
-  const handleChatInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setChatInput(e.target.value);
-  };
-
   const handleEnter = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey && !isComposing) {
+    if (e.key === "Enter" && !e.shiftKey && !isComposing.current) {
       e.preventDefault();
       handleSubmit();
     }
   };
 
   const handleSubmit = () => {
-    if (chatInput === "" || !client.current || client.current.connected) return;
+    const chatInput = chatInputRef.current!.value.trimEnd();
+    if (chatInput === "" || !client.current || !client.current.connected) return;
 
-    const submittedChat = requestChatSumbit(client.current, chatInput.trimEnd());
-    submittedChat && setChats((prev) => [...prev, submittedChat]);
-
-    setChatInput("");
+    requestChatSumbit(client.current, chatInput);
+    chatInputRef.current!.value = "";
   };
 
   const handleComposition = (e: React.CompositionEvent) => {
@@ -67,8 +66,8 @@ function ChatComponent() {
 
     // 키 값 재한 -> [Type in CompositionEventType]
     const compositionEventHandler: { [Type in CompositionEventType]: () => void } = {
-      compositionstart: () => setIsComposing(true),
-      compositionend: () => setIsComposing(false),
+      compositionstart: () => (isComposing.current = true),
+      compositionend: () => (isComposing.current = false),
     };
 
     const handler = compositionEventHandler[e.type as CompositionEventType];
@@ -78,9 +77,20 @@ function ChatComponent() {
   const initChat = async () => {
     client.current = createClient(); // 클라이언트 생성
     connect(client.current); // 연결(구독)
-    const pastedChats = await requestPastChats(client.current); // 과거 채팅 내역 불러오기(HTTP)
-    setChats(pastedChats);
+    client.current.onStompError = (frame) => {
+      // 서버에서 오는 에러를 여기에서 처리할 수 있습니다.
+      console.error("Broker reported error:", frame.headers["message"]);
+      console.error("Additional details:", frame.body);
+      console.error("frame:", frame);
+    };
+    const pastedChats = await requestPastChats(); // 과거 채팅 내역 불러오기(HTTP)
+    setChats(pastedChats.messages);
+    setRoomName(pastedChats.roomName);
   };
+
+  useEffect(() => {
+    console.log("chat:", chats);
+  }, [chats]);
 
   useEffect(() => {
     initChat();
@@ -96,17 +106,37 @@ function ChatComponent() {
   // 임시 데이터 로직
 
   function Chatting({ chats }: ChattingProps) {
+    console.log("chats:", chats);
     return (
       <>
-        {chats.map(({ sender, img, message }: Chat, index) => {
-          const isMyChat = nickname === sender;
-          const isFriendChat = nickname !== sender;
-
-          if (isMyChat)
-            return <MyChat key={index} name={sender} src={img} message={message} />;
-          if (isFriendChat)
-            return <FriendChat key={index} name={sender} src={img} message={message} />;
-        })}
+        {chats.map(
+          ({ sender, imageUrl, message, readCount, messageCreatedAt }: Chat, index) => {
+            const isMyChat = user.nickname === sender;
+            const isFriendChat = user.nickname !== sender;
+            if (isMyChat)
+              return (
+                <MyChat
+                  key={index}
+                  name={sender}
+                  imageUrl={imageUrl}
+                  message={message}
+                  readCount={readCount}
+                  createdAt={messageCreatedAt}
+                />
+              );
+            if (isFriendChat)
+              return (
+                <FriendChat
+                  key={index}
+                  name={sender}
+                  src={imageUrl}
+                  message={message}
+                  readCount={readCount}
+                  createdAt={messageCreatedAt}
+                />
+              );
+          },
+        )}
       </>
     );
   }
@@ -115,16 +145,16 @@ function ChatComponent() {
     <>
       <Nav type="top" />
       <S.Container>
-        <S.Title>채팅</S.Title>
+        <S.Title onClick={handleClickProfileImg}>{roomName} 님과의 채팅</S.Title>
         <S.ChatContainer ref={chatContainerRef}>
           <Chatting chats={chats} />
         </S.ChatContainer>
         <S.InputContainer>
           <S.ChatInput
+            ref={chatInputRef}
             autoFocus
             placeholder="메세지를 입력해주세요."
-            value={chatInput}
-            onChange={handleChatInput}
+            defaultValue=""
             onKeyDown={(e) => handleEnter(e)} // onkeyUp 적용하면 안됨
             onCompositionStart={handleComposition}
             onCompositionEnd={handleComposition}

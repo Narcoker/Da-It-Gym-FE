@@ -21,6 +21,7 @@ export const Title = styled.div`
   font-size: ${FONT.XL};
   padding: 20px 0;
   font-weight: ${FONT.Bold};
+  cursor: pointer;
 `;
 
 export const ChatContainer = styled.div`

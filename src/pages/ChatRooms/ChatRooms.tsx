@@ -5,91 +5,28 @@ import * as Icon from "../../components/Icon";
 import { useEffect, useState } from "react";
 import ChatRoom from "./ChatRoom";
 import { useNavigate } from "react-router";
-
-export interface Room {
-  id: number;
-  roomName: string;
-  sender: string; // 본인
-  redisRoomId: string; // 채팅방 접속에 필요한 id 
-  recevier: string  // 상대방
-  message: string; // 최근 메세지
-
-  
-  userName: string;
-  resentMessage: string;
-  createdAt: Date;
-}
-
-const tempRooms: Room[] = [
-  {
-    roomId: 1,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-  {
-    roomId: 2,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-  {
-    roomId: 3,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-  {
-    roomId: 4,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-  {
-    roomId: 5,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-  {
-    roomId: 6,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-
-  {
-    roomId: 7,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-  {
-    roomId: 8,
-    userImg: "",
-    userName: "짱군이",
-    resentMessage: "문앞에서 껄떡거리지말고 빨리 들어와서 운동해 자식아",
-    createdAt: new Date(),
-  },
-];
+import useChatRoomAPI, { Room } from "../../api/useChatRoomAPI";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../../recoil/userInfoState";
 
 function ChatRooms() {
   const [rooms, setRooms] = useState<Room[]>([]);
+  const user = useRecoilValue(userInfoState);
   const navigate = useNavigate();
+  const { requestChatRooms } = useChatRoomAPI();
 
-  const handleRedirectChatRoom = (roomId: number): void => {
+  const handleRedirectChatRoom = (roomId: string): void => {
     navigate(`/chat/${roomId}`);
   };
 
+  const handleUpdateChatRoom = async () => {
+    const rooms = await requestChatRooms();
+    setRooms(rooms);
+  };
+
   useEffect(() => {
-    setRooms(tempRooms);
+    handleUpdateChatRoom();
+    setRooms(rooms);
   }, []);
 
   return (
@@ -109,21 +46,23 @@ function ChatRooms() {
         </S.SearchContainer>
 
         <S.UsersContainer>
-          {rooms.map(({ roomId, userImg, userName, resentMessage, createdAt }) => (
-            <S.Users
-              key={roomId}
-              onClick={() => {
-                handleRedirectChatRoom(roomId);
-              }}
-            >
-              <ChatRoom
-                userImg={userImg}
-                userName={userName}
-                resentMessage={resentMessage}
-                createdAt={createdAt}
-              />
-            </S.Users>
-          ))}
+          {rooms.map(
+            ({ redisRoomId, imageUrl, receiver, sender, message, messageCreatedAt }) => (
+              <S.Users
+                key={redisRoomId}
+                onClick={() => {
+                  handleRedirectChatRoom(redisRoomId);
+                }}
+              >
+                <ChatRoom
+                  imageUrl={imageUrl}
+                  userName={receiver === user.nickname ? sender : receiver}
+                  resentMessage={message}
+                  createdAt={messageCreatedAt}
+                />
+              </S.Users>
+            ),
+          )}
         </S.UsersContainer>
       </S.Container>
 
