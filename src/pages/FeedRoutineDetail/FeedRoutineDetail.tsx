@@ -12,9 +12,11 @@ import { useNavigate, useParams } from "react-router";
 import useRoutineDetailState from "../../hooks/useRoutineDetailState";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../recoil/userInfoState";
+import { useTimeCalculate } from "../../api/useTimeCalculate";
 
 export default function FeedRoutineDetail() {
   const navigate = useNavigate();
+  const timeCalculator = useTimeCalculate();
   const { routineId } = useParams();
   const [routine, dispatch] = useRoutine();
   const {
@@ -130,7 +132,7 @@ export default function FeedRoutineDetail() {
         <S.BoardTitleWrapper>
           <S.BoardTitle>{routineDetailState.title}</S.BoardTitle>
           <S.BoardWritedTime>
-            {new Date(routineDetailState.createdAt).toLocaleString()}
+            {timeCalculator(routineDetailState.createdAt)}
           </S.BoardWritedTime>
         </S.BoardTitleWrapper>
 

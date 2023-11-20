@@ -9,10 +9,12 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 import * as S from "./FeedNewRoutine.style";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function FeedNewRoutine() {
   const location = useLocation();
+  const navigate = useNavigate();
   const user = useRecoilValue(userInfoState);
   const [routine, dispatch] = useRoutine();
   const [selectedDivision, setSelectedDivision] = useState<number>(1);
@@ -32,6 +34,8 @@ function FeedNewRoutine() {
       routine: routine,
     };
     requestCreateRoutine(payload);
+    toast.success("루틴을 등록했습니다.");
+    navigate("/feed/routine");
   };
 
   useEffect(() => {

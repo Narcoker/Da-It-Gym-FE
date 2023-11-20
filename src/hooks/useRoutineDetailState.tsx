@@ -3,7 +3,7 @@ import { useState } from "react";
 type RoutineDetail = {
   writer: string;
   writerImg: string;
-  createdAt: Date;
+  createdAt: string;
   title: string;
   description: string;
   liked: boolean;
@@ -15,7 +15,7 @@ type RoutineDetail = {
 const initialState = {
   writer: "작성자",
   writerImg: "/images/start_logo.png",
-  createdAt: new Date(),
+  createdAt: "",
   title: "제목",
   description: "내용을 불러오는 중 입니다...",
   liked: false,

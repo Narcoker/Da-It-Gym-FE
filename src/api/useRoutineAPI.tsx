@@ -28,7 +28,7 @@ export interface ScrapRoutinePayload {
 export interface ResponseDetailRoutine {
   writer: string;
   writerImg: string;
-  createdAt: Date;
+  createdAt: string;
   title: string;
   description: string;
   liked: boolean;
