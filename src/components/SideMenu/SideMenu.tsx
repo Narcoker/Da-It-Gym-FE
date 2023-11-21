@@ -68,6 +68,13 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>마이</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
+      <S.SideMenuBox onClick={() => handleNav(`/user/recommend`)}>
+        <S.SearchIcon>
+          <Icon.Recommend />
+        </S.SearchIcon>
+        <S.SideMenuTitle>친구 찾기</S.SideMenuTitle>
+      </S.SideMenuBox>
+      <S.Line />
       <S.SideMenuBox onClick={() => handleNav("/")}>
         <S.SearchIcon>
           <Icon.HeadSet />

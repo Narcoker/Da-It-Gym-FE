@@ -184,3 +184,7 @@ export const Location = ({ size, color }: Props) => (
 export const Lock = ({ size, color }: Props) => (
   <Ci.CiLock size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
 );
+
+export const Recommend = ({ size, color }: Props) => (
+  <Fi.FiUserPlus size={size ? size : F_DEFAULT} color={color ? color : C_DEFAULT} />
+);

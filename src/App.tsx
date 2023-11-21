@@ -29,6 +29,7 @@ import LoginLoading from "./pages/LoginLoading/LoginLoading";
 import Recovery from "./pages/Recovery/Recovery";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "./recoil/userInfoState";
+import UserRecommend from "./pages/UserRecommend/UserRecommend";
 
 function App() {
   const LoginRoutes = [
@@ -50,6 +51,7 @@ function App() {
     { path: "/chat/search/user", element: <ChatSearchUser /> },
     { path: "/chat/rooms", element: <ChatRooms /> },
     { path: "/admin", element: <Admin /> },
+    { path: "/user/recommend", element: <UserRecommend /> },
   ];
   const LogOutRoutes = [
     { path: "/login", element: <Login /> },
