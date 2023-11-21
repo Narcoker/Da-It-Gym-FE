@@ -30,6 +30,7 @@ import Recovery from "./pages/Recovery/Recovery";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "./recoil/userInfoState";
 import UserRecommend from "./pages/UserRecommend/UserRecommend";
+import CustomerCenter from "./pages/CustomerCenter/CustomerCenter";
 
 function App() {
   const LoginRoutes = [
@@ -50,6 +51,7 @@ function App() {
     { path: "/chat/:chatId", element: <Chat /> },
     { path: "/chat/search/user", element: <ChatSearchUser /> },
     { path: "/chat/rooms", element: <ChatRooms /> },
+    { path: "/help", element: <CustomerCenter /> },
     { path: "/admin", element: <Admin /> },
     { path: "/user/recommend", element: <UserRecommend /> },
   ];

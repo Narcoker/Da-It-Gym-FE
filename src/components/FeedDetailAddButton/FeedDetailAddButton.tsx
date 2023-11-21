@@ -10,7 +10,7 @@ function FeedDetailAddButton({ children, onClick }: FeedDetailAddButtonProps) {
     <div>
       <S.AddMyDiaryBox onClick={() => onClick()}>
         <S.IconDiv>
-          <Icon.AddImage size="24" color={COLOR.Gray2} />
+          <Icon.AddCircle size="24" color={COLOR.Gray2} />
         </S.IconDiv>
         <S.Content>{children}</S.Content>
       </S.AddMyDiaryBox>

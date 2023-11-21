@@ -1,5 +1,4 @@
 import * as S from "./FeedDiaryEmpty.style";
-import noData from "/public/images/noData.png";
 interface FeedDiaryEmptyProps {
   children: React.ReactNode;
 }
@@ -7,7 +6,7 @@ function FeedDiaryEmpty({ children }: FeedDiaryEmptyProps) {
   return (
     <S.EmptyWrapper>
       <S.EmptyImgBox>
-        <S.EmptyImage src={noData} />
+        <S.EmptyImage src="/images/noData.png" />
       </S.EmptyImgBox>
       <S.EmptyComment>
         {children}

@@ -13,6 +13,7 @@ import useExerciseDiaryAPI from "../../api/useExerciseDiaryAPI";
 export default function FeedImport() {
   const [query] = useSearchParams();
   const ids = query.get("id");
+  const type = query.get("type");
   const [value, onChange] = useState<Value>(new Date());
   const navigate = useNavigate();
   const cancelHandler = () => {
@@ -29,6 +30,9 @@ export default function FeedImport() {
         const importDate = new Date(addDate.setDate(selectedDate.getDate() + i));
         const importDateTransform = moment(importDate).format("YYYY-MM-DD");
         requestJournalReplication(ids_split[i], importDateTransform);
+        if (type === "diary") {
+          requestJournalReplication(ids_split[i], importDateTransform);
+        }
       }
     }
     const move = moment(selectedDate).format("YYYY-MM-DD");

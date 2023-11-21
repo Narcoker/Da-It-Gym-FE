@@ -13,6 +13,7 @@ import useRoutineDetailState from "../../hooks/useRoutineDetailState";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../recoil/userInfoState";
 import { useTimeCalculate } from "../../api/useTimeCalculate";
+import Comments from "../../components/Comments/Comments";
 
 export default function FeedRoutineDetail() {
   const navigate = useNavigate();
@@ -188,8 +189,8 @@ export default function FeedRoutineDetail() {
           mulitple={true}
           type="recorded"
         />
+        <Comments />
       </S.RoutineContainer>
-
       <Nav type="home" />
     </>
   );

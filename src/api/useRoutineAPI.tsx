@@ -88,55 +88,6 @@ export default function useRoutineAPI() {
     return newLikeCounts;
   };
 
-  // 루틴 댓글/대댓글 작성하기
-  const requestCreateComment = (routineId: number, payload: CreateCommentPayload) => {
-    axios
-      .post(`${API_URL}/api/routines/${routineId}/comment`, payload)
-      .then(() => {})
-      .catch(() => {});
-  };
-
-  // 루틴 댓글/대댓글 수정하기
-  const requestUpdateComment = (
-    routineId: number,
-    commentId: number,
-    payload: UpdateCommentPayload,
-  ) => {
-    axios
-      .put(`${API_URL}/api/routines/${routineId}/comments/${commentId}`, payload)
-      .then(() => {})
-      .catch(() => {});
-  };
-
-  // 루틴 댓글/대댓글 삭제하기
-  const requestDeleteComment = (routineId: number, commentId: number) => {
-    axios
-      .delete(`${API_URL}/api/routines/${routineId}/comments/${commentId}`)
-      .then(() => {})
-      .catch(() => {});
-  };
-
-  // 루틴 댓글 가져오기
-  const requestComments = (routineId: number, page: number) => {
-    const pageSize = 10;
-    axios
-      .get(
-        `${API_URL}/api/routines/${routineId}/comments?page=${page}&pageSize=${pageSize}`,
-      )
-      .then(() => {})
-      .catch(() => {});
-  };
-
-  // 루틴 대댓글 가져오기
-  const requestRecomments = (routineId: number, commentId: number) => {
-    axios
-      .get(
-        `${API_URL}/api/feed-routines/${routineId}/comments/${commentId}/child-comment`,
-      )
-      .then(() => {})
-      .catch(() => {});
-  };
-
   // 모든 사용자들의 루틴 목록 조회하기
   const requestRoutineAll = async (
     page: number,
@@ -264,11 +215,6 @@ export default function useRoutineAPI() {
   return {
     requestLike,
     requestDislike,
-    requestCreateComment,
-    requestUpdateComment,
-    requestDeleteComment,
-    requestComments,
-    requestRecomments,
     requestRoutineAll,
     requestRoutineFollowing,
     requestRoutineRecommend,

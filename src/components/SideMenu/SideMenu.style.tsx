@@ -6,14 +6,15 @@ interface SideMenuProps {
 }
 export const SideWrapper = styled.div<SideMenuProps>`
   position: absolute;
-  height: 80vh;
-  width: 200px;
+  height: 100vh;
+  width: 300px;
   background-color: ${COLOR.White};
   color: ${COLOR.Primary};
-  top: 40px;
-  right: -145px;
+  top: 60px;
+  right: -243px;
   transition: all 1s ease-in-out;
-  box-shadow: 4px 4px 4px rgba(43, 45, 54, 0.3);
+  border-radius: 1px solid ${COLOR.Gray0};
+  box-shadow: 4px 4px 12px rgba(32, 32, 32, 0.1);
 `;
 export const SideMenuBox = styled.div`
   display: flex;

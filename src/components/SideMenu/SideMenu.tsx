@@ -13,6 +13,7 @@ function SideMenu({ sideMenu }: Props) {
   const LOGOUT_REDIRECT_URI = `http://localhost:5173/login`;
   const link = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
   const { nickname } = useRecoilValue(userInfoState);
+  const { role } = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const setSideMenu = useSetRecoilState(sideMenuState);
   const handleNav = (destination: string) => {
@@ -75,13 +76,24 @@ function SideMenu({ sideMenu }: Props) {
         <S.SideMenuTitle>친구 찾기</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
-      <S.SideMenuBox onClick={() => handleNav("/")}>
+      <S.SideMenuBox onClick={() => handleNav("/help")}>
         <S.SearchIcon>
           <Icon.HeadSet />
         </S.SearchIcon>
         <S.SideMenuTitle>고객 센터</S.SideMenuTitle>
       </S.SideMenuBox>
       <S.Line />
+      {role === "관리자" && (
+        <>
+          <S.SideMenuBox onClick={() => handleNav("/admin")}>
+            <S.SearchIcon>
+              <Icon.HeadSet />
+            </S.SearchIcon>
+            <S.SideMenuTitle>관리자 페이지</S.SideMenuTitle>
+          </S.SideMenuBox>
+          <S.Line />
+        </>
+      )}
       <S.SideMenuBox onClick={handleLogout}>
         <S.SearchIcon>
           <Icon.LogOut />
