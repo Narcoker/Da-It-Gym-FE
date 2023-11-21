@@ -6,7 +6,6 @@ import FriendChat from "./FriendChat";
 import MyChat from "./MyChat";
 import useChatAPI, { Chat, ChatConfig } from "../../api/useChatAPI";
 import { useNavigate, useParams } from "react-router";
-import { Client } from "@stomp/stompjs";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../recoil/userInfoState";
 
@@ -19,7 +18,6 @@ function ChatComponent() {
   const chatInputRef = useRef<HTMLTextAreaElement>(null);
   const isComposing = useRef<boolean>(false);
   const { chatId } = useParams();
-  const client = useRef<Client>();
   const user = useRecoilValue(userInfoState);
   const [roomName, setRoomName] = useState("");
   const navigate = useNavigate();
@@ -55,9 +53,9 @@ function ChatComponent() {
 
   const handleSubmit = () => {
     const chatInput = chatInputRef.current!.value.trimEnd();
-    if (chatInput === "" || !client.current || !client.current.connected) return;
+    if (chatInput === "") return;
 
-    requestChatSumbit(client.current, chatInput);
+    requestChatSumbit(chatInput);
     chatInputRef.current!.value = "";
   };
 
@@ -75,26 +73,16 @@ function ChatComponent() {
   };
 
   const initChat = async () => {
-    client.current = createClient(); // 클라이언트 생성
-    connect(client.current); // 연결(구독)
-    client.current.onStompError = (frame) => {
-      // 서버에서 오는 에러를 여기에서 처리할 수 있습니다.
-      console.error("Broker reported error:", frame.headers["message"]);
-      console.error("Additional details:", frame.body);
-      console.error("frame:", frame);
-    };
+    createClient(); // 클라이언트 생성
+    connect(); // 연결(구독)
     const pastedChats = await requestPastChats(); // 과거 채팅 내역 불러오기(HTTP)
     setChats(pastedChats.messages);
     setRoomName(pastedChats.roomName);
   };
 
   useEffect(() => {
-    console.log("chat:", chats);
-  }, [chats]);
-
-  useEffect(() => {
     initChat();
-    return () => disConnect(client.current); // 연결 해제
+    return () => disConnect(); // 연결 해제
   }, []);
 
   useEffect(() => {
@@ -106,7 +94,6 @@ function ChatComponent() {
   // 임시 데이터 로직
 
   function Chatting({ chats }: ChattingProps) {
-    console.log("chats:", chats);
     return (
       <>
         {chats.map(
