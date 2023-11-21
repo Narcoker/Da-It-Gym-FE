@@ -4,11 +4,16 @@ import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 import { UserInfo, userInfoState } from "../recoil/userInfoState";
 
-export interface ResponseSearchUser {
-  userImg: string;
+export interface User {
+  userProfileImageUrl: string;
   nickname: string;
-  info: string;
+  introduction: string;
   inbodyScore: number;
+}
+
+export interface ResponseSearchUser {
+  userResponses: User[];
+  hasNext: boolean;
 }
 
 export function useUserAPI() {

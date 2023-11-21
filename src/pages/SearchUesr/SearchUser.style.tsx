@@ -54,7 +54,7 @@ export const UsersContainer = styled.div`
   width: 85%;
   height: 100%;
   overflow: auto;
-  padding: 0px 10px;
+  padding: 0px 10px 10px 10px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -62,4 +62,5 @@ export const UsersContainer = styled.div`
 
 export const Users = styled.div`
   margin: 20px 0;
+  cursor: pointer;
 `;
