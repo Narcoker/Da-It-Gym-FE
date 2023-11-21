@@ -4,7 +4,7 @@ export const Diaries = styled.div`
   display: flex;
   gap: 3px;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
 `;
 
 export const Diary = styled.div`

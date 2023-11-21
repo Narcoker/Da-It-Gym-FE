@@ -28,9 +28,9 @@ export const UserInfoBox = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  gap: 5px;
 `;
 export const FollowUserName = styled.div`
-  font-size: ${FONT.L};
   color: ${COLOR.Black};
 `;
 export const FollowInfo = styled.div`

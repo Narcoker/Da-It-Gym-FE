@@ -52,6 +52,7 @@ export default function FollowModal({ type, setFollowType }: Props) {
                 userName={nickname}
                 info={intro}
                 inbodyScore={score}
+                setFollowType={setFollowType}
               />
             ))
           ) : (

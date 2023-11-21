@@ -63,193 +63,195 @@ export default function Inbody() {
   const dates = inbodyData.records.map((record) => record.measureAt);
   return (
     <S.Wrapper>
-      <S.ScoreCard>
-        <S.Title>인바디 점수</S.Title>
-        <S.Score>
-          {inbodyData.records[len - 1].inbodyScore}
-          <span>점</span>
-        </S.Score>
-      </S.ScoreCard>
-      <S.RadarBox>
-        <ApexChart
-          type="radar"
-          series={[
-            //인바디 점수, 기초대사량, 체중, 체지방률, 골격근량
-            { name: "현재", data: normData },
-            { name: "평균", data: avgNormData },
-          ]}
-          options={{
-            chart: {
-              height: 300,
-              width: "100%",
-              toolbar: { show: false },
-              background: "transparent",
-            },
-            fill: {
-              opacity: 0.2,
-            },
-            tooltip: {
-              y: { formatter: (value) => `${value}` },
-            },
-            stroke: {
-              show: true,
-              width: 2,
-              dashArray: 0,
-            },
-            markers: {
-              size: 5,
-              hover: {
-                size: 10,
+      <>
+        <S.ScoreCard>
+          <S.Title>인바디 점수</S.Title>
+          <S.Score>
+            {inbodyData.records[len - 1].inbodyScore}
+            <span>점</span>
+          </S.Score>
+        </S.ScoreCard>
+        <S.RadarBox>
+          <ApexChart
+            type="radar"
+            series={[
+              //인바디 점수, 기초대사량, 체중, 체지방률, 골격근량
+              { name: "현재", data: normData },
+              { name: "평균", data: avgNormData },
+            ]}
+            options={{
+              chart: {
+                height: 300,
+                width: "100%",
+                toolbar: { show: false },
+                background: "transparent",
               },
-            },
-            xaxis: {
-              categories: ["인바디 점수", "기초대사량", "체중", "체지방률", "골격근량"],
-              labels: {
+              fill: {
+                opacity: 0.2,
+              },
+              tooltip: {
+                y: { formatter: (value) => `${value}` },
+              },
+              stroke: {
                 show: true,
-                style: {
-                  colors: ["#a8a8a8"],
-                  fontSize: "11px",
-                  fontFamily: "Arial",
+                width: 2,
+                dashArray: 0,
+              },
+              markers: {
+                size: 5,
+                hover: {
+                  size: 10,
                 },
               },
-            },
-            yaxis: {
-              show: false,
-            },
-          }}
-        />
-      </S.RadarBox>
-      <S.LineChart>
-        <ApexChart
-          type="line"
-          series={[{ name: "골격근량", data: muscles }]}
-          options={{
-            chart: {
-              height: 350,
-              type: "line",
-              zoom: {
+              xaxis: {
+                categories: ["인바디 점수", "기초대사량", "체중", "체지방률", "골격근량"],
+                labels: {
+                  show: true,
+                  style: {
+                    colors: ["#a8a8a8"],
+                    fontSize: "11px",
+                    fontFamily: "Arial",
+                  },
+                },
+              },
+              yaxis: {
+                show: false,
+              },
+            }}
+          />
+        </S.RadarBox>
+        <S.LineChart>
+          <ApexChart
+            type="line"
+            series={[{ name: "골격근량", data: muscles }]}
+            options={{
+              chart: {
+                height: 350,
+                type: "line",
+                zoom: {
+                  enabled: false,
+                },
+              },
+              dataLabels: {
                 enabled: false,
               },
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              show: true,
-              width: 2,
-              // colors: [`${COLOR.Primary}`, `${COLOR.Purple2}`],
-              dashArray: 0,
-            },
-            title: {
-              text: "골격근량",
-              align: "left",
-            },
-            grid: {
-              row: {
-                colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-                opacity: 0.5,
+              stroke: {
+                show: true,
+                width: 2,
+                // colors: [`${COLOR.Primary}`, `${COLOR.Purple2}`],
+                dashArray: 0,
               },
-            },
-            xaxis: {
-              categories: dates,
-            },
-            markers: {
-              size: 5,
-              hover: {
-                size: 10,
+              title: {
+                text: "골격근량",
+                align: "left",
               },
-            },
-          }}
-        />
-      </S.LineChart>
-      <S.LineChart>
-        <ApexChart
-          type="line"
-          series={[{ name: "체지방량", data: fats, color: `${COLOR.Red}` }]}
-          options={{
-            chart: {
-              height: 350,
-              type: "line",
-              zoom: {
+              grid: {
+                row: {
+                  colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+                  opacity: 0.5,
+                },
+              },
+              xaxis: {
+                categories: dates,
+              },
+              markers: {
+                size: 5,
+                hover: {
+                  size: 10,
+                },
+              },
+            }}
+          />
+        </S.LineChart>
+        <S.LineChart>
+          <ApexChart
+            type="line"
+            series={[{ name: "체지방량", data: fats, color: `${COLOR.Red}` }]}
+            options={{
+              chart: {
+                height: 350,
+                type: "line",
+                zoom: {
+                  enabled: false,
+                },
+              },
+              dataLabels: {
                 enabled: false,
               },
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              show: true,
-              width: 2,
-              colors: [`${COLOR.Red}`],
-              dashArray: 0,
-            },
-            title: {
-              text: "체지방량",
-              align: "left",
-            },
-            grid: {
-              row: {
-                colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-                opacity: 0.5,
+              stroke: {
+                show: true,
+                width: 2,
+                colors: [`${COLOR.Red}`],
+                dashArray: 0,
               },
-            },
-            xaxis: {
-              categories: dates,
-            },
-            markers: {
-              size: 5,
-              colors: [`${COLOR.Red}`],
-              hover: {
-                size: 10,
+              title: {
+                text: "체지방량",
+                align: "left",
               },
-            },
-          }}
-        />
-      </S.LineChart>
-      <S.LineChart>
-        <ApexChart
-          type="line"
-          series={[{ name: "몸무게", data: weights, color: `${COLOR.Purple2}` }]}
-          options={{
-            chart: {
-              height: 350,
-              type: "line",
-              zoom: {
+              grid: {
+                row: {
+                  colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+                  opacity: 0.5,
+                },
+              },
+              xaxis: {
+                categories: dates,
+              },
+              markers: {
+                size: 5,
+                colors: [`${COLOR.Red}`],
+                hover: {
+                  size: 10,
+                },
+              },
+            }}
+          />
+        </S.LineChart>
+        <S.LineChart>
+          <ApexChart
+            type="line"
+            series={[{ name: "몸무게", data: weights, color: `${COLOR.Purple2}` }]}
+            options={{
+              chart: {
+                height: 350,
+                type: "line",
+                zoom: {
+                  enabled: false,
+                },
+              },
+              dataLabels: {
                 enabled: false,
               },
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              show: true,
-              width: 2,
-              colors: [`${COLOR.Purple2}`],
-              dashArray: 0,
-            },
-            title: {
-              text: "몸무게",
-              align: "left",
-            },
-            grid: {
-              row: {
-                colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-                opacity: 0.5,
+              stroke: {
+                show: true,
+                width: 2,
+                colors: [`${COLOR.Purple2}`],
+                dashArray: 0,
               },
-            },
-            xaxis: {
-              categories: dates,
-            },
-            markers: {
-              size: 5,
-              colors: [`${COLOR.Purple2}`],
-              hover: {
-                size: 10,
+              title: {
+                text: "몸무게",
+                align: "left",
               },
-            },
-          }}
-        />
-      </S.LineChart>
+              grid: {
+                row: {
+                  colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+                  opacity: 0.5,
+                },
+              },
+              xaxis: {
+                categories: dates,
+              },
+              markers: {
+                size: 5,
+                colors: [`${COLOR.Purple2}`],
+                hover: {
+                  size: 10,
+                },
+              },
+            }}
+          />
+        </S.LineChart>
+      </>
     </S.Wrapper>
   );
 }

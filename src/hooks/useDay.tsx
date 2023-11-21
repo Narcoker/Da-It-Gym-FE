@@ -51,6 +51,10 @@ export type Action =
       type: "UPDATE_EXERSISE_SET";
       exerciseSetId: number;
       exerciseIndex: number;
+    }
+  | {
+      type: "UPDATE_ID";
+      dayId: number;
     };
 
 export function dayRecucer(day: Day, action: Action) {
@@ -62,6 +66,12 @@ export function dayRecucer(day: Day, action: Action) {
       return newDay;
     }
 
+    case "UPDATE_ID": {
+      const { dayId } = action;
+      newDay.id = dayId;
+
+      return newDay;
+    }
     case "CREATE_EXERCISE": {
       const { exerciseName, exercisePart } = action;
       const newExercise = getNewExercise(

@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
   position: absolute;
   top: 20%;
   height: 500px;
-  width: 300px;
+  width: 340px;
 `;
 
 export const Header = styled.div`

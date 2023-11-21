@@ -11,7 +11,7 @@ export interface ProfileData {
   introduction: string;
   journalCount: number;
   nickname: string;
-  perferredSplit: string;
+  preferredSplit: string;
   role: string;
   userProfileImgUrl: string;
 }

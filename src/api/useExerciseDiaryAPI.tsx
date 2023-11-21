@@ -112,13 +112,15 @@ export default function useExerciseDiaryAPI() {
     journalDate: string,
     setIsExist: SetterOrUpdater<boolean>,
     setMark: SetterOrUpdater<string[]>,
+    dayDispatch: React.Dispatch<Action>,
   ) => {
     axios
       .post(`${API_URL}/api/journals`, { journalDate })
       .then((res) => {
-        console.log(res);
+        const dayId = res.data.data.id;
         setIsExist(true);
         setMark((prev) => [...prev, journalDate]);
+        dayDispatch({ type: "UPDATE_ID", dayId });
       })
       .catch((err) => toast.error(err.message));
   };

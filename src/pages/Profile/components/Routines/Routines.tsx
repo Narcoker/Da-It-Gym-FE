@@ -25,11 +25,15 @@ export default function Routines() {
   const params = useParams();
   const [query] = useSearchParams();
   const section = query.get("section");
+  // const type =
+  // const [type, setType] = useState<string>("");
   const [routines, setRoutines] = useState<RoutineSummary[]>([]);
   // const [page, setPage] = useState(0);
+  // console.log(query);
   const page = useRef(0);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const hasNext = useRef(true);
+  console.log(routines);
   const loadMoreFeed = () => {
     // 🔥 API 요청 loadMoreFeed() 불러오기 : 1) 불러올때 setFeedDiaryData에 담아서 가져오기 requestFeedDiary(nickname as string, page, 9, setFeedDiaryData);
     // 📧 요청할때 보내야할 데이터 1. 분할 2.가슴 어깨 등 .. 3. 전체보기 + 팔로우보기 + 추천 중에 무엇인지 담아서 요청
@@ -53,6 +57,7 @@ export default function Routines() {
   };
   // 무한 스크롤
   useEffect(() => {
+    console.log("1");
     const observer = new IntersectionObserver((entries) =>
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -70,7 +75,8 @@ export default function Routines() {
   useEffect(() => {
     page.current = 0;
     setRoutines([]);
-  }, [params.nickname]);
+    hasNext.current = true;
+  }, [params.nickname, section]);
 
   return (
     <S.RoutineUsers>
@@ -96,7 +102,7 @@ export default function Routines() {
                 timeAgo={createdAt}
                 likeCount={likeCounts}
                 shareCount={scrapCounts}
-                label={`${division}분할`}
+                label={division === 1 ? `무분할` : `${division}분할`}
               />
             ),
           )}

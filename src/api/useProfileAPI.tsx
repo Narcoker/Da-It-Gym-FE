@@ -109,7 +109,15 @@ export default function useProfileAPI() {
         const inbodyData: Inbody = res.data.data;
 
         if (inbodyData.records.length > 0) {
-          setInbodyData(res.data.data);
+          const data: Inbody = res.data.data;
+          const sortedData = {
+            ...data,
+            records: data.records.sort(
+              (a, b) => new Date(a.measureAt).getTime() - new Date(b.measureAt).getTime(),
+            ),
+          };
+
+          setInbodyData(sortedData);
         } else {
           setInbodyData((prev) => {
             return { ...prev, avg: inbodyData.avg };

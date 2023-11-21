@@ -8,9 +8,9 @@ import FeedDiaryEmpty from "../../../../components/FeedEmptyDataUI/FeedDiaryEmpt
 
 export interface Diary {
   id: number;
-  src: string;
-  likeCount: number;
-  shareCount: number;
+  image: string;
+  likes: number;
+  scrapCounts: number;
 }
 
 export default function Diaries() {
@@ -30,6 +30,7 @@ export default function Diaries() {
     // 🔥 API 요청 loadMoreFeed() 불러오기 : 1) 불러올때 setFeedDiaryData에 담아서 가져오기 requestFeedDiary(nickname as string, page, 9, setFeedDiaryData);
     // 📧 요청할때 보내야할 데이터 1. 분할 2.가슴 어깨 등 .. 3. 전체보기 + 팔로우보기 + 추천 중에 무엇인지 담아서 요청
     // console.log("요청");
+
     switch (section) {
       case "diary":
         requestFeedDiaryList(params.nickname as string, page.current, setFeedDiaryData);
@@ -42,6 +43,8 @@ export default function Diaries() {
   };
   // 무한 스크롤
   useEffect(() => {
+    console.log("123");
+    console.log(section);
     const observer = new IntersectionObserver((entries) =>
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -63,12 +66,11 @@ export default function Diaries() {
     <S.Diaries>
       {feedDiaryData.length > 0 ? (
         <>
-          {feedDiaryData.map(({ src, likeCount, shareCount, id }) => (
+          {feedDiaryData.map(({ image, likes, scrapCounts, id }) => (
             <S.Diary onClick={() => handleNavigate(id)}>
-              <FeedPreview src={src} likeCount={likeCount} shareCount={shareCount} />
+              <FeedPreview src={image} likeCount={likes} shareCount={scrapCounts} />
             </S.Diary>
           ))}
-          <S.Observer ref={observerRef} />
         </>
       ) : (
         <FeedDiaryEmpty>
@@ -79,6 +81,7 @@ export default function Diaries() {
           </S.EmptySpan>
         </FeedDiaryEmpty>
       )}
+      <S.Observer ref={observerRef} />
     </S.Diaries>
   );
 }

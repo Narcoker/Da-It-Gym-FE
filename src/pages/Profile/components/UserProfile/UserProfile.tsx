@@ -25,7 +25,7 @@ export default function UserProfile() {
     introduction: "",
     journalCount: 0,
     nickname: "",
-    perferredSplit: "무분할",
+    preferredSplit: "무분할",
     role: "일반",
     userProfileImgUrl: "",
   });
@@ -38,11 +38,11 @@ export default function UserProfile() {
     introduction,
     journalCount,
     nickname,
-    perferredSplit,
+    preferredSplit,
     // role,
     userProfileImgUrl,
   } = profileData;
-
+  // console.log(profileData);
   const { requestProfile, requestFollow, requestDeleteFollow } = useProfileAPI();
   const { requestCreateChatRoom } = useCreateChatRoomAPI();
   const userInfo = useRecoilValue(userInfoState);
@@ -126,14 +126,15 @@ export default function UserProfile() {
       <S.Desc>
         <S.DivideBox>
           선호하는 분할
-          <S.Select name="divide" disabled value={perferredSplit}>
+          <S.PreferredSplit>{preferredSplit}</S.PreferredSplit>
+          {/* <S.Select name="divide" disabled value={perferredSplit}>
             <option value="무분할">무분할</option>
             <option value="2분할">2분할</option>
             <option value="3분할">3분할</option>
             <option value="4분할">4분할</option>
             <option value="5분할">5분할</option>
             <option value="6분할">6분할+</option>
-          </S.Select>
+          </S.Select> */}
         </S.DivideBox>
         <S.Introduce>
           <pre>{introduction}</pre>

@@ -35,7 +35,7 @@ export default function ExerciseDiaryDefault({ day, dayDispatch }: Props) {
 
   const addDiaryHandler = () => {
     const date = moment(value as Date).format("YYYY-MM-DD");
-    requestPostJournal(date, setIsExist, setMark);
+    requestPostJournal(date, setIsExist, setMark, dayDispatch);
   };
   // console.log(isExist);
   return (

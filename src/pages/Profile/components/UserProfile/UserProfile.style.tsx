@@ -61,6 +61,13 @@ export const CounterBox = styled(ButtonBox)`
   flex-wrap: nowrap;
 `;
 
+export const PreferredSplit = styled.div`
+  background-color: ${COLOR.Green1};
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: ${COLOR.Green2};
+`;
+
 export const CounterButton = styled(ProfileButton)`
   background-color: transparent;
 `;

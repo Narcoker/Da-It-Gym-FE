@@ -1,26 +1,28 @@
-import { useState } from "react";
 import * as S from "./Bookmark.style";
 import Routines from "../Routines/Routines";
 import Diaries from "../Diaries/Diaries";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../../recoil/userInfoState";
 import * as Icon from "../../../../components/Icon";
 import * as COLOR from "../../../../constants/color";
-
-type Feed = null | "routines" | "diary";
+import { useSearchParams } from "react-router-dom";
 
 export default function Bookmark() {
-  const [feed, setFeed] = useState<Feed>(null);
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
+  const navigate = useNavigate();
+
   const params = useParams();
   const userInfo = useRecoilValue(userInfoState);
   const routineHandler = () => {
-    setFeed("routines");
+    navigate(`/profile/${userInfo.nickname}?section=bookmark&type=routines`);
   };
 
   const diaryHandler = () => {
-    setFeed("diary");
+    navigate(`/profile/${userInfo.nickname}?section=bookmark&type=diary`);
   };
+  console.log(type);
 
   return (
     <>
@@ -33,7 +35,7 @@ export default function Bookmark() {
         </S.Wrapper>
       ) : (
         <>
-          {feed === null && (
+          {!type && (
             <S.Wrapper>
               <S.BookmarkWrapper onClick={routineHandler}>
                 <S.Background src="/public/images/kakao_signup.png" />
@@ -47,12 +49,12 @@ export default function Bookmark() {
               </S.BookmarkWrapper>
             </S.Wrapper>
           )}
-          {feed === "routines" && (
+          {type === "routines" && (
             <S.RoutineWrapper>
               <Routines />
             </S.RoutineWrapper>
           )}
-          {feed === "diary" && <Diaries />}
+          {type === "diary" && <Diaries />}
         </>
       )}
     </>
