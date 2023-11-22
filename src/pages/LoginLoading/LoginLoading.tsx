@@ -1,5 +1,5 @@
 import { SpinnerCircular } from "spinners-react";
-import Logo from "/public/images/start_logo.png";
+import Logo from "/images/start_logo.png";
 import * as COLOR from "../../constants/color";
 import * as S from "./LoginLoading.style";
 import { useEffect } from "react";

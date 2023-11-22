@@ -15,6 +15,7 @@ export const SideWrapper = styled.div<SideMenuProps>`
   transition: all 1s ease-in-out;
   border-radius: 1px solid ${COLOR.Gray0};
   box-shadow: 4px 4px 12px rgba(32, 32, 32, 0.1);
+  z-index: 90;
 `;
 export const SideMenuBox = styled.div`
   display: flex;

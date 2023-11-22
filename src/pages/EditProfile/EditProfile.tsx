@@ -1,4 +1,3 @@
-import Nav from "../../components/Nav/Nav";
 import TrainerEdit from "./components/TrainerEdit/TrainerEdit";
 import UserEdit from "./components/UserEdit/UserEdit";
 import * as S from "./EditProfile.style";
@@ -14,7 +13,6 @@ export default function EditProfile() {
 
   return (
     <>
-      <Nav type="top" />
       <>
         <UserEdit />
         <TrainerEdit />
@@ -24,7 +22,6 @@ export default function EditProfile() {
         <S.Span>|</S.Span>
         <S.Button onClick={deleteUserHandler}>회원탈퇴</S.Button>
       </S.Footer>
-      <Nav type="home" />
     </>
   );
 }

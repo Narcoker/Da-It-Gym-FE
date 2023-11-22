@@ -6,7 +6,7 @@ export const Header = styled.div`
   position: fixed;
   width: 100%;
   max-width: 600px;
-  z-index: 100;
+  z-index: 91;
   background-color: ${COLOR.White};
 `;
 

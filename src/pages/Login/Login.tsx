@@ -1,4 +1,4 @@
-import Logo from "/public/images/start_logo.png";
+import Logo from "/images/start_logo.png";
 import * as S from "./Login.style";
 import KakaoLogin from "./components/KakaoLogin";
 

@@ -93,7 +93,7 @@ function FeedDiaryBody() {
   return (
     <>
       <S.BodyWrapper>
-        {feedDiaryData.feedExerciseJournalLists.length > 0 ? (
+        {feedDiaryData.feedExerciseJournalLists.length > 0 && (
           <>
             <S.BodyBox>
               {feedDiaryData.feedExerciseJournalLists.map((data) => (
@@ -110,7 +110,10 @@ function FeedDiaryBody() {
             </S.BodyBox>
             {page <= feedDiaryData.totalPage && <S.Observer ref={observerRef} />}
           </>
-        ) : (
+        )}
+      </S.BodyWrapper>
+      <S.BodyEmptyWrapper>
+        {feedDiaryData.feedExerciseJournalLists.length === 0 && (
           <FeedDiaryEmpty
             children={
               <>
@@ -120,7 +123,7 @@ function FeedDiaryBody() {
             }
           />
         )}
-      </S.BodyWrapper>
+      </S.BodyEmptyWrapper>
     </>
   );
 }

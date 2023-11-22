@@ -9,7 +9,23 @@ export const BodyWrapper = styled.div`
   /* display: flex; */
   /* flex-wrap: wrap; */
   width: 100%;
-  max-height: 830px;
+  /* max-height: 830px; */
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* flex-flow: row wrap;
+  gap: 7.5px; */
+  /* &::-webkit-scrollbar { */
+  /* display: none; */
+  /* } */
+`;
+export const BodyEmptyWrapper = styled.div`
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  width: 100%;
+  /* max-height: 830px; */
+  padding: 220px 30px 100px 30px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -61,7 +77,7 @@ export const MoveToTopButton = styled.div`
   height: 30px;
   background-color: ${COLOR.Gray0};
   border-radius: 50%;
-  z-index: 99;
+  z-index: 90;
   bottom: 90px;
   right: 60px;
   &:hover {

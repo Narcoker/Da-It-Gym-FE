@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import * as COLOR from "../../constants/color";
 import * as FONT from "../../constants/font";
+
 export const EmptyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 120px;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;

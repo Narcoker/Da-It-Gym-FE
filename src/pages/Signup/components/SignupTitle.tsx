@@ -1,5 +1,5 @@
 import * as S from "./SignupTitle.style";
-import LogoImg from "/public/images/start_logo.png";
+import LogoImg from "/images/start_logo.png";
 function SignupTitle() {
   return (
     <S.SignupTitleWrapper>

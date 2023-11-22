@@ -9,19 +9,21 @@ import useExerciseDiaryAPI from "../../api/useExerciseDiaryAPI";
 import moment from "moment";
 import { useFeedDiaryShareAPI } from "../../api/useFeedDiaryShareAPI";
 import { useRecoilValue } from "recoil";
-import { fileListState, splitState } from "../../recoil/diaryshareState";
+import { splitState } from "../../recoil/diaryshareState";
+import { useNavigate } from "react-router";
+import { userInfoState } from "../../recoil/userInfoState";
 
 function FeedDiaryShare() {
   const [day, dayDispatch] = useDay();
   const date = moment(new Date()).format("YYYY-MM-DD");
+  const navigate = useNavigate();
   const [journalId, setJournalId] = useState<number>(0);
   const [splitList, setSplitList] = useState<Array<string>>([]);
-  console.log("date", date);
   const { requestJournalDetail } = useExerciseDiaryAPI();
   const { requestPostFeedShare } = useFeedDiaryShareAPI();
   const [formData, setFormData] = useState(new FormData());
   const [visible, setVisible] = useState(true);
-  const fileList = useRecoilValue(fileListState);
+  const { nickname } = useRecoilValue(userInfoState);
   const split = useRecoilValue(splitState);
   const handleCancel = () => {
     setVisible(false);
@@ -32,6 +34,7 @@ function FeedDiaryShare() {
     formData.append("share", blobVisible);
     setFormData(formData);
   };
+
   const handleShare = () => {
     handleVisibleSplitChange(visible, split);
     console.log("formData", formData);
@@ -52,9 +55,8 @@ function FeedDiaryShare() {
     //   reader.readAsText(file);
     // }
 
-    console.log("day", day);
-    console.log({ visible: visible, split: split, images: fileList });
     requestPostFeedShare(journalId, formData); //🔥 API 요청
+    navigate(`/profile/${nickname}?section=diary`);
     // 🧐  formData 에 뭐들어 있는지 확인
     // for (const key of formData.keys()) {
     //   console.log(key, ":", formData.get(key));
@@ -62,10 +64,8 @@ function FeedDiaryShare() {
   };
   useEffect(() => {
     requestJournalDetail(date as string, dayDispatch, setJournalId, setSplitList);
-    console.log("dayDispatch", dayDispatch);
-    console.log("🔥journalId", journalId);
   }, [journalId]);
-  console.log("splitList", splitList);
+
   return (
     <div>
       <SharePhoto formData={formData} setFormData={setFormData} />

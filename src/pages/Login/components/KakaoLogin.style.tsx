@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as FONT from "../../../constants/font";
 import * as COLOR from "../../../constants/color";
-import login from "/public/images/kakao_login.png";
+import login from "/images/kakao_login.png";
 
 export const KakaoLoginWrapper = styled.div`
   width: 100%;

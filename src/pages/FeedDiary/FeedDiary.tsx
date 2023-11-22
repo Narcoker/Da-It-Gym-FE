@@ -23,7 +23,6 @@ export default function FeedDiary() {
   return (
     <div>
       <S.TopRef ref={topRef} tabIndex={-1} />
-      <Nav type="top" />
       <S.FeedDiaryWrapper>
         <SearchTag />
         <FeedDiaryHeader />
@@ -34,7 +33,6 @@ export default function FeedDiary() {
           <Icon.UpArrow />
         </S.UpIcon>
       </S.MoveToTopButton>
-      <Nav type="home" />
     </div>
   );
 }

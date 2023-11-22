@@ -48,7 +48,7 @@ function FDSTag({ splitList }: FDSTagProps) {
   //   console.log(ActiveBody);
   // };
   useEffect(() => {
-    // setActiveBody(["가슴", "등", "어깨"]);
+    setSplit(userInfo.preferredSplit);
   }, []);
   return (
     <S.TagWrapper>

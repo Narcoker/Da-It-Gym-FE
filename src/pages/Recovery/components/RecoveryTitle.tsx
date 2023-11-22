@@ -1,5 +1,5 @@
 import * as S from "./RecoveryTitle.style";
-import LogoImg from "/public/images/start_logo.png";
+import LogoImg from "/images/start_logo.png";
 function RecoveryTitle() {
   return (
     <S.RecoveryTitleWrapper>
