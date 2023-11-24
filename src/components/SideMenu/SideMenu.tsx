@@ -21,10 +21,14 @@ function SideMenu({ sideMenu }: Props) {
     setSideMenu(false);
   };
   const { requestLogout } = useUserAPI();
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const FCMToken = localStorage.getItem("FCMToken");
+    if (FCMToken) {
+      await requestLogout(FCMToken);
+    }
     window.location.href = link;
-    requestLogout();
   };
+
   return (
     <S.SideWrapper sideMenu={sideMenu}>
       <S.SideMenuBox onClick={() => handleNav("/feed/search-user")}>
