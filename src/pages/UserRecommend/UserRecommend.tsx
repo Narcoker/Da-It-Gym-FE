@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import Nav from "../../components/Nav/Nav";
 import * as S from "./UserRecommend.style";
-import * as Icon from "../../components/Icon";
-import * as COLOR from "../../constants/color";
 import FollowUser from "../../components/FollowUser/FollowUser";
 import useProfileAPI from "../../api/useProfileAPI";
 import FeedDiaryEmpty from "../../components/FeedEmptyDataUI/FeedDiaryEmpty";
@@ -26,17 +24,6 @@ export default function UserRecommend() {
     <>
       <Nav type="top" />
       <S.Container>
-        <S.SearchContainer>
-          <S.SearchInput
-            type="text"
-            placeholder="유저를 검색해주세요"
-            className="search-input"
-          />
-          <S.Icon>
-            <Icon.Search size="24" color={`${COLOR.Gray2}`} />
-          </S.Icon>
-        </S.SearchContainer>
-
         <S.UsersContainer>
           {users.length > 0 ? (
             users.map((user) => (
