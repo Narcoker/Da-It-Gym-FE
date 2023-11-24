@@ -6,6 +6,8 @@ export const AccordionContainer = styled.div`
   max-width: 100%;
   margin: 30px;
   margin-top: 80px;
+  max-height: 90vh;
+  overflow-y: auto;
 `;
 
 export const AccordionTitle = styled.h1`
@@ -39,19 +41,19 @@ export const GridentTitle = styled.div`
   text-align: center;
 `;
 
-// export const Center = styled.div`
-//   border: 1px solid ${COLOR.Gray1};
-//   border-radius: 5px;
-//   position: static;
-//   margin-top: 15px;
-// `;
+export const Center = styled.div`
+  border: 1px solid ${COLOR.Gray1};
+  border-radius: 5px;
+  position: static;
+  margin-top: 15px;
+`;
 
-// export const Gtitle = styled.h1`
-//   align-items: center;
-//   color: ${COLOR.Gray4};
-//   font-size: ${FONT.S};
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-//   padding: 5px;
-//   position: relative;
-// `;
+export const Gtitle = styled.h1`
+  align-items: center;
+  color: ${COLOR.Gray4};
+  font-size: ${FONT.S};
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  position: relative;
+`;

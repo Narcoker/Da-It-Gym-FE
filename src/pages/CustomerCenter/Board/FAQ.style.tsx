@@ -25,6 +25,7 @@ export const AccordionSummary = styled.summary`
 
 export const AccordionDetails = styled.div`
   padding: 10px;
+  line-height: 20px;
 `;
 
 export const ArrowIcon = styled.span<{ isOpen: boolean }>`

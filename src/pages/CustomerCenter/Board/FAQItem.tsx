@@ -1,13 +1,14 @@
 import * as S from "./FAQ.style";
 import * as Icon from "../../../components/Icon";
 import * as COLOR from "../../../constants/color";
+import { ReactNode } from "react";
 
 interface FAQItemProps {
   index: number;
   isOpen: boolean;
   toggleAccordion: (index: number) => void;
   question: string;
-  answer: string;
+  answer: ReactNode;
 }
 
 const FAQItem: React.FC<FAQItemProps> = ({

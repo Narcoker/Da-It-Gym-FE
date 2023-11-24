@@ -2,7 +2,10 @@ import styled from "styled-components";
 import * as COLOR from "../../../constants/color";
 import * as FONT from "../../../constants/font";
 
-export const AdminContainer = styled.div``;
+export const AdminContainer = styled.div`
+  padding: 10px;
+  cursor: default;
+`;
 
 export const Table = styled.table`
   width: 100%;
@@ -14,13 +17,17 @@ export const Table = styled.table`
 
 export const Th = styled.th`
   background-color: ${COLOR.Sub1};
-  padding: 10px;
+  padding: 10px 0px;
   font-weight: ${FONT.Bold};
   border-bottom: 1px solid ${COLOR.Gray2};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Td = styled.td`
-  padding: 10px;
+  padding: 10px 0px;
   border-bottom: 1px solid ${COLOR.Gray1};
 `;
 
@@ -51,4 +58,26 @@ export const Icon = styled.div`
   align-items: center;
   padding: 5px;
   cursor: pointer;
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 80px;
+`;
+
+export const PageBtn = styled.button`
+  border: 1px solid ${COLOR.Primary};
+  border-radius: 5px;
+  flex-direction: row;
+  padding: 10px;
+  background-color: ${COLOR.White};
+  &:hover {
+    background-color: ${COLOR.Primary};
+    color: ${COLOR.White};
+  }
 `;
