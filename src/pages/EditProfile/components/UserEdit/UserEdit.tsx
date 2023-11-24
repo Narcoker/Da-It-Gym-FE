@@ -55,11 +55,10 @@ export default function UserEdit() {
       userProfileImg,
       request: { nickname, introduction, gymName, preferredSplit },
     };
-    if (!preferredSplit && !nickname && !introduction) {
-      toast.error("빈 칸을 입력해 주세요");
-    } else {
-      console.log(userProfileImg);
+    if (preferredSplit && nickname && introduction) {
       requestEditProfile(userInfo.nickname, payload, setUserInfo);
+    } else {
+      toast.error("빈 칸을 입력해 주세요");
     }
   };
 

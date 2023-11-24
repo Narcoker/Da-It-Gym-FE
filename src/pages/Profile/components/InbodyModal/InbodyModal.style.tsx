@@ -74,3 +74,33 @@ export const Required = styled.span`
   font-weight: ${FONT.Bold};
   color: ${COLOR.Red};
 `;
+
+export const InputBox = styled.div``;
+
+export const Label = styled.label`
+  display: block;
+  width: 100%;
+`;
+
+export const TitleWrapper = styled.span`
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
+  padding-left: 8px;
+`;
+
+export const InputTitle = styled.span`
+  font-weight: ${FONT.Bold};
+`;
+
+export const SelectBox = styled.select`
+  width: 100%;
+  outline: none;
+  border: 1px solid ${COLOR.Gray1};
+  padding: 12px 20px;
+  font-size: ${FONT.M};
+  &:focus {
+    border: 1px solid ${COLOR.Primary};
+  }
+  border-radius: 5px;
+`;

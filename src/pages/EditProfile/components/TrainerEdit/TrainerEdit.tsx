@@ -39,7 +39,7 @@ export default function TrainerEdit() {
     "생활스포츠 지도사 2급",
     "생활스포츠 지도사 1급",
     "건강운동관리사",
-    "NSCA-CPT,",
+    "NSCA-CPT",
     "NSCA-CSCC",
     "NASM-CPT",
     "NASM-CES",
@@ -105,10 +105,8 @@ export default function TrainerEdit() {
       },
     };
     const validation =
-      certificateImages.length > 0 &&
-      awardImages.length > 0 &&
-      certificates.length > 0 &&
-      awards.length > 0;
+      (certificateImages.length > 0 && certificates.length > 0) ||
+      (awardImages.length > 0 && awards.length > 0);
 
     if (validation) {
       requestEvaluateTrainer(payload);
@@ -119,17 +117,24 @@ export default function TrainerEdit() {
   };
 
   const awardAddHandler = () => {
-    const award: Award = {
-      name: awardRef.current!.value,
-      awardAt: awardDateRef.current!.value,
-      org: awardOrg.current!.value,
-    };
-    setAwards((prev) => [...prev, award]);
+    const name = awardRef.current!.value;
+    const awardAt = awardDateRef.current!.value;
+    const org = awardOrg.current!.value;
+    if (name && awardAt && org) {
+      const award: Award = {
+        name,
+        awardAt,
+        org,
+      };
+      setAwards((prev) => [...prev, award]);
 
-    awardRef.current!.value = "";
-    awardDateRef.current!.value = "";
-    awardOrg.current!.value = "";
-    awardRef.current!.focus();
+      awardRef.current!.value = "";
+      awardDateRef.current!.value = "";
+      awardOrg.current!.value = "";
+      awardRef.current!.focus();
+    } else {
+      toast.error("수상이름 또는 날짜를 입력해 주십시오");
+    }
   };
 
   const awardRemoveHandler = () => {
@@ -137,13 +142,19 @@ export default function TrainerEdit() {
   };
 
   const certAddHandler = () => {
-    const cert: Cerificate = {
-      name: certRef.current!.value,
-      acquisitionAt: certDateRef.current!.value,
-    };
+    const name = certRef.current!.value;
+    const acquisitionAt = certDateRef.current!.value;
+    if (name && acquisitionAt) {
+      const cert: Cerificate = {
+        name: certRef.current!.value,
+        acquisitionAt: certDateRef.current!.value,
+      };
 
-    setCertificates((prev) => [...prev, cert]);
-    certDateRef.current!.value = "";
+      setCertificates((prev) => [...prev, cert]);
+      certDateRef.current!.value = "";
+    } else {
+      toast.error("자격증 이름 또는 날짜를 입력해 주십시오");
+    }
   };
 
   const certRemoveHandler = () => {

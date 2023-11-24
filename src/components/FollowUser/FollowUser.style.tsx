@@ -9,11 +9,13 @@ export const FollowUserWrapper = styled.div`
   box-shadow: 0px 4px 4px ${COLOR.Shadow};
   border-radius: 10px;
   padding: 6px 0px 6px 16px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const FollowUserImg = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   border-radius: 10px;
 `;
 
@@ -44,12 +46,12 @@ export const InbodyBox = styled.div`
   flex-direction: column;
 `;
 export const InbodyTitle = styled.div`
-  font-size: ${FONT.S};
+  font-size: ${FONT.XS};
   font-weight: ${FONT.Bold};
   color: ${COLOR.Gray4};
 `;
 export const InbodyScore = styled.div`
-  font-size: ${FONT.L};
+  font-size: ${FONT.M};
   font-weight: ${FONT.Bold};
   color: ${COLOR.Primary};
 `;

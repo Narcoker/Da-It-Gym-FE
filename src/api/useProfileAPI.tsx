@@ -12,6 +12,7 @@ import { SetterOrUpdater } from "recoil";
 import { UserInfo } from "../recoil/userInfoState";
 import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
 import { Diary } from "../pages/Profile/components/Diaries/Diaries";
+import { Users } from "../pages/UserRecommend/UserRecommend";
 
 interface EditProfilePayload {
   userProfileImg?: File;
@@ -31,6 +32,10 @@ interface EvaluateTrainerPayload {
 
   certificationImgs: File[];
   awardImgs: File[];
+}
+
+export interface InbodyRecordPayload extends InbodyRecord {
+  routineId: string | null;
 }
 
 export default function useProfileAPI() {
@@ -77,7 +82,7 @@ export default function useProfileAPI() {
   const requestEvaluateTrainer = (payload: EvaluateTrainerPayload) => {
     const formData = new FormData();
     for (const img of payload.certificationImgs) {
-      formData.append("certificateImgs", img);
+      formData.append("certificationImgs", img);
     }
 
     for (const img of payload.awardImgs) {
@@ -87,11 +92,11 @@ export default function useProfileAPI() {
     axios
       .post(`${API_URL}/api/users/career/submit`, formData)
       .then((res) => console.log(res))
-      .catch((err) => toast.error(err.message));
+      .catch(() => toast.error("이미 심사가 진행중입니다."));
   };
 
   // 인바디 등록
-  const requestInbody = (payload: InbodyRecord) => {
+  const requestInbody = (payload: InbodyRecordPayload) => {
     axios
       .post(`${API_URL}/api/users/inbodies`, payload)
       .then()
@@ -199,12 +204,14 @@ export default function useProfileAPI() {
   const requestFeedRoutineList = (
     nickname: string,
     page: number,
+    size: number,
     setRoutines: React.Dispatch<React.SetStateAction<RoutineSummary[]>>,
     hasNext: React.MutableRefObject<boolean>,
+
     // setPage: React.Dispatch<React.SetStateAction<number>>,
   ) => {
     axios
-      .get(`${API_URL}/api/routines/${nickname}?page=${page}&size=20`)
+      .get(`${API_URL}/api/routines/${nickname}?page=${page}&size=${size}`)
       .then((res) => {
         setRoutines((prev) => [...prev, ...res.data.data.routines]);
         hasNext.current = res.data.data.hasNext;
@@ -228,6 +235,26 @@ export default function useProfileAPI() {
       .catch((err) => toast.error(err.message));
   };
 
+  const requestKakaoFriends = (
+    setUsers: React.Dispatch<React.SetStateAction<Users[]>>,
+  ) => {
+    axios
+      .get(`${API_URL}/api/users/kakao/friends`)
+      .then((res) => {
+        if (res.status === 200) {
+          setUsers(res.data.data.elements);
+        }
+      })
+      .catch(() => {
+        console.log("3");
+        const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
+        // const REDIRECT_URI = "http://localhost:5173/user/recommend";
+        const REDIRECT_URI = "http://localhost:5173/login/oauth2/callback/kakao";
+
+        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=friends`;
+      });
+  };
+
   return {
     requestEditProfile,
     requestEvaluateTrainer,
@@ -242,5 +269,6 @@ export default function useProfileAPI() {
     requestFeedDiaryScrap,
     requestFeedRoutineList,
     requestFeedRoutineScrap,
+    requestKakaoFriends,
   };
 }

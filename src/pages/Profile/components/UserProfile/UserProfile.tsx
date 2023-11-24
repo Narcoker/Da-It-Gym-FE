@@ -28,6 +28,7 @@ export default function UserProfile() {
     preferredSplit: "무분할",
     role: "일반",
     userProfileImgUrl: "",
+    submitTrainerQualification: false,
   });
 
   const {
@@ -39,8 +40,9 @@ export default function UserProfile() {
     journalCount,
     nickname,
     preferredSplit,
-    // role,
+    role,
     userProfileImgUrl,
+    submitTrainerQualification,
   } = profileData;
   // console.log(profileData);
   const { requestProfile, requestFollow, requestDeleteFollow } = useProfileAPI();
@@ -83,10 +85,16 @@ export default function UserProfile() {
   return (
     <>
       <S.ProfileWrapper>
-        <S.ProfileImg src={userProfileImgUrl} />
+        <S.ProfileDiv>
+          <S.ProfileImg src={userProfileImgUrl} />
+          {submitTrainerQualification && <S.ProfileSpan>심사 중</S.ProfileSpan>}
+        </S.ProfileDiv>
         <S.ProfileBox>
           <S.ProfileContent>
-            <S.Nickname>{nickname}</S.Nickname>
+            <S.Nickname>
+              {nickname}
+              {userInfo.nickname === nickname && <S.Role>{role}</S.Role>}
+            </S.Nickname>
             {healthClubName && <S.Place>{`${healthClubName}에서 운동 중`}</S.Place>}
           </S.ProfileContent>
           <S.ButtonBox>

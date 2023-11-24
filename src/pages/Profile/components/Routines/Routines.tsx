@@ -43,6 +43,7 @@ export default function Routines() {
           requestFeedRoutineList(
             params.nickname as string,
             page.current,
+            20,
             setRoutines,
             hasNext,
           );

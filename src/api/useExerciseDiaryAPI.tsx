@@ -5,6 +5,7 @@ import { useAxios } from "./useAxios";
 import { Action } from "../hooks/useDay";
 import { ExerciseSet } from "../hooks/useExerciseSet";
 import { SetterOrUpdater } from "recoil";
+import { Replication } from "../pages/FeedImport/FeedImport";
 // import { useNavigate } from "react-router";
 
 export default function useExerciseDiaryAPI() {
@@ -142,11 +143,15 @@ export default function useExerciseDiaryAPI() {
   };
 
   // 운동일지 완료
-  const requestDiaryComplete = (journalId: number, payload: DiaryComplete) => {
+  const requestDiaryComplete = async (journalId: number, payload: DiaryComplete) => {
     axios
       .patch(`${API_URL}/api/journals/${journalId}/complete`, payload)
-      .then(() => window.location.reload())
-      .catch((err) => toast.error(err.message));
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        }
+      })
+      .catch(() => toast.error("운동을 모두 완료해주세요"));
   };
 
   // 일지에 운동 추가하기
@@ -215,6 +220,14 @@ export default function useExerciseDiaryAPI() {
       .catch((err) => toast.error(err.message));
   };
 
+  // 루틴에서 운동일지 가져오기
+  const requestRoutineReplication = (payload: Replication[]) => {
+    axios
+      .post(`${API_URL}/api/journals/replication/routine`, { routines: payload })
+      .then((res) => console.log(res))
+      .catch((err) => toast.error(err.message));
+  };
+
   return {
     requestPatchRestTime,
     requestJournals,
@@ -234,6 +247,7 @@ export default function useExerciseDiaryAPI() {
     requestDeleteExercise,
     requestChangeRestTime,
     requestChangeHistory,
+    requestRoutineReplication,
   };
 }
 

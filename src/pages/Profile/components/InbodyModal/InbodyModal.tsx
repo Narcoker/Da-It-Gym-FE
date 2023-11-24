@@ -1,8 +1,11 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Button from "../../../../components/Button/Button";
 import Input from "../../../../components/Input/Input";
 import * as S from "./InbodyModal.style";
 import useProfileAPI from "../../../../api/useProfileAPI";
+import { toast } from "react-toastify";
+import { useParams } from "react-router";
+import { RoutineSummary } from "../Routines/Routines";
 
 interface Props {
   setIsInbodyClick: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,13 +18,17 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
   const fat = useRef<HTMLInputElement>(null);
   const weight = useRef<HTMLInputElement>(null);
   const basal = useRef<HTMLInputElement>(null);
-
-  const { requestInbody } = useProfileAPI();
+  const routineId = useRef<HTMLSelectElement>(null);
+  const params = useParams();
+  const { requestInbody, requestFeedRoutineList } = useProfileAPI();
 
   const cancelHandler = () => {
     setIsInbodyClick(false);
   };
 
+  const page = useRef(0);
+  const hasNext = useRef(true);
+  const [routines, setRoutines] = useState<RoutineSummary[]>([]);
   const submitHandler = () => {
     const isPositive = /^\d+\.?\d+$/;
     const emptyCheck =
@@ -30,11 +37,13 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
       muscle.current!.value &&
       fat.current!.value &&
       weight.current!.value &&
-      basal.current!.value
+      basal.current!.value &&
+      routineId.current!.value
         ? true
         : false;
+    const id = routineId.current!.value === "null" ? null : routineId.current!.value;
     if (!emptyCheck) {
-      alert("빈 칸을 모두 채워주세요");
+      toast.error("빈 칸을 모두 채워주세요");
     } else {
       const validCheck =
         isPositive.test(score.current!.value) &&
@@ -44,7 +53,7 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
         isPositive.test(basal.current!.value);
 
       if (!validCheck) {
-        alert("숫자만 입력해주세요.");
+        toast.error("숫자만 입력해주세요.");
       } else {
         const payload = {
           measureAt: date.current!.value,
@@ -53,6 +62,7 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
           bodyFatRatio: parseInt(fat.current!.value),
           weight: parseInt(weight.current!.value),
           basalMetabolicRate: parseInt(basal.current!.value),
+          routineId: id,
         };
         requestInbody(payload);
         setIsInbodyClick(false);
@@ -60,16 +70,39 @@ export default function InbodyModal({ setIsInbodyClick }: Props) {
       }
     }
   };
+
+  useEffect(() => {
+    requestFeedRoutineList(
+      params.nickname as string,
+      page.current,
+      100,
+      setRoutines,
+      hasNext,
+    );
+  }, []);
   return (
     <S.Overlay>
       <S.Wrapper>
         <S.Inputs>
+          <S.InputBox>
+            <S.TitleWrapper>
+              <S.InputTitle>루틴</S.InputTitle>
+              <S.Required>*</S.Required>
+            </S.TitleWrapper>
+            <S.SelectBox ref={routineId}>
+              <option value="null">없음</option>
+              {routines.map((routine) => (
+                <option value={routine.id}>{routine.title}</option>
+              ))}
+            </S.SelectBox>
+          </S.InputBox>
           <S.CalendarLabel>
             <S.Calendartitle>
               측정일<S.Required>*</S.Required>
             </S.Calendartitle>
             <S.DateInput type="date" ref={date} />
           </S.CalendarLabel>
+
           <Input inputTitle="인바디 점수" ref={score} required={true} />
           <Input inputTitle="골격근량" ref={muscle} required={true} />
           <Input inputTitle="체지방률(%)" ref={fat} required={true} />

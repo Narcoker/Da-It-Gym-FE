@@ -57,7 +57,7 @@ function App() {
   ];
   const LogOutRoutes = [
     { path: "/login", element: <Login /> },
-    { path: "/login/oauth2/callback/kakao", element: <LoginLoading /> },
+    // { path: "/login/oauth2/callback/kakao", element: <LoginLoading /> },
     { path: "/account/recovery", element: <Recovery /> },
   ];
   const location = useLocation();
@@ -86,6 +86,7 @@ function App() {
               element={<PublicRoute authenticated={auth} element={element} />}
             />
           ))}
+          <Route path="/login/oauth2/callback/kakao" element={<LoginLoading />} />
           {LoginRoutes.map(({ path, element }) => (
             <>
               <Route element={location.pathname !== "/signup" && <LoginLayout />}>

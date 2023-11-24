@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router-dom";
 import ExerciseDiaryDefault from "./components/ExerciseDiaryDefault/ExerciseDiaryDefault";
 import ExerciseNav from "./components/ExerciseNav/ExerciseNav";
 import ExerciseDiarySuccess from "./components/ExerciseDiarySuccess/ExerciseDiarySuccess";
-import Nav from "../../components/Nav/Nav";
 import { useEffect } from "react";
 import useExerciseDiaryAPI from "../../api/useExerciseDiaryAPI";
 import { useDay } from "../../hooks/useDay";
@@ -19,7 +18,13 @@ export default function ExerciseDiary() {
   useEffect(() => {
     if (mark.includes(date as string)) {
       if (date) {
-        requestJournalDetail(date as string, dayDispatch, setIsExist);
+        requestJournalDetail(
+          date as string,
+          dayDispatch,
+          undefined,
+          undefined,
+          setIsExist,
+        );
       }
     }
   }, [date, isExist]);
@@ -32,7 +37,6 @@ export default function ExerciseDiary() {
             dayDispatch={dayDispatch}
             journalId={day.id as number}
           />
-          <Nav type="home" />
         </>
       ) : (
         <>
