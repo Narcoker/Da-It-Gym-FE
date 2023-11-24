@@ -1,5 +1,8 @@
-import React, { useEffect } from "react";
+import "firebase/compat/messaging";
+import { useEffect } from "react";
 import { Navigate } from "react-router";
+import { useUserAPI } from "../api/useUserAPI";
+// import { useUserAPI } from "../api/useUserAPI";
 
 interface PrivateRouteProps {
   authenticated: boolean;
@@ -8,6 +11,7 @@ interface PrivateRouteProps {
 
 export default function PrivateRoute({ authenticated, element }: PrivateRouteProps) {
   const alreadyJoined = localStorage.getItem("alreadyJoined");
+  const { requestPostFCMToken } = useUserAPI();
   useEffect(() => {
     if (!authenticated) {
       //   alert("로그인 후 이용해 주세요");
@@ -15,6 +19,10 @@ export default function PrivateRoute({ authenticated, element }: PrivateRoutePro
     } else {
       // 🔥API
       // requestUserInfo();
+      const FCMToken = localStorage.getItem("FCMToken");
+      if (FCMToken) {
+        requestPostFCMToken(FCMToken);
+      }
     }
   }, []);
   return authenticated ? (

@@ -31,8 +31,75 @@ import { useRecoilValue } from "recoil";
 import { userInfoState } from "./recoil/userInfoState";
 import UserRecommend from "./pages/UserRecommend/UserRecommend";
 import CustomerCenter from "./pages/CustomerCenter/CustomerCenter";
+import firebase from "firebase/compat/app";
+import { onMessage } from "firebase/messaging";
+
+// import { getAnalytics } from "firebase/analytics";
+
+// TODO: Add SDKs for Firebase products that you want to use
+
+// const analytics = getAnalytics(app);
+
+// .then(function () {
+//   console.log("허가!");
+//   return messaging.getToken(); //토큰을 받는 함수를 추가!
+// })
+// .then(function (token) {
+//   console.log(token); //토큰을 출력!
+// })
+// .catch(function (err) {
+//   console.log("fcm에러 : ", err);
+// });
+const firebaseConfig = {
+  apiKey: "AIzaSyCtBI1WgFnKleFr4JDati_fg1O4hlVeg3U",
+  authDomain: "daitgym.firebaseapp.com",
+  projectId: "daitgym",
+  storageBucket: "daitgym.appspot.com",
+  messagingSenderId: "951645079216",
+  appId: "1:951645079216:web:1cdd81bf9aa6c3355b5d75",
+  measurementId: "G-T1N80KD5X8",
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+// const { requestPostFCMToken } = useUserAPI();
 
 function App() {
+  Notification.requestPermission()
+    .then((PermissionStatus) => {
+      if (PermissionStatus === "granted") {
+        messaging
+          .getToken({ vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY })
+          .then((token: string) => {
+            console.log(`허가! 토큰값 :${token}`);
+            // requestPostFCMToken(token);
+            localStorage.setItem("FCMToken", token);
+          })
+          .catch((err) => console.log("토큰 가져오는 중에 에러", err));
+
+        return messaging.getToken();
+      } else if (PermissionStatus === "denied") {
+        alert("알림 권한 거부됨");
+      } else {
+        console.log("알림 권한 차단됨", Permissions);
+      }
+    })
+    .catch((err) => {
+      console.log("FCM 오류", err);
+    });
+  onMessage(messaging, (payload) => {
+    const notificationTitle = payload.notification?.title;
+    const notificationOptions = {
+      body: payload.notification?.body,
+    };
+
+    // 사용자에게 알림을 표시
+    // @ts-ignore
+    const notification = new Notification(notificationTitle, notificationOptions);
+  });
+
   const LoginRoutes = [
     { path: "/", element: <New /> },
     { path: "/ui-sample", element: <UISample /> },
