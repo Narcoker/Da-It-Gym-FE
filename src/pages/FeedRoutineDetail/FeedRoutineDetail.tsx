@@ -1,4 +1,3 @@
-import Nav from "../../components/Nav/Nav";
 import * as S from "./FeedRoutineDetail.styled";
 import * as Icon from "../../components/Icon";
 import * as COLOR from "../../constants/color";
@@ -87,7 +86,6 @@ export default function FeedRoutineDetail() {
 
   return (
     <>
-      <Nav type="top" />
       <S.BoardContainer>
         <S.BoardHeader>
           <S.WriterInfoWrapper>
@@ -191,7 +189,6 @@ export default function FeedRoutineDetail() {
         />
         <Comments />
       </S.RoutineContainer>
-      <Nav type="home" />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../../components/Button/Button";
-import Nav from "../../components/Nav/Nav";
 import * as S from "./Chat.style";
 import FriendChat from "./FriendChat";
 import MyChat from "./MyChat";
@@ -129,41 +128,36 @@ function ChatComponent() {
   }
 
   return (
-    <>
-      <Nav type="top" />
-      <S.Container>
-        <S.Title onClick={handleClickProfileImg}>{roomName} 님과의 채팅</S.Title>
-        <S.ChatContainer ref={chatContainerRef}>
-          <Chatting chats={chats} />
-        </S.ChatContainer>
-        <S.InputContainer>
-          <S.ChatInput
-            ref={chatInputRef}
-            autoFocus
-            placeholder="메세지를 입력해주세요."
-            defaultValue=""
-            onKeyDown={(e) => handleEnter(e)} // onkeyUp 적용하면 안됨
-            onCompositionStart={handleComposition}
-            onCompositionEnd={handleComposition}
-          />
+    <S.Container>
+      <S.Title onClick={handleClickProfileImg}>{roomName} 님과의 채팅</S.Title>
+      <S.ChatContainer ref={chatContainerRef}>
+        <Chatting chats={chats} />
+      </S.ChatContainer>
+      <S.InputContainer>
+        <S.ChatInput
+          ref={chatInputRef}
+          autoFocus
+          placeholder="메세지를 입력해주세요."
+          defaultValue=""
+          onKeyDown={(e) => handleEnter(e)} // onkeyUp 적용하면 안됨
+          onCompositionStart={handleComposition}
+          onCompositionEnd={handleComposition}
+        />
 
-          {/*
+        {/*
             velog
             이 문제는 IME(입력기)와 관련이 있을 수 있습니다. 특히 한글 같은 아시아 언어를 입력할 때 IME는 사용자가 문자를 완성하기 전까지 실제 문자를 입력하지 않습니다.
             따라서 한글을 입력하는 도중에 엔터 키를 누르면 '완성' 및 '전송' 두 가지 작업이 동시에 수행될 수 있습니다.
             이 문제를 해결하려면 React에서 제공하는 compositionstart와 compositionend 이벤트를 활용하여 한글 입력이 완료되었는지 확인하면 됩니다. 
             onCompositionStart 및 onCompositionEnd 이벤트 핸들러를 추가하면 해당 문제를 해결할 수 있습니다. 
             */}
-          <S.ButtonWrapper>
-            <Button display="flex" type="fill" onClick={handleSubmit} size="large">
-              전송
-            </Button>
-          </S.ButtonWrapper>
-        </S.InputContainer>
-      </S.Container>
-
-      <Nav type="chat" />
-    </>
+        <S.ButtonWrapper>
+          <Button display="flex" type="fill" onClick={handleSubmit} size="large">
+            전송
+          </Button>
+        </S.ButtonWrapper>
+      </S.InputContainer>
+    </S.Container>
   );
 }
 

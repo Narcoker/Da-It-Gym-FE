@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import HashTagButton from "../../components/HashtagButton/HashtagButton";
-import Nav from "../../components/Nav/Nav";
 import RoutineUser from "../../components/RoutineUser/RoutineUser";
 import * as S from "./FeedRoutine.style";
 import useRoutineAPI, { RoutineInfo } from "../../api/useRoutineAPI";
@@ -166,8 +165,6 @@ export default function FeedRoutine() {
   return (
     <>
       <S.Header>
-        <Nav type="top" />
-
         <S.ExercisePartLabels>
           <HashTagButton
             label="무분할"
@@ -266,8 +263,6 @@ export default function FeedRoutine() {
         ))}
         <div ref={targetRef}></div>
       </S.Routines>
-
-      <Nav type="home" />
     </>
   );
 }
