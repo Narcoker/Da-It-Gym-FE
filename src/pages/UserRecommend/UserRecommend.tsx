@@ -7,73 +7,15 @@ import FollowUser from "../../components/FollowUser/FollowUser";
 import useProfileAPI from "../../api/useProfileAPI";
 import FeedDiaryEmpty from "../../components/FeedEmptyDataUI/FeedDiaryEmpty";
 
-export interface Users {
-  userImg: string;
-  userName: string;
-  info: string;
-  inbodyScore: number;
+export interface User {
+  nickName: string;
+  imageUrl: string;
+  intro: string;
+  score: number;
 }
-// const tempUsers = [
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-//   {
-//     userImg:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmI-Yk_hVcYEhVxOMceoNG9eo3sJlKBLYRfQ&usqp=CAU",
-//     userName: "가나다",
-//     info: "설명글",
-//     inbodyScore: 120,
-//   },
-// ];
 
 export default function UserRecommend() {
-  const [users, setUsers] = useState<Users[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const { requestKakaoFriends } = useProfileAPI();
 
   useEffect(() => {
@@ -100,10 +42,10 @@ export default function UserRecommend() {
             users.map((user) => (
               <S.Users>
                 <FollowUser
-                  src={user.userImg}
-                  userName={user.userName}
-                  info={user.info}
-                  inbodyScore={user.inbodyScore}
+                  src={user.imageUrl}
+                  userName={user.nickName}
+                  info={user.intro}
+                  inbodyScore={user.score}
                 />
               </S.Users>
             ))

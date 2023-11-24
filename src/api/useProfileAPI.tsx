@@ -12,7 +12,7 @@ import { SetterOrUpdater } from "recoil";
 import { UserInfo } from "../recoil/userInfoState";
 import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
 import { Diary } from "../pages/Profile/components/Diaries/Diaries";
-import { Users } from "../pages/UserRecommend/UserRecommend";
+import { User } from "../pages/UserRecommend/UserRecommend";
 
 interface EditProfilePayload {
   userProfileImg?: File;
@@ -236,7 +236,7 @@ export default function useProfileAPI() {
   };
 
   const requestKakaoFriends = (
-    setUsers: React.Dispatch<React.SetStateAction<Users[]>>,
+    setUsers: React.Dispatch<React.SetStateAction<User[]>>,
   ) => {
     axios
       .get(`${API_URL}/api/users/kakao/friends`)

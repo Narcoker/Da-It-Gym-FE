@@ -121,7 +121,7 @@ export default function UserProfile() {
           </S.ButtonBox>
 
           <S.CounterBox>
-            <S.CounterButton>{`일지수 ${journalCount}`}</S.CounterButton>
+            <S.CounterDiv as="span">{`일지수 ${journalCount}`}</S.CounterDiv>
             <S.CounterButton
               onClick={followerModalHandler}
             >{`팔로워 ${followerCount}`}</S.CounterButton>

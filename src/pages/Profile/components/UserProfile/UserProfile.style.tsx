@@ -80,6 +80,17 @@ export const PreferredSplit = styled.div`
 
 export const CounterButton = styled(ProfileButton)`
   background-color: transparent;
+  font-size: ${FONT.S};
+  line-height: ${FONT.S};
+`;
+
+export const CounterDiv = styled(CounterButton)`
+  cursor: initial;
+
+  -webkit-user-select: none !important;
+  -moz-user-select: -moz-none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 `;
 
 export const Desc = styled.div`
