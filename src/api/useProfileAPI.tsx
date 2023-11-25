@@ -246,7 +246,6 @@ export default function useProfileAPI() {
         }
       })
       .catch(() => {
-        console.log("3");
         const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
         // const REDIRECT_URI = "http://localhost:5173/user/recommend";
         const REDIRECT_URI = "http://localhost:5173/login/oauth2/callback/kakao";

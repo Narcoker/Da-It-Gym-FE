@@ -1,6 +1,5 @@
 import New from "./pages/New/New";
 import { Route, Routes, useLocation, useNavigate } from "react-router";
-import UISample from "./pages/UISample/UISample";
 import * as S from "./App.style";
 import Profile from "./pages/Profile/Profile";
 import ExerciseDiary from "./pages/ExerciseDiary/ExerciseDiary";
@@ -81,7 +80,7 @@ function App() {
 
         return messaging.getToken();
       } else if (PermissionStatus === "denied") {
-        alert("알림 권한 거부됨");
+        // alert("알림 권한 거부됨");
       } else {
         console.log("알림 권한 차단됨", Permissions);
       }
@@ -102,7 +101,6 @@ function App() {
 
   const LoginRoutes = [
     { path: "/", element: <New /> },
-    { path: "/ui-sample", element: <UISample /> },
     { path: "/signup", element: <Signup /> },
     { path: "/profile/:nickname", element: <Profile /> },
     { path: "/diary", element: <ExerciseDiary /> },

@@ -18,6 +18,7 @@ export const BookmarkWrapper = styled.div`
 
 export const Background = styled.img`
   width: 100%;
+  height: 100%;
   position: absolute;
   z-index: 0;
 `;

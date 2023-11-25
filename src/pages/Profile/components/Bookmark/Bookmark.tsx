@@ -38,12 +38,12 @@ export default function Bookmark() {
           {!type && (
             <S.Wrapper>
               <S.BookmarkWrapper onClick={routineHandler}>
-                <S.Background src="/public/images/kakao_signup.png" />
+                <S.Background src="/public/images/diaryScrap.png" />
                 <S.Overlay />
                 <S.BookmarkTitle>루틴 보관함</S.BookmarkTitle>
               </S.BookmarkWrapper>
               <S.BookmarkWrapper onClick={diaryHandler}>
-                <S.Background src="/public/images/kakao_signup.png" />
+                <S.Background src="/public/images/routineScrap.png" />
                 <S.Overlay />
                 <S.BookmarkTitle>일지 보관함</S.BookmarkTitle>
               </S.BookmarkWrapper>
