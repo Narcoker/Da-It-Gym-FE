@@ -18,7 +18,7 @@ import ChatSearchUser from "./pages/ChatSearchUser/ChatSearchUser";
 import ChatRooms from "./pages/ChatRooms/ChatRooms";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -66,6 +66,7 @@ const messaging = firebase.messaging();
 // const { requestPostFCMToken } = useUserAPI();
 
 function App() {
+  const [fcmToken, setfcmToken] = useState("");
   Notification.requestPermission()
     .then((PermissionStatus) => {
       if (PermissionStatus === "granted") {
@@ -73,6 +74,7 @@ function App() {
           .getToken({ vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY })
           .then((token: string) => {
             console.log(`허가! 토큰값 :${token}`);
+            setfcmToken(token);
             // requestPostFCMToken(token);
             localStorage.setItem("FCMToken", token);
           })
@@ -80,7 +82,7 @@ function App() {
 
         return messaging.getToken();
       } else if (PermissionStatus === "denied") {
-        // alert("알림 권한 거부됨");
+        console.log("알림 권한 거부됨");
       } else {
         console.log("알림 권한 차단됨", Permissions);
       }
@@ -158,7 +160,13 @@ function App() {
                 <Route
                   key={path}
                   path={path}
-                  element={<PrivateRoute authenticated={auth} element={element} />}
+                  element={
+                    <PrivateRoute
+                      authenticated={auth}
+                      element={element}
+                      fcmToken={fcmToken}
+                    />
+                  }
                 />
               </Route>
             </>

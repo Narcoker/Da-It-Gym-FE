@@ -122,8 +122,19 @@ export function useUserAPI() {
       })
       .catch((error) => toast.error(error.message));
   };
-
-  //Firebase 푸쉬 알림 FCM 토큰
+  //GET : Firebase 푸쉬 알림 FCM 토큰
+  const requestFCMToken = async (
+    setDbFcmToken: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => {
+    await axios
+      .get(`${API_URL}/api/notification/token`)
+      .then((res) => {
+        setDbFcmToken(res.data.data);
+        console.log("Get으로 받아온 FCM 있냐 ?", res.data.data);
+      })
+      .catch((error) => toast.error(error.message));
+  };
+  //Post : Firebase 푸쉬 알림 FCM 토큰
   const requestPostFCMToken = (fcmToken: string) => {
     const payload = {
       token: fcmToken,
@@ -131,9 +142,21 @@ export function useUserAPI() {
     axios
       .post(`${API_URL}/api/notification/token`, payload)
       .then(() => {})
+      .catch((error) => console.log(error.message));
+  };
+
+  //PATCH : Firebase 푸쉬 알림 FCM 토큰
+  const requestPatchFCMToken = (fcmToken: string) => {
+    const payload = {
+      token: fcmToken,
+    };
+    axios
+      .patch(`${API_URL}/api/notification/token`, payload)
+      .then(() => {})
       .catch((error) => toast.error(error.message));
   };
-  // 유저 검색
+
+  //GET : 유저 검색
   const requestSearchUser = async (
     nickname: string,
     page: number,
@@ -152,7 +175,9 @@ export function useUserAPI() {
     requestDeleteKaKaoWithdraw,
     requestPatchNickname,
     requestDuplicatedNickname,
+    requestFCMToken,
     requestPostFCMToken,
+    requestPatchFCMToken,
     requestSearchUser,
   };
 }
