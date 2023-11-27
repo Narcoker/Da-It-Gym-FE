@@ -57,7 +57,7 @@ export const Observer = styled.div`
   width: 100%;
   height: 10px;
   opacity: 0.8;
-  background-color: ${COLOR.Green3};
+  /* background-color: ${COLOR.Green3}; */
 `;
 export const UpIcon = styled.div`
   display: flex;

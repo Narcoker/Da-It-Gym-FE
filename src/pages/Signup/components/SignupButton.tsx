@@ -8,10 +8,11 @@ import {
 } from "../../../recoil/signupState";
 import { useUserAPI } from "../../../api/useUserAPI";
 import { useNavigate } from "react-router";
+import { userInfoState } from "../../../recoil/userInfoState";
 function SignupButton() {
   const navigate = useNavigate();
   const { requestPatchNickname } = useUserAPI();
-  const nickname = "조재균";
+  const { nickname } = useRecoilValue(userInfoState);
   const debounceNickname = useRecoilValue(submitNicknameState); // recoil로 받아온 값
   const regCheck = useRecoilValue(regCheckState);
   const handleSkip = () => {
