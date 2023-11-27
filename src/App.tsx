@@ -25,13 +25,14 @@ import PrivateRoute from "./components/PrivateRoute";
 import FeedDiaryShare from "./pages/FeedDiaryShare/FeedDiaryShare";
 import Admin from "./pages/Admin/Admin";
 import LoginLoading from "./pages/LoginLoading/LoginLoading";
-import Recovery from "./pages/Recovery/Recovery";
+
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "./recoil/userInfoState";
 import UserRecommend from "./pages/UserRecommend/UserRecommend";
 import CustomerCenter from "./pages/CustomerCenter/CustomerCenter";
 import firebase from "firebase/compat/app";
 import { onMessage } from "firebase/messaging";
+import Recovery from "./pages/Recovery/Recovery";
 
 // import { getAnalytics } from "firebase/analytics";
 
@@ -50,13 +51,13 @@ import { onMessage } from "firebase/messaging";
 //   console.log("fcm에러 : ", err);
 // });
 const firebaseConfig = {
-  apiKey: "AIzaSyCtBI1WgFnKleFr4JDati_fg1O4hlVeg3U",
-  authDomain: "daitgym.firebaseapp.com",
-  projectId: "daitgym",
-  storageBucket: "daitgym.appspot.com",
-  messagingSenderId: "951645079216",
-  appId: "1:951645079216:web:1cdd81bf9aa6c3355b5d75",
-  measurementId: "G-T1N80KD5X8",
+  apiKey: import.meta.env.VITE_FIREBASE_APP_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+  storageBucket: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDERID,
+  appId: import.meta.env.VITE_FIREBASE_APPID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

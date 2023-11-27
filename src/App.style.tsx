@@ -5,7 +5,7 @@ export const Layout = styled.div`
   width: 100%;
   height: 100vh;
   justify-content: center;
-  background-color: antiquewhite;
+  background-color: white;
 `;
 export const AppWrapper = styled.div`
   position: relative;
