@@ -63,34 +63,47 @@
 https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/79975172/c728ec7b-0139-4ef7-b236-8ca7093c95a6
 
 ### 루틴 목록 보기
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/79af2b21-2a6c-4df4-8126-1bfcecaa30d4
 
 ### 루틴 상세 보기
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/d00cfbf5-a570-4bc4-9930-a3ad6f4e9356
 
 ### 루틴 작성 하기
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/557063b8-e2c8-487c-9856-983b861c55e5
 
 ### 알림
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/598d9f7c-3f77-4a47-b658-8109a5bbc094
 
 ### 운동 일지 목록 보기
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/a707fb5b-eda7-446c-b429-b8a0ce7dbc51
 
 ### 운동 일지 상세 보기
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/2f2585d6-028a-459c-98a8-9a4bcb587348
 
 ### 운동 계획 작성 및 시작
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/4a48fdfc-a0ec-46fa-8d26-f052fb8bd89e
 
 ### 운동 일지 작성
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/cf8757f5-6814-4589-a72f-21569b2fd638
 
-### 마이 페이지 - 보관함
-
-### 마이 페이지 - 인바디
+### 마이 페이지 - 보관함/인바디
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/35f687b2-55e4-4b10-ad24-fd5d517e8139
 
 ### 마이 페이지 - 프로필 편집
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/460188d0-f376-435e-9cca-3943d3766e39
 
 ### 관리자 페이지 - 트레이너 승인
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/8162de51-2b74-4abb-b5b5-454f98e8f3ce
 
 ### 유저 찾기
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/dff067d4-7639-4755-9762-59f4d27e0360
 
 ### 근근근을 사용하고 있는 카카오톡 친구
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/1ea6affe-c707-4a62-98ac-88e57fe49550
 
 ### 채팅
+https://github.com/Goorm-OGJG/Da-It-Gym-FE/assets/62943439/14ee20ac-bfa7-4e94-869d-d7173139d881
+
 
 
 
