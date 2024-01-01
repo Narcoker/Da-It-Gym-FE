@@ -5,8 +5,11 @@ import * as COLOR from "../../../../constants/color";
 import * as S from "./TrainerEdit..style";
 import Button from "../../../../components/Button/Button";
 import { useNavigate } from "react-router";
-import useProfileAPI from "../../../../api/useProfileAPI";
+// import useProfileAPI from "../../../../api/useProfileAPI";
+import { EvaluateTrainerPayload } from "../../../../api/useProfileAPI";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { useAxios } from "../../../../api/useAxios";
 
 interface Image {
   url: string;
@@ -50,8 +53,24 @@ export default function TrainerEdit() {
   ];
 
   const [certificates, setCertificates] = useState<Cerificate[]>([]);
+  const API_URL = import.meta.env.VITE_API_URL;
+  const axios = useAxios();
 
-  const { requestEvaluateTrainer } = useProfileAPI();
+  const submitTrainer = useMutation({
+    mutationFn: (payload: EvaluateTrainerPayload) => {
+      const formData = new FormData();
+      for (const img of payload.certificationImgs) {
+        formData.append("certificationImgs", img);
+      }
+
+      for (const img of payload.awardImgs) {
+        formData.append("awardImgs", img);
+      }
+      formData.append("request", JSON.stringify(payload.request));
+      return axios.post(`${API_URL}/api/users/career/submit`, formData);
+    },
+  });
+  // const { requestEvaluateTrainer } = useProfileAPI();
   const previewHandler = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
     if (!e.target.files) return;
     for (const file of e.target.files) {
@@ -109,8 +128,9 @@ export default function TrainerEdit() {
       (awardImages.length > 0 && awards.length > 0);
 
     if (validation) {
-      requestEvaluateTrainer(payload);
-      console.log("변경하기 제출");
+      submitTrainer.mutate(payload);
+      // requestEvaluateTrainer(payload);
+      // console.log("변경하기 제출");
     } else {
       toast.error("빈 칸을 모두 채워주십시오");
     }

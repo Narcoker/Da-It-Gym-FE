@@ -7,9 +7,11 @@ import { ChangeEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import FindGymModal from "../FindGymModal/FindGymModal";
 import { toast } from "react-toastify";
-import useProfileAPI from "../../../../api/useProfileAPI";
+// import useProfileAPI, { EditProfilePayload } from "../../../../api/useProfileAPI";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../../../recoil/userInfoState";
+import { useMutation } from "@tanstack/react-query";
+import { useAxios } from "../../../../api/useAxios";
 
 interface Preview {
   url: string;
@@ -29,7 +31,35 @@ export default function UserEdit() {
   const [preview, setPreview] = useState<Preview | null>({
     url: userInfo.userProfileImgUrl,
   });
-  const { requestEditProfile } = useProfileAPI();
+  const axios = useAxios();
+  // const { requestEditProfile } = useProfileAPI();
+  const editProfile = useMutation({
+    mutationFn: (userNickname: string) => {
+      const formData = new FormData();
+      const API_URL = import.meta.env.VITE_API_URL;
+      const userProfileImg = preview?.file;
+      const nickname = nicknameRef.current!.value;
+      const introduction = descRef.current!.value;
+      const preferredSplit = splitRef.current!.value;
+      const payload = {
+        userProfileImg,
+        request: { nickname, introduction, gymName, preferredSplit },
+      };
+
+      formData.append("userProfileImg", payload.userProfileImg as File);
+      formData.append("request", JSON.stringify(payload.request));
+      return axios.put(`${API_URL}/api/users/${userNickname}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    },
+    onSuccess: (data) => {
+      const res = data.data.data;
+      setUserInfo(res);
+      navigate(`/profile/${res.nickname}?section=routines`);
+    },
+  });
   const previewHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -47,16 +77,18 @@ export default function UserEdit() {
   };
 
   const submitHandler = () => {
-    const userProfileImg = preview?.file;
+    // const userProfileImg = preview?.file;
     const nickname = nicknameRef.current!.value;
     const introduction = descRef.current!.value;
     const preferredSplit = splitRef.current!.value;
-    const payload = {
-      userProfileImg,
-      request: { nickname, introduction, gymName, preferredSplit },
-    };
+
+    // const payload = {
+    //   userProfileImg,
+    //   request: { nickname, introduction, gymName, preferredSplit },
+    // };
     if (preferredSplit && nickname && introduction) {
-      requestEditProfile(userInfo.nickname, payload, setUserInfo);
+      editProfile.mutate(userInfo.nickname);
+      // requestEditProfile(userInfo.nickname, payload, setUserInfo);
     } else {
       toast.error("빈 칸을 입력해 주세요");
     }

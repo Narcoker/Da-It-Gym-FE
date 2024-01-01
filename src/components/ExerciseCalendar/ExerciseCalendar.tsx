@@ -6,6 +6,8 @@ import useExerciseDiary from "../../api/useExerciseDiaryAPI";
 import { useLocation, useNavigate } from "react-router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { isExistState, markState } from "../../recoil/exerciseState";
+import { useQuery } from "@tanstack/react-query";
+import { useAxios } from "../../api/useAxios";
 export type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
@@ -24,6 +26,17 @@ export default function ExerciseCalendar({ value, onChange }: Props) {
   const currDateTime = moment(currDate).format("MM-DD");
   const { requestJournals } = useExerciseDiary();
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+  const axios = useAxios();
+
+  const { data } = useQuery({
+    queryKey: ["get-journals"],
+    queryFn: () => {
+      return axios.get(`${API_URL}/api/journals`);
+    },
+  });
+
+  console.log("data", data);
   const [mark, setMark] = useRecoilState(markState);
   // const mark = journals.map((journal) => journal.journalDate);
   const setIsExist = useSetRecoilState(isExistState);
@@ -31,6 +44,7 @@ export default function ExerciseCalendar({ value, onChange }: Props) {
   // console.log(location.pathname);
   const dayHandler = (value: Value) => {
     const date = moment(value as Date).format("YYYY-MM-DD");
+    const mark = data?.data.data.journals;
     if (location.pathname === "/diary") {
       navigate(`/diary?date=${date}`);
       // console.log(mark);

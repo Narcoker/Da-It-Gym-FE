@@ -14,7 +14,7 @@ import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
 import { Diary } from "../pages/Profile/components/Diaries/Diaries";
 import { User } from "../pages/UserRecommend/UserRecommend";
 
-interface EditProfilePayload {
+export interface EditProfilePayload {
   userProfileImg?: File;
   request: {
     nickname: string;
@@ -24,7 +24,7 @@ interface EditProfilePayload {
   };
 }
 
-interface EvaluateTrainerPayload {
+export interface EvaluateTrainerPayload {
   request: {
     certifications: Cerificate[];
     awards: Award[];
@@ -49,7 +49,7 @@ export default function useProfileAPI() {
     axios
       .get(`${API_URL}/api/users/${nickname}`)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setProfileData(res.data.data);
       })
       .catch((err) => toast.error(err.message));
@@ -65,7 +65,7 @@ export default function useProfileAPI() {
     formData.append("userProfileImg", payload.userProfileImg as File);
     formData.append("request", JSON.stringify(payload.request));
 
-    axios
+    return axios
       .put(`${API_URL}/api/users/${nickname}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

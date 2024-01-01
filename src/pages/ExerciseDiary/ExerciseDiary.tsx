@@ -15,6 +15,7 @@ export default function ExerciseDiary() {
   const { requestJournalDetail } = useExerciseDiaryAPI();
   const [day, dayDispatch] = useDay();
   const mark = useRecoilValue(markState);
+
   useEffect(() => {
     if (mark.includes(date as string)) {
       if (date) {
