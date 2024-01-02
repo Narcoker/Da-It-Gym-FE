@@ -42,7 +42,7 @@
 ### Frontend
 - [김준서](https://github.com/narcoker)  
 - [한승재](https://github.com/stat1202)  
-- [조재균](https://github.com/stat1202)  
+- [조재균](https://github.com/JamesJoe0830)  
 - [한세라](https://github.com/hansera)
 
 ### Backend
