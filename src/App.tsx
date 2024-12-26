@@ -18,7 +18,7 @@ import ChatSearchUser from "./pages/ChatSearchUser/ChatSearchUser";
 import ChatRooms from "./pages/ChatRooms/ChatRooms";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LoginLayout from "./pages/Login/LoginLayout";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -30,8 +30,8 @@ import { useRecoilValue } from "recoil";
 import { userInfoState } from "./recoil/userInfoState";
 import UserRecommend from "./pages/UserRecommend/UserRecommend";
 import CustomerCenter from "./pages/CustomerCenter/CustomerCenter";
-import firebase from "firebase/compat/app";
-import { onMessage } from "firebase/messaging";
+// import firebase from "firebase/compat/app";
+// import { onMessage } from "firebase/messaging";
 import Recovery from "./pages/Recovery/Recovery";
 
 // import { getAnalytics } from "firebase/analytics";
@@ -50,57 +50,57 @@ import Recovery from "./pages/Recovery/Recovery";
 // .catch(function (err) {
 //   console.log("fcm에러 : ", err);
 // });
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_APP_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
-  storageBucket: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDERID,
-  appId: import.meta.env.VITE_FIREBASE_APPID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
-};
+// const firebaseConfig = {
+//   apiKey: import.meta.env.VITE_FIREBASE_APP_KEY,
+//   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+//   projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+//   storageBucket: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+//   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDERID,
+//   appId: import.meta.env.VITE_FIREBASE_APPID,
+//   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+// };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+// firebase.initializeApp(firebaseConfig);
+// const messaging = firebase.messaging();
 
 // const { requestPostFCMToken } = useUserAPI();
 
 function App() {
-  const [fcmToken, setfcmToken] = useState("");
-  Notification.requestPermission()
-    .then((PermissionStatus) => {
-      if (PermissionStatus === "granted") {
-        messaging
-          .getToken({ vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY })
-          .then((token: string) => {
-            console.log(`허가! 토큰값 :${token}`);
-            setfcmToken(token);
-            // requestPostFCMToken(token);
-            localStorage.setItem("FCMToken", token);
-          })
-          .catch((err) => console.log("토큰 가져오는 중에 에러", err));
+  // const [fcmToken, setfcmToken] = useState("");
+  // Notification.requestPermission()
+  //   .then((PermissionStatus) => {
+  //     if (PermissionStatus === "granted") {
+  //       messaging
+  //         .getToken({ vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY })
+  //         .then((token: string) => {
+  //           console.log(`허가! 토큰값 :${token}`);
+  //           setfcmToken(token);
+  //           // requestPostFCMToken(token);
+  //           localStorage.setItem("FCMToken", token);
+  //         })
+  //         .catch((err) => console.log("토큰 가져오는 중에 에러", err));
 
-        return messaging.getToken();
-      } else if (PermissionStatus === "denied") {
-        console.log("알림 권한 거부됨");
-      } else {
-        console.log("알림 권한 차단됨", Permissions);
-      }
-    })
-    .catch((err) => {
-      console.log("FCM 오류", err);
-    });
-  onMessage(messaging, (payload) => {
-    const notificationTitle = payload.notification?.title;
-    const notificationOptions = {
-      body: payload.notification?.body,
-    };
+  //       return messaging.getToken();
+  //     } else if (PermissionStatus === "denied") {
+  //       console.log("알림 권한 거부됨");
+  //     } else {
+  //       console.log("알림 권한 차단됨", Permissions);
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log("FCM 오류", err);
+  //   });
+  // onMessage(messaging, (payload) => {
+  //   const notificationTitle = payload.notification?.title;
+  //   const notificationOptions = {
+  //     body: payload.notification?.body,
+  //   };
 
-    // 사용자에게 알림을 표시
-    // @ts-ignore
-    const notification = new Notification(notificationTitle, notificationOptions);
-  });
+  //   // 사용자에게 알림을 표시
+  //   // @ts-ignore
+  //   const notification = new Notification(notificationTitle, notificationOptions);
+  // });
 
   const LoginRoutes = [
     { path: "/", element: <New /> },
@@ -165,7 +165,7 @@ function App() {
                     <PrivateRoute
                       authenticated={auth}
                       element={element}
-                      fcmToken={fcmToken}
+                      // fcmToken={fcmToken}
                     />
                   }
                 />
