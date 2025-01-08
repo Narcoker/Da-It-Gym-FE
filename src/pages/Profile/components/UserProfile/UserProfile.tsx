@@ -9,26 +9,17 @@ import { userInfoState } from "../../../../recoil/userInfoState";
 import useCreateChatRoomAPI, {
   RequestCreateChatRoom,
 } from "../../../../api/useChatRoomAPI";
-import { useQuery } from "@tanstack/react-query";
-import { useAxios } from "../../../../api/useAxios";
+
 
 export type FollowType = "" | "follow" | "follower";
 
 export default function UserProfile() {
   const navigate = useNavigate();
+  const params = useParams();
   const [followType, setFollowType] = useState<FollowType>("");
   const [isInbodyClick, setIsInbodyClick] = useState(false);
-  const params = useParams();
-
-  const axios = useAxios();
-  const { data } = useQuery({
-    queryKey: ["get-profile"],
-    queryFn: () => {
-      const API_URL = import.meta.env.VITE_API_URL;
-      return axios.get(`${API_URL}/api/users/${params.nickname}`);
-    },
-  });
-
+  const { useRequestProfile } = useProfileAPI();
+  const { data } = useRequestProfile(params.nickname as string);
   const { requestFollow, requestDeleteFollow } = useProfileAPI();
   const { requestCreateChatRoom } = useCreateChatRoomAPI();
   const userInfo = useRecoilValue(userInfoState);

@@ -13,6 +13,7 @@ import { UserInfo } from "../recoil/userInfoState";
 import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
 import { Diary } from "../pages/Profile/components/Diaries/Diaries";
 import { User } from "../pages/UserRecommend/UserRecommend";
+import { useQuery } from "@tanstack/react-query";
 
 export interface EditProfilePayload {
   userProfileImg?: File;
@@ -42,6 +43,7 @@ export default function useProfileAPI() {
   const API_URL = import.meta.env.VITE_API_URL;
   const axios = useAxios();
   const navigate = useNavigate();
+  
   const requestProfile = (
     nickname: string,
     setProfileData: React.Dispatch<React.SetStateAction<ProfileData>>,
@@ -54,6 +56,11 @@ export default function useProfileAPI() {
       })
       .catch((err) => toast.error(err.message));
   };
+
+  const useRequestProfile = (nickname: string) => useQuery({
+    queryKey: ["profile", nickname],
+    queryFn: () => axios.get(`/api/users/${nickname}`)
+  });
 
   // 프로필 편집
   const requestEditProfile = (
@@ -261,6 +268,7 @@ export default function useProfileAPI() {
     requestInbody,
     requestGetInbody,
     requestProfile,
+    useRequestProfile,
     requestFollowerList,
     requestFollowList,
     requestFollow,
