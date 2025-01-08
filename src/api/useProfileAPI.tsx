@@ -13,7 +13,7 @@ import { UserInfo } from "../recoil/userInfoState";
 import { RoutineSummary } from "../pages/Profile/components/Routines/Routines";
 import { Diary } from "../pages/Profile/components/Diaries/Diaries";
 import { User } from "../pages/UserRecommend/UserRecommend";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export interface EditProfilePayload {
   userProfileImg?: File;
@@ -160,17 +160,39 @@ export default function useProfileAPI() {
       .catch((err) => toast.error(err.message));
   };
 
-  const requestFollow = (nickname: string) => {
-    axios
-      .post(`${API_URL}/api/follows/${nickname}`)
-      .then((res) => console.log(res))
-      .catch((err) => toast.error(err.message));
-  };
-  const requestDeleteFollow = (nickname: string) => {
-    axios
-      .delete(`${API_URL}/api/follows/${nickname}`)
-      .then()
-      .catch((err) => toast.error(err.error));
+  // const requestFollow = async (nickname: string) => {
+  //   await axios
+  //     .post(`${API_URL}/api/follows/${nickname}`)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => toast.error(err.message));
+  // };
+
+  const useRequestFollow = (userProfileRefetch: () => void) => {
+    return useMutation({
+      mutationFn: (nickname: string) =>
+        axios.post(`${API_URL}/api/follows/${nickname}`), // 팔로우 요청 API 호출
+      onSuccess: () => {
+        userProfileRefetch(); // 요청 성공 시 유저 프로필 쿼리 갱신
+      },
+      onError: (err) => {
+        toast.error(err.message); // 에러 발생 시 에러 메시지 출력
+      },
+    });
+};
+
+  // const requestDeleteFollow = async (nickname: string) => {
+  //   await axios
+  //     .delete(`${API_URL}/api/follows/${nickname}`)
+  //     .then()
+  //     .catch((err) => toast.error(err.error));
+  // };
+
+  const useRequestDeleteFollow = (userProfileRefetch: ()=> void) => {
+    return useMutation({
+      mutationFn: (nickname: string) =>  axios.delete(`${API_URL}/api/follows/${nickname}`),
+      onSuccess: () => userProfileRefetch(),
+      onError: (err) => toast.error(err.message)
+    });
   };
 
   // 사용자 피드 운동일지 조회 요청
@@ -271,8 +293,10 @@ export default function useProfileAPI() {
     useRequestProfile,
     requestFollowerList,
     requestFollowList,
-    requestFollow,
-    requestDeleteFollow,
+    // requestFollow,
+    useRequestFollow,
+    // requestDeleteFollow,
+    useRequestDeleteFollow,
     requestFeedDiaryList,
     requestFeedDiaryScrap,
     requestFeedRoutineList,

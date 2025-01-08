@@ -13,6 +13,7 @@ export interface UserInfo {
   introduction: string;
   healthClubName: string;
   role: "일반" | "관리자" | "트레이너";
+  follower?: boolean;
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -24,6 +25,7 @@ export const userInfoState = atom<UserInfo>({
     introduction: "",
     healthClubName: "",
     role: "일반",
+    follower: false,
   },
   effects_UNSTABLE: [persistAtom],
 });
