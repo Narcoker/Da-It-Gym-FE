@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Exercise, RestTime, getNewExercise } from "./useExercise";
+import { Exercise, RestTime, getNewExercise, initExercise } from "./useExercise";
 import { initExerciseSet } from "./useExerciseSet";
 import { ExercisePart } from "../constants/excercise";
 
@@ -179,7 +179,7 @@ export const initDay: Day = {
   },
   completed: false,
   spread: false,
-  exercises: [],
+  exercises: [initExercise],
 };
 
 export function useDay(): [Day, React.Dispatch<Action>] {

@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.repository.fork == false  # Fork된 레포지토리에서 실행되지 않도록 설정
+    if: github.repository_owner == github.event.repository.owner.login # Fork된 레포지토리에서는 실행하지 않음
     steps:
       - name: Checkout source code. # 레포지토리 체크아웃
         uses: actions/checkout@main
