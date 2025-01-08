@@ -33,9 +33,9 @@ export default function FollowModal({ type, setFollowType }: Props) {
     queryKey: ["get-followUsers"],
     queryFn: () => {
       if (type === "follow") {
-        return axios.get(`${API_URL}/api/follows/follower-list/${params.nickname}`);
-      } else {
-        return axios.get(`${API_URL}/api/follows/following-list/${params.nickname}`);
+        return axios.get(`${API_URL}/api/follows/following-list/${params.nickname}`); // 팔로우
+      } else { 
+        return axios.get(`${API_URL}/api/follows/follower-list/${params.nickname}`); // 팔로워
       }
     },
   });
