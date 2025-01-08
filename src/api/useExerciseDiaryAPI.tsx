@@ -119,9 +119,10 @@ export default function useExerciseDiaryAPI() {
       .post(`${API_URL}/api/journals`, { journalDate })
       .then((res) => {
         const dayId = res.data.data.id;
+        console.log(dayId);
         setIsExist(true);
         setMark((prev) => [...prev, journalDate]);
-        dayDispatch({ type: "UPDATE_ID", dayId });
+        dayDispatch({ type: "UPDATE_DAY_ID", dayId });
       })
       .catch((err) => toast.error(err.message));
   };
@@ -155,10 +156,13 @@ export default function useExerciseDiaryAPI() {
   };
 
   // 일지에 운동 추가하기
-  const requestAddExercise = (payload: AddExercise) => {
+  const requestAddExercise = (payload: AddExercise, dayDispatch: React.Dispatch<Action>) => {
     axios
       .post(`${API_URL}/api/journals/exercise-list`, payload)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log("운동아이디 저장하기:", res.data.data.id);
+        dayDispatch({type:"UPDATE_EXERCISE_ID", exerciseId: res.data.data.id });
+      })
       .catch((err) => toast.error(err.message));
   };
 
@@ -171,7 +175,7 @@ export default function useExerciseDiaryAPI() {
     axios
       .post(`${API_URL}/api/journals/exercise-history`, payload)
       .then((res) => {
-        console.log(res.data.data.id);
+        console.log("test:", res.data.data.id);
         const exerciseSetId = res.data.data.id;
         dispatch({ type: "UPDATE_EXERSISE_SET", exerciseIndex, exerciseSetId });
       })

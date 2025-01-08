@@ -45,7 +45,7 @@ export default function AddExerciseModal({
     const payload = { ...newExercise, exerciseNum: day.exercises.length + 1, id: day.id };
 
     if (location.pathname === "/diary") {
-      requestAddExercise(payload);
+      requestAddExercise(payload, dispatch as React.Dispatch<DayAction>);
     }
   };
 

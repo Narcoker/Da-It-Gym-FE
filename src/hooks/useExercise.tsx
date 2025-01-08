@@ -100,7 +100,8 @@ export const initExercise: Exercise = {
   part: "",
   restTime: { hours: 0, minutes: 1, seconds: 0 },
   spread: false,
-  exerciseSets: [initExerciseSet],
+  // exerciseSets: [initExerciseSet],
+  exerciseSets: [],
 };
 
 export function useExercise(): [Exercise, React.Dispatch<Action>] {
