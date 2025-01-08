@@ -30,7 +30,7 @@ export default function Nav({ type }: Props) {
             <S.NavIcon onClick={handleSideMenu}>
               <Icon.Menu />
             </S.NavIcon>
-            {sideMenu && <SideMenu sideMenu={sideMenu} />}
+            {sideMenu && <SideMenu />}
           </S.MenuBox>
           <S.MessengerBox onClick={() => handleNav("/chat/rooms")}>
             <S.NavIcon>
