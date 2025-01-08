@@ -44,10 +44,10 @@ export default function ExerciseCalendar({ value, onChange }: Props) {
   // console.log(location.pathname);
   const dayHandler = (value: Value) => {
     const date = moment(value as Date).format("YYYY-MM-DD");
-    const mark = data?.data.data.journals;
+    // const mark = data?.data.data.journals;
     if (location.pathname === "/diary") {
       navigate(`/diary?date=${date}`);
-      // console.log(mark);
+      console.log("mark",mark);
       if (mark.includes(date)) {
         setIsExist(true);
       } else {

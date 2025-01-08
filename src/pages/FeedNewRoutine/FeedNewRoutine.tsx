@@ -4,13 +4,12 @@ import { userInfoState } from "../../recoil/userInfoState";
 import { Routine, useRoutine } from "../../hooks/useRoutine";
 import useRoutineAPI, { CreateRoutinePayload } from "../../api/useRoutineAPI";
 import RoutineAccordion from "../../components/RoutineAccordion/RoutineAccordion";
-import Nav from "../../components/Nav/Nav";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import TextArea from "../../components/TextArea/TextArea";
 import * as S from "./FeedNewRoutine.style";
 import { useLocation, useNavigate } from "react-router";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 function FeedNewRoutine() {
   const location = useLocation();
@@ -34,7 +33,9 @@ function FeedNewRoutine() {
       routine: routine,
     };
     requestCreateRoutine(payload);
-    toast.success("루틴을 등록했습니다.");
+  };
+
+  const handleCancel = () => {
     navigate("/feed/routine");
   };
 
@@ -47,7 +48,6 @@ function FeedNewRoutine() {
 
   return (
     <>
-      <Nav type="top" />
       <S.BoardContainer>
         <S.BoardHeader>
           <S.WriterInfoWrapper>
@@ -96,15 +96,13 @@ function FeedNewRoutine() {
       </S.RoutineContainer>
 
       <S.RoutineFunctionsContainer>
-        <Button display="flex" type="border" size="large" onClick={() => {}}>
+        <Button display="flex" type="border" size="large" onClick={handleCancel}>
           취소
         </Button>
         <Button display="flex" type="fill" size="large" onClick={handleSumbitRoutine}>
           공유하기
         </Button>
       </S.RoutineFunctionsContainer>
-
-      <Nav type="home" />
     </>
   );
 }

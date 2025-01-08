@@ -79,14 +79,14 @@ export default function UserEdit() {
   const submitHandler = () => {
     // const userProfileImg = preview?.file;
     const nickname = nicknameRef.current!.value;
-    const introduction = descRef.current!.value;
+    // const introduction = descRef.current!.value;
     const preferredSplit = splitRef.current!.value;
 
     // const payload = {
     //   userProfileImg,
     //   request: { nickname, introduction, gymName, preferredSplit },
     // };
-    if (preferredSplit && nickname && introduction) {
+    if (preferredSplit && nickname) {
       editProfile.mutate(userInfo.nickname);
       // requestEditProfile(userInfo.nickname, payload, setUserInfo);
     } else {

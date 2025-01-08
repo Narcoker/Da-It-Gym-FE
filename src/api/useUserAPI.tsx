@@ -98,11 +98,11 @@ export function useUserAPI() {
         },
       })
       .then((response) => {
-        console.log(response);
         setUserInfo((prev: UserInfo) => ({
           ...prev,
           nickname: response.data.data.nickname,
         }));
+        localStorage.setItem("nickname", response.data.data.nickname);
       })
       .catch((error) => toast.error(error.message));
   };

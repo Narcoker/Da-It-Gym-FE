@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import * as COLOR from "../../../constants/color";
+import * as FONT from "../../../constants/font";
 import styled from "styled-components";
 
 interface Props {
@@ -19,6 +20,7 @@ export const TitleLink = styled(Link)<Props>`
   align-items: center;
   text-decoration: none;
   color: ${(props) => (props.active ? COLOR.Primary : COLOR.Gray2)};
+  font-weight: ${FONT.Bold};
   border-bottom: 1px solid ${COLOR.Gray1};
   border-right: 1px solid ${COLOR.Gray1};
   border-top: ${(props) => (props.active ? `1px solid ${COLOR.Primary}` : `transparent`)};

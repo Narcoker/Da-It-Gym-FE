@@ -31,6 +31,7 @@ jobs:
           echo "VITE_KAKAO_REST_API=${{ secrets.VITE_KAKAO_REST_API }}" >> .env
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
           echo "VITE_SITE_URL=${{ secrets.VITE_SITE_URL }}" >> .env
+          echo "VITE_WS_BROKER_URL=${{ secrets.VITE_WS_BROKER_URL }}" >> .env
 
       - name: Build # React Build
         run: npm run build # npm run build를 실행할 경로로 설정

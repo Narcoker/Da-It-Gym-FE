@@ -23,12 +23,11 @@ function SignupButton() {
     if (debounceNickname && isDuplicate === "사용가능") {
       // request 요청 보냄
       requestPatchNickname(debounceNickname);
-      navigate(`/profile/${nickname}`);
+      navigate(`/feed/diary?section=total`);
     }
   };
   const isDuplicate = useRecoilValue(signupState);
-  // console.log(isDuplicate);
-  // console.log("debounceNickname", debounceNickname);
+
   return (
     <S.ButtonWrapper>
       <Button display="flex" type="border" size="large" onClick={handleSkip}>
